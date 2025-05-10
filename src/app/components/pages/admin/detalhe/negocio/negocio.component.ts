@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Paginacao } from '../../../../interface/produto/paginacao';
 import { Negocio } from '../../../../interface/produto/negocio';
-import { NegocioService } from '../../../../service/produto/negocio.service';
+import { NegocioService } from '../../../../service/imovel/negocio.service';
 import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
@@ -32,7 +32,7 @@ export class NegocioComponent implements OnInit {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Negocio>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private negocioService : NegocioService,

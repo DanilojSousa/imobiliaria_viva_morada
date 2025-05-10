@@ -12,7 +12,7 @@ export class CidadeService {
   constructor(private http: HttpClient) { }
 
   getAllPorEstCodigo(estCodigo: number): Observable<Cidade[]> {
-    return this.http.get<Cidade[]>(environment.api_url + "/cidade/getAllPorEstCodigo?estCodigo="+estCodigo, { withCredentials: true }).pipe(
+    return this.http.get<Cidade[]>(environment.api_url_public + "/cidade/getAllPorEstCodigo?estCodigo="+estCodigo, { withCredentials: true }).pipe(
       map((obj) => obj),
     );
   }

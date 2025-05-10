@@ -1,11 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./components/pages/home/cabecalho/home.component";
-import { CookieService } from 'ngx-cookie-service';
+import { Component} from '@angular/core';
+import { InicioComponent } from "./components/pages/home/inicio.component";
 
 @Component({
     selector: 'app-root',
-    imports: [HomeComponent, ],
+    imports: [InicioComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

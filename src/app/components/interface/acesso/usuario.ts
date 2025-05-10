@@ -3,7 +3,7 @@ import { Contato } from '../pessoa/contato';
 import { Email } from '../pessoa/email';
 import { RedeSocial } from '../pessoa/redeSocial';
 import { Situacao } from '../pessoa/situacao';
-import { EmpresaDTO } from '../geral/empresa';
+import { Empresa } from '../geral/empresa';
 
 export class Usuario{
 
@@ -21,7 +21,7 @@ export class Usuario{
     public email: Email;
     public redeSocial: RedeSocial;
     public roles!: string;
-    public empresa: EmpresaDTO;
+    public empresa: Empresa;
     public usrCreci!: string;
 
     constructor(){
@@ -30,6 +30,6 @@ export class Usuario{
         this.email = new Email();
         this.contato = new Contato();
         this.redeSocial = new RedeSocial();
-        this.empresa = new EmpresaDTO();
+        this.empresa = new Empresa();
     }
 }

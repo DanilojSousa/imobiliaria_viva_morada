@@ -12,12 +12,6 @@ export class ImagensService {
   constructor(private http: HttpClient) { }
 
   getAllPorImvCodigo(imvCodigo: number): Observable<Imagens[]> {
-    return this.http.get<Imagens[]>(environment.api_url + "/imagens/getAllPorImvCodigo?imvCodigo="+imvCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-      catchError(error => {
-        console.error('Erro ao buscar imóveis em destaque:', error);
-        return throwError(error);
-      })
-    )
+    return this.http.get<Imagens[]>(environment.api_url + "/imagens/getAllPorImvCodigo?imvCodigo="+imvCodigo, { withCredentials: true });
   }
 }

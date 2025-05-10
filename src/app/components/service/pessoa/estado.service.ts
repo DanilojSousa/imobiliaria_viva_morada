@@ -13,7 +13,7 @@ export class EstadoService {
   constructor(private http: HttpClient) { }
 
   getAllPorImovelAtivo(): Observable<EstadoCidade[]> {
-    return this.http.get<EstadoCidade[]>(environment.api_url + "/estado/getAllPorImovelAtivo", { withCredentials: true }).pipe(
+    return this.http.get<EstadoCidade[]>(environment.api_url_public + "/estado/getAllPorImovelAtivo", { withCredentials: true }).pipe(
       map((obj) => obj),
     );
   }

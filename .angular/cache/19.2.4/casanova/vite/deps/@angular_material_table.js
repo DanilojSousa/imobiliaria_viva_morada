@@ -6,7 +6,6 @@ import {
   MatCommonModule
 } from "./chunk-WCONKTIB.js";
 import "./chunk-M3HR6BUY.js";
-import "./chunk-ORAUIUNY.js";
 import {
   ScrollingModule,
   ViewportRuler
@@ -19,6 +18,7 @@ import {
   isDataSource
 } from "./chunk-Y5DN3UKX.js";
 import "./chunk-65RJ5ZZ2.js";
+import "./chunk-ORAUIUNY.js";
 import "./chunk-DMFM3V3E.js";
 import {
   Directionality

@@ -17,7 +17,7 @@ import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component
 import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
-import { AreaLazerService } from '../../../../service/produto/area-lazer.service';
+import { AreaLazerService } from '../../../../service/imovel/area-lazer.service';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class AreaLazerComponent implements OnInit, AfterViewInit  {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<AreaLazer>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private areaLazerService : AreaLazerService,

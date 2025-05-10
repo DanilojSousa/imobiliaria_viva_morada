@@ -6,7 +6,7 @@ import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { ImovelService } from '../../../../service/produto/imovel.service';
+import { ImovelService } from '../../../../service/imovel/imovel.service';
 import { PesquisaFiltradaImovel } from '../../../../interface/produto/pesquisaFiltradaImovel';
 import { Imovel } from '../../../../interface/produto/imovel';
 import { CommonModule } from '@angular/common';

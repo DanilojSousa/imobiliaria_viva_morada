@@ -14,27 +14,19 @@ export class EnderecoService {
   constructor(private http: HttpClient) { }
 
   salvar(endereco: EnderecoDTO): Observable<EnderecoDTO> {
-    return this.http.post<EnderecoDTO>(environment.api_url + "/endereco/salvar", endereco, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.post<EnderecoDTO>(environment.api_url + "/endereco/salvar", endereco, { withCredentials: true });
   }
 
   getAll(): Observable<EnderecoDTO[]> {
-    return this.http.get<EnderecoDTO[]>(environment.api_url + "/endereco/getAll", { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<EnderecoDTO[]>(environment.api_url + "/endereco/getAll", { withCredentials: true });
   }
 
   getAllPorCidCodigo(cidCodigo: number): Observable<EnderecoDTO[]> {
-    return this.http.get<EnderecoDTO[]>(environment.api_url + "/endereco/getAllPorCidCodigo?cidCodigo="+cidCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<EnderecoDTO[]>(environment.api_url + "/endereco/getAllPorCidCodigo?cidCodigo="+cidCodigo, { withCredentials: true });
   }
 
   getAllPorImovelAtivo(): Observable<EnderecoDTO[]> {
-    return this.http.get<EnderecoDTO[]>(environment.api_url + "/endereco/getAllPorImovelAtivo", { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<EnderecoDTO[]>(environment.api_url_public + "/endereco/getAllPorImovelAtivo", { withCredentials: true });
   }
   getAllPaginado(paginacao:Paginacao): Observable<Pageable<EnderecoDTO>> {
     const headers = new HttpHeaders({
@@ -48,7 +40,7 @@ export class EnderecoService {
     );
   }
   delete(endCodigo: number) {
-    return this.http.get(environment.api_url + "/endereco/delete?endCodigo="+ endCodigo, { withCredentials: true }).pipe(
+    return this.http.delete(environment.api_url + "/endereco/delete?endCodigo="+ endCodigo, { withCredentials: true }).pipe(
       map((obj) => obj),
     );
   }

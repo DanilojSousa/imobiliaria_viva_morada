@@ -1,34 +1,32 @@
 import { LoginService } from './../../../service/acesso/login.service';
-import { Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { EmpresaDTO } from '../../../interface/geral/empresa';
-import { EmpresaService } from '../../../service/geral/empresa.service';
-import { Util } from '../../../utils/util';
+import { Empresa } from '../../../interface/geral/empresa';
 import {MatIconModule} from '@angular/material/icon';
 import { RodapeComponent } from "../../rodape/rodape.component";
 import {MatMenuModule} from '@angular/material/menu';
 import { CookieService } from 'ngx-cookie-service';
+import { PesquisaComponent } from '../pesquisa/pesquisa.component';
+import { environment } from '../../../../../environments/environment.prod';
 
 @Component({
     selector: 'app-home',
-    imports: [RouterLink, RouterLinkActive, MatIconModule, RouterOutlet, RodapeComponent, MatMenuModule],
+    imports: [RouterLink, RouterLinkActive, MatIconModule, MatMenuModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
 
-  empresa: EmpresaDTO = new EmpresaDTO();
+  @Input() empresaGeral!: Empresa;
   mostrarMenuFixo = false;
   logado: boolean = false;
-  constructor(private empresaService: EmpresaService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private loginService: LoginService,
               private cookieService: CookieService){}
 
   ngOnInit(){
     this.logado = this.loginService.logado;
-    this.carregaEmpresa();
     this.route.queryParams.subscribe(params => {
       const sectionId = params['section'];
       if (sectionId) {
@@ -39,14 +37,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  carregaEmpresa(){
-    this.empresaService.selecionarAtivo().subscribe({
-      next:(res)=>{
-        this.empresa = res;
-      }
-    })
-  }
-
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
     const scrollPosition = window.scrollY || document.documentElement.scrollTop;
@@ -54,18 +44,14 @@ export class HomeComponent implements OnInit {
     this.mostrarMenuFixo = scrollPosition > 100 && scrollPosition < scrollHeight - 100
   }
 
-  mostraImagem(empCodigo : number): string {
-      return Util.mostraImagemEmpresa(empCodigo);
-  }
-
   formataWatssap(): string{
-    return "https://api.whatsapp.com/send?phone=55"+this.empresa.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
+    return environment.url_whatsapp+this.empresaGeral.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
   }
 
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {
-      this.smoothScroll(element, 1000); // 1000ms (1 segundo) para ajustar a velocidade
+      this.smoothScroll(element, 1000);
     }
   }
   smoothScroll(target: HTMLElement, duration: number) {

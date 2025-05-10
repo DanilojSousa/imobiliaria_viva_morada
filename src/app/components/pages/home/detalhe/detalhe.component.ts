@@ -3,11 +3,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { Imagens } from '../../../interface/produto/imagens';
 import localePt from '@angular/common/locales/pt';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ImagensService } from '../../../service/produto/imagens.service';
+import { ImagensService } from '../../../service/imovel/imagens.service';
 import { Imovel } from '../../../interface/produto/imovel';
-import { ImovelService } from '../../../service/produto/imovel.service';
+import { ImovelService } from '../../../service/imovel/imovel.service';
 import { MatButtonModule } from '@angular/material/button';
-import { Util } from '../../../utils/util';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -16,16 +15,16 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { EmailService } from '../../../service/geral/email.service';
 import { Email } from '../../../interface/geral/email';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import { ProximidadeService } from '../../../service/produto/proximidade.service';
+import { ProximidadeService } from '../../../service/imovel/proximidade.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { VisualizarImagemDialogComponent } from '../dialog/visualizar-imagem/visualizar-imagem-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AreaLazerService } from '../../../service/produto/area-lazer.service';
+import { AreaLazerService } from '../../../service/imovel/area-lazer.service';
 import { AreaLazer } from '../../../interface/produto/areaLazer';
 import { Proximidade } from '../../../interface/produto/proximidade';
 import { environment } from '../../../../../environments/environment.prod';
 import { EmpresaService } from '../../../service/geral/empresa.service';
-import { EmpresaDTO } from '../../../interface/geral/empresa';
+import { Empresa } from '../../../interface/geral/empresa';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -48,7 +47,7 @@ export class DetalheComponent implements OnInit {
   listaProximidade: Proximidade[] = [];
   spinner: boolean = false;
   buttonFlutuante: boolean = false;
-  empresa: EmpresaDTO = new EmpresaDTO();
+  empresa: Empresa = new Empresa();
   mensagem = "Olá, estou interessado nesse imóvel que encontrei no site. Aguardo seu retorno.";
   listaColRow = [
     {cows: 2,rows:3},

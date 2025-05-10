@@ -1,27 +1,27 @@
 #pesquisa{
     width: 100%;
-    background-color: transparent;
+    min-height: 100vh;
+    background-image: 
+    linear-gradient(to bottom, rgba(14, 36, 66, 1), rgba(14, 36, 66, 0.8), rgba(14, 36, 66, 0)),
+    url("../../../../../assets/home/home_fundo.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .pesquisa_form{
         width: 70%;
-        min-height: 300px;
         height: auto;
-        background: linear-gradient(to right, #C7AE80, #C9AC5E);
-        margin: auto;
-        margin-top: 5%;
         border-radius: 2px;
         padding: 20px;
-        .titulo{
-            width: 100%;
-            p{
-                color: white;
-            }
-        }
         .formulario{
             display: flex;
             flex-direction: column;
             .linha1_formulario, .linha2_formulario{
                 width: 100%;
                 display: flex;
+                align-items: center;
                 margin: auto;
                 div{
                     width: 100%;
@@ -64,9 +64,9 @@ select optgroup{
     font-family: "Montserrat";
 }
 button {
-    width: 100px;
+    width: 500px;
+    height: 40px;
     padding: 10px 15px;
-    background-color: #4C2426;
     color: white;
     border: none;
     cursor: pointer;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, catchError, delay, first, map } from 'rxjs';
 import { environment } from '../../../../environments/environment.prod';
-import { EmpresaDTO } from '../../interface/geral/empresa';
+import { Empresa } from '../../interface/geral/empresa';
 import { HttpClient } from '@angular/common/http';
 import { Mensagem } from '../../utils/mensagem';
 import { Paginacao } from '../../interface/produto/paginacao';
@@ -15,75 +15,51 @@ export class EmpresaService {
   constructor(private http: HttpClient,
               private mensagem: Mensagem) { }
 
-  cadastrarEmpresaDTO(empresa: EmpresaDTO): Observable<EmpresaDTO> {
-    return this.http.post<EmpresaDTO>(environment.api_url + "/empresa/salvar", empresa, { withCredentials: true }).pipe(
-      map((obj) => obj),
-      catchError((e) => this.error(e)),
-    );
+  cadastrarEmpresa(empresa: Empresa): Observable<Empresa> {
+    return this.http.post<Empresa>(environment.api_url + "/empresa/salvar", empresa, { withCredentials: true });
   }
 
-  excluirEmpresaDTO(id: string){
+  excluirEmpresa(id: string){
     const url = environment.api_url + "/empresa/delete/" + id;
-    return this.http.delete(url, { withCredentials: true }).pipe(
-      map((obj) => obj),
-      catchError((e) => this.error(e)),
-    );
+    return this.http.delete(url, { withCredentials: true });
   }
 
-  selecionarTodos(): Observable<EmpresaDTO[]>{
-    return this.http.get<EmpresaDTO[]>(environment.api_url + "/empresa/getAll", { withCredentials: true }).pipe(
-      first(),
-      delay(500),
-      map((obj) => obj),
-      catchError((e) => this.error(e)),
-    );
+  selecionarTodos(): Observable<Empresa[]>{
+    return this.http.get<Empresa[]>(environment.api_url + "/empresa/getAll", { withCredentials: true });
   }
 
-  selecionarPorId(empCodigo: number): Observable<EmpresaDTO>{
-    return this.http.get<EmpresaDTO>(environment.api_url + "/empresa/getById?empCodigo="+empCodigo, { withCredentials: true });
+  selecionarPorId(empCodigo: number): Observable<Empresa>{
+    return this.http.get<Empresa>(environment.api_url + "/empresa/getById?empCodigo="+empCodigo, { withCredentials: true });
   }
 
-  selecionarAtivo(): Observable<EmpresaDTO>{
-    return this.http.get<EmpresaDTO>(environment.api_url + "/empresa/getByAtivo", { withCredentials: true });
+  selecionarAtivo(): Observable<Empresa>{
+    return this.http.get<Empresa>(environment.api_url_public + "/empresa/getByAtivo", { withCredentials: true });
   }
 
-  getByEmpresaDTO(empCodigo: number): Observable<EmpresaDTO>{
-    return this.http.get<EmpresaDTO>(environment.api_url + "/empresa/getByEmpresaUsuario/"+ empCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-      catchError((e) => this.error(e)),
-    );
+  getByEmpresa(empCodigo: number): Observable<Empresa>{
+    return this.http.get<Empresa>(environment.api_url + "/empresa/getByEmpresaUsuario/"+ empCodigo, { withCredentials: true });
   }
 
-  getAllPaginado(paginacao:Paginacao): Observable<Pageable<EmpresaDTO>> {
-    return this.http.post<Pageable<EmpresaDTO>>(environment.api_url + "/empresa/getAllPaginado", paginacao, { withCredentials: true })
+  getAllPaginado(paginacao:Paginacao): Observable<Pageable<Empresa>> {
+    return this.http.post<Pageable<Empresa>>(environment.api_url + "/empresa/getAllPaginado", paginacao, { withCredentials: true })
   }
 
   delete(empCodigo: number) {
-    return this.http.get(environment.api_url + "/empresa/delete?empCodigo="+ empCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.delete(environment.api_url + "/empresa/delete?empCodigo="+ empCodigo, { withCredentials: true })
   }
   desativar(empCodigo: number) {
-    return this.http.get(environment.api_url + "/empresa/desativar?empCodigo="+empCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get(environment.api_url + "/empresa/desativar?empCodigo="+empCodigo, { withCredentials: true });
   }
 
-  getAll(): Observable<EmpresaDTO[]> {
-    return this.http.get<EmpresaDTO[]>(environment.api_url + "/empresa/getAll", { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+  getAll(): Observable<Empresa[]> {
+    return this.http.get<Empresa[]>(environment.api_url + "/empresa/getAll", { withCredentials: true });
   }
 
-  salvar(empresa: EmpresaDTO): Observable<EmpresaDTO>  {
-    return this.http.post<EmpresaDTO>(environment.api_url + "/empresa/salvar", empresa, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+  salvar(empresa: Empresa): Observable<Empresa>  {
+    return this.http.post<Empresa>(environment.api_url + "/empresa/salvar", empresa, { withCredentials: true });
   }
-  getById(empCodigo: string): Observable<EmpresaDTO> {
-    return this.http.get<EmpresaDTO>(environment.api_url + "/empresa/getById?empCodigo="+empCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+  getById(empCodigo: string): Observable<Empresa> {
+    return this.http.get<Empresa>(environment.api_url + "/empresa/getById?empCodigo="+empCodigo, { withCredentials: true });
   }
 
   error(e: any): Observable<any>{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlocosCaroucelComponent } from "../blocos-caroucel/blocos-caroucel.component";
-import { ImovelService } from '../../../service/produto/imovel.service';
+import { ImovelService } from '../../../service/imovel/imovel.service';
 import { Imovel } from '../../../interface/produto/imovel';
 import { Pageable } from '../../../interface/produto/pageable';
 import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';

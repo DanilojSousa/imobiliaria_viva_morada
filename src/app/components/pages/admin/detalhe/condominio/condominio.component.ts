@@ -32,7 +32,7 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
   isLoadingResults = true;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Condominio>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição','Endereço','Ação'];
   constructor(private condominioService : CondominioService,

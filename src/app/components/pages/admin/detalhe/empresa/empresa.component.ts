@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
-import { EmpresaDTO } from '../../../../interface/geral/empresa';
+import { Empresa } from '../../../../interface/geral/empresa';
 import { EmpresaService } from '../../../../service/geral/empresa.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,8 +30,8 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
   isLoadingResults = true;
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
-  pageable!: Pageable<EmpresaDTO>;
-  paginacao: Paginacao = new Paginacao();
+  pageable!: Pageable<Empresa>;
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Razão Social','CNPJ','Situação','Ação'];
   constructor(private empresaService : EmpresaService,
@@ -123,7 +123,7 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
   voltar(){
     this.route.navigate(['acesso/sistema']);
   }
-  abrirDialogDeletar(empresa: EmpresaDTO){
+  abrirDialogDeletar(empresa: Empresa){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',
       data:{valor: empresa.empRazaoSocial}

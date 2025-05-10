@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmpresaDTO } from './../../../../interface/geral/empresa';
+import { Empresa } from './../../../../interface/geral/empresa';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +28,7 @@ import { Util } from '../../../../utils/util';
 })
 export class CadastroEmpresaComponent implements OnInit {
 
-  empresa: EmpresaDTO = new EmpresaDTO();
+  empresa: Empresa = new Empresa();
   listaSituacao: Situacao[] = [];
   listaEndereco: EnderecoDTO[] = [];
   valida = false;

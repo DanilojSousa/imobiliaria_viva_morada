@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { EmpresaDTO } from '../../interface/geral/empresa';
+import { Component, Input, OnInit } from '@angular/core';
+import { Empresa } from '../../interface/geral/empresa';
 import { Util } from '../../utils/util';
 import {MatIconModule} from '@angular/material/icon';
 import { timer } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmpresaService } from '../../service/geral/empresa.service';
-import { SessaoService } from '../../service/sessao/sessao.service';
+import { environment } from '../../../../environments/environment.prod';
 
 @Component({
     selector: 'app-rodape',
@@ -15,15 +14,12 @@ import { SessaoService } from '../../service/sessao/sessao.service';
 })
 export class RodapeComponent implements OnInit {
 
-  empresa: EmpresaDTO = new EmpresaDTO();
+  @Input() empresaGeral!: Empresa;
   copiado = false;
-  constructor(private empresaService: EmpresaService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private sessaoService: SessaoService){}
+  constructor(private router: Router,
+              private route: ActivatedRoute){}
 
   ngOnInit(): void {
-    this.carregaEmpresa();
     this.route.queryParams.subscribe(params => {
       const sectionId = params['section'];
       if (sectionId) {
@@ -34,28 +30,20 @@ export class RodapeComponent implements OnInit {
     });
   }
 
-  carregaEmpresa(){
-    this.empresaService.selecionarAtivo().subscribe({
-      next:(res)=>{
-        this.empresa = res;
-      }
-    })
-  }
-
   mostraImagem(empCodigo: number): string{
       return Util.mostraImagemEmpresa(empCodigo);
   }
 
   formatarTelefone(){
-    if(this.empresa.contato?.cntWhatsapp != null){
-      const match = this.empresa.contato?.cntWhatsapp.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.empresa.contato?.cntWhatsapp;
+    if(this.empresaGeral.contato?.cntWhatsapp != null){
+      const match = this.empresaGeral.contato?.cntWhatsapp.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.empresaGeral.contato?.cntWhatsapp;
     }
     return '';
   }
   copiarEmail(){
     this.copiado = true;
-    navigator.clipboard.writeText(this.empresa.email.emaEmail);
+    navigator.clipboard.writeText(this.empresaGeral.email.emaEmail);
     timer(5000).subscribe(() => {
       this.copiado = false;
     });
@@ -93,12 +81,12 @@ export class RodapeComponent implements OnInit {
   }
 
   formataWatssap(): string{
-    return "https://api.whatsapp.com/send?phone=55"+this.empresa.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
+    return environment.url_whatsapp+this.empresaGeral.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
   }
 
   formatCNPJ(): string {
-    if(this.empresa.empCnpj != null){
-      const cnpj = this.empresa.empCnpj.replace(/\D/g, '');
+    if(this.empresaGeral.empCnpj != null){
+      const cnpj = this.empresaGeral.empCnpj.replace(/\D/g, '');
       return cnpj.replace(
         /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
         '$1.$2.$3/$4-$5'
