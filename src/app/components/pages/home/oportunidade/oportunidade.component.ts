@@ -2,8 +2,8 @@ import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ImovelService } from '../../../service/imovel/imovel.service';
 import { Util } from '../../../utils/util';
 import { Router } from '@angular/router';
-import { ImovelOportunidade } from '../../../interface/produto/imovelOportunidade';
-import { Paginacao } from '../../../interface/produto/paginacao';
+import { ImovelOportunidade } from '../../../interface/imovel/imovelOportunidade';
+import { Paginacao } from '../../../interface/imovel/paginacao';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -28,7 +28,7 @@ export class OportunidadeComponent implements OnInit {
   }
 
   carregaLista() {
-    const page = new Paginacao(0, 5);
+    const page = new Paginacao(0, 3);
     this.imovelService.getAllOportunidade(page).subscribe({
       next:(res)=>{
         this.listaImovelOportunidade = res;

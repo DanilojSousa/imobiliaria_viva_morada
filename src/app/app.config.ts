@@ -8,6 +8,7 @@ import { Mensagem } from './components/utils/mensagem';
 import { SessaoService } from './components/service/sessao/sessao.service';
 import { LogadoOnGuard } from './components/account/shared/logadoOn';
 import { noopInterceptor } from './auth-interceptor';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 export const appConfig: ApplicationConfig = {

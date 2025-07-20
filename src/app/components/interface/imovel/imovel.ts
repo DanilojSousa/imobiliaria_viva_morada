@@ -1,0 +1,58 @@
+import { Usuario } from '../acesso/usuario';
+import { EnderecoDTO } from '../pessoa/endereco';
+import { Imagens } from './imagens';
+import { AreaLazer} from './areaLazer';
+import { Proximidade } from './proximidade';
+import { LocalizacaoPraia } from './localizacaoPraia';
+import { Negocio } from './negocio';
+import { SituacaoImovel } from './situacaoImovel';
+import { TipoImovel } from './tipoImovel';
+import { ImagensCodigo } from './ImagensCodigo';
+export class Imovel{
+
+    public imvCodigo!: number;
+    public imvDescricao!: string;
+    public imvData!: Date;
+    public imvAtivo!: boolean;
+    public imvValor!: number;
+    public imvDormitorio!: number;
+    public imvBanheiro!: number;
+    public imvSuite!: number;
+    public imvGaragem!: number;
+    public imvSalaEstar!: number;
+    public imvSalaJantar!: number;
+    public imvCozinha!: number;
+    public imvAreaServico!: number;
+    public imvGaragemCoberta!: boolean;
+    public imvBanheira!: boolean;
+    public imvPiscina!: boolean;
+    public imvHidromassagem!: boolean;
+    public imvOfuro!: boolean;
+    public imvAreaConstruida!: number;
+    public imvAreaTotal!: number;
+    public imvObservacao!: string;
+    public imvDestaque!: boolean;
+    public imvEscriturado!: boolean;
+    public imvAverbado!: boolean;
+    public imvAceitaFinanciamento!: boolean;
+    public imvMinhaCasaMinhaVida!: boolean;
+    public imvMobiliado!: boolean;
+    public localizacaoPraia!: LocalizacaoPraia;
+    public situacaoImovel!: SituacaoImovel;
+    public negocio!: Negocio;
+    public tipoImovel!: TipoImovel;
+    public endereco!: EnderecoDTO;
+    public usuario!: Usuario;
+    public imagens!: Imagens[];
+    public imagensCodigo!: ImagensCodigo[];
+    public areaLazer!: AreaLazer[];
+    public proximidade!: Proximidade[];
+    public odernar!: string;
+    public imvVisualizacao!: number;
+    public imvFavorito!: number;
+    public imvCompartilhamento!: number;
+    constructor(){
+        this.imvFavorito = -1;
+        this.imagens = [];
+    }
+}

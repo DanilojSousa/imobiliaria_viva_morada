@@ -1,4 +1,4 @@
-import { Pageable } from './../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewInit, Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { EnderecoDTO } from '../../../../interface/pessoa/endereco';
 import { EnderecoService } from '../../../../service/pessoa/endereco.service';
-import { Paginacao } from '../../../../interface/produto/paginacao';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-endereco',
@@ -29,11 +29,10 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 export class EnderecoComponent implements OnInit, AfterViewInit  {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
 
   pageable!: Pageable<EnderecoDTO>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Endereço', 'Bairro', 'Cidade/UF', 'Ação'];
   constructor(private enderecoService : EnderecoService,
@@ -76,11 +75,9 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar endereço cadastrado")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -91,11 +88,10 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
   }
 
   detalhe(endCodigo: number){
-    this.route.navigate(['cadastro/endereco/'+endCodigo]);
+    this.route.navigate(['acesso/sistema/cadastro/endereco/'+endCodigo]);
   }
 
   delete(endCodigo: number){
-    this.spinnerAcao = true;
     this.enderecoService.delete(endCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Endereço deletado com sucesso")
@@ -103,15 +99,11 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar o Endereço, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
   novo(){
-    this.route.navigate(['cadastro/endereco']);
-  }
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
+    this.route.navigate(['acesso/sistema/cadastro/endereco']);
   }
   abrirDialogDeletar(endereco: EnderecoDTO){
     const dialogRef = this.dialog.open(DeletarComponent, {

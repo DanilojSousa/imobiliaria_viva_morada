@@ -1,8 +1,8 @@
 #content_detalhe{
     width: 100%;
     background-color: #F8F9FA;
-    margin-top: 70px;
-    margin-bottom: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     .spinner{
         display: flex;
         justify-content: center;
@@ -17,6 +17,8 @@
         justify-content: space-between;
         margin: auto;
         .titulo_cabecalho{
+            margin-top: 70px;
+            margin-bottom: 50px;
             margin-top: 20px;
             font-size: 26px;
             color: rgb(60, 72, 88);
@@ -37,7 +39,7 @@
             border-radius: 3px;
             margin-top: 20px;
             color: #DCE9F7;
-            background-color: #B4985F;
+            background-color: rgb(77, 158, 77);
         }
     }
     .fotos{
@@ -50,9 +52,7 @@
             overflow: hidden;
             z-index: 1;
         }
-       /* .imagens_grid:hover{
-            filter: brightness(50%);
-        }*/
+
         .cobertura{
             position: absolute;
             width: 100%;
@@ -83,7 +83,7 @@
             margin-top: 20px;
             z-index: 2;
             .tipo{
-                background-color: #B4985F;
+                background-color: #0E2442;
                 color: rgb(255, 255, 255);
                 padding: 10px 20px;
                 font-size: 16px;
@@ -145,7 +145,7 @@
                     display: flex;
                     justify-content: center;
                     mat-icon{
-                        color: #4C2426;
+                        color: #0E2442;
                     }
                 }
                 .bloco_texto{
@@ -163,13 +163,13 @@
             font-size: 30px;
             font-weight: 500;
             padding: 0px 30px;
-            color: #B4985F;
+            color: #0E2442;
             .tipo{
                 font-size: 16px;
             }
         }
     }
-    .conteudo{
+    .conteudo_usuario{
         display: flex;
         width: 90%;
         height: 100%;
@@ -184,7 +184,7 @@
             background-color: white;
             color: rgb(60, 72, 88);
             border: 1px solid rgba(226, 228, 232, 0.8);
-            .topo{
+            .topo_usuario{
                 display: flex;
                 .perfil{
                     margin: 10px;
@@ -286,13 +286,13 @@
                     flex-direction: row;
                     margin: 10px 0 10px 0;
                     .button_email{
-                        background-color: #B4985F;
+                        background-color: #0E2442;
                         color: white;
                         border-radius: 3px;
                         width: 45%;
                     }
                     .button_whatsapp{
-                        background-color: #4C2426;
+                        background-color: rgb(77, 158, 77);
                         color: white;
                         border-radius: 3px;
                         width: 45%;

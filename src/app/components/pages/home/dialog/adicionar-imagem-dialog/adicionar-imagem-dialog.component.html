@@ -4,10 +4,10 @@
             <mat-card>
             <mat-card-content>
                 <mat-icon>cloud_upload</mat-icon>
-                <p>Arraste suas imagens PNG aqui ou clique para selecionar</p>
+                <p>Arraste suas imagens aqui ou clique para selecionar</p>
                 <input
                 type="file"
-                accept="image/png"
+                accept="image/*"
                 multiple
                 (change)="onFileSelect($event)"
                 hidden

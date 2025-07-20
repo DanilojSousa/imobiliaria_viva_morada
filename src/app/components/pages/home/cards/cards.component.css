@@ -1,5 +1,6 @@
 #imagem-container{
     width: 100%;
+    min-width: 600px;
     margin: auto;
     margin-top: 150px;
     margin-bottom: 50px;
@@ -17,16 +18,21 @@
     position: relative;
     margin: auto;
     cursor: pointer;
-    .imagens img{
-      display: flex;
+    justify-content: center;
+    .imagens{
+      width: 100%;
+      height: 500px; /* ou outro valor fixo ou baseado no layout responsivo */
+      overflow: hidden;
       position: relative;
-      z-index: 0;
-      width: 70%;
+    }
+    .imagens img{
+      width: 100%;
       height: 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
+      object-fit: cover; /* Preenche o container sem distorcer, cortando se necessário */
+      display: block;
+      margin: 0;
+      padding: 0;
       transition: all 0.3s ease-in-out;
-      margin: 0px 100px 0px 100px;
     }
 }
 
@@ -143,7 +149,6 @@
               color: #8E959F;
               .icones{
                 display: flex;
-                align-items: center;
                 margin-top: 0px;
                 margin-bottom: 0px;
                 font-size: 14px;
@@ -158,7 +163,7 @@
           border-color: #8E959F;
           margin: 10px 0px 10px 0px;
       }
-      .topo{
+      .topo_card{
         display: flex;
         .perfil{
             margin: 10px;

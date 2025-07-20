@@ -1,6 +1,6 @@
 import { Component, HostListener, Inject, inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Imagens } from '../../../../interface/produto/imagens';
+import { Imagens } from '../../../../interface/imovel/imagens';
 import { Util } from '../../../../utils/util';
 import { CommonModule } from '@angular/common';
 

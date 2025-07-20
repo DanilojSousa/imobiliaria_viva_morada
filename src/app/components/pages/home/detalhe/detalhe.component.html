@@ -1,3 +1,4 @@
+<app-home></app-home>
 <div id="content_detalhe">
     @if(!spinner){
         <div class="cabecalho">
@@ -75,9 +76,9 @@
             </div>
             <div class="valor">{{imovel.imvValor | currency: 'BRL':'symbol':'1.2-2'}}<span class="tipo">/{{imovel.negocio.ngcDescricao}}</span></div>
         </div>
-        <div class="conteudo">
+        <div class="conteudo_usuario">
             <div class="usuario">
-                <div class="topo">
+                <div class="topo_usuario">
                     <div class="perfil">
                         @if(imovel.usuario.usrImagem != undefined){
                             <img class="imagemUsuario" [src]="mostraImagemUsuario(imovel.usuario.usrCodigo)">
@@ -230,3 +231,4 @@
         </div>
     }
 </div>
+<app-rodape></app-rodape>

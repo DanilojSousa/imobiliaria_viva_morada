@@ -1,13 +1,11 @@
-import { LoginService } from './../../../service/acesso/login.service';
-import { Component, HostListener, Input, OnInit} from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, HostListener, OnInit} from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Empresa } from '../../../interface/geral/empresa';
 import {MatIconModule} from '@angular/material/icon';
-import { RodapeComponent } from "../../rodape/rodape.component";
 import {MatMenuModule} from '@angular/material/menu';
 import { CookieService } from 'ngx-cookie-service';
-import { PesquisaComponent } from '../pesquisa/pesquisa.component';
 import { environment } from '../../../../../environments/environment.prod';
+import { SessaoService } from '../../../service/sessao/sessao.service';
 
 @Component({
     selector: 'app-home',
@@ -17,24 +15,16 @@ import { environment } from '../../../../../environments/environment.prod';
 })
 export class HomeComponent implements OnInit {
 
-  @Input() empresaGeral!: Empresa;
+  empresa: Empresa = new Empresa();
   mostrarMenuFixo = false;
   logado: boolean = false;
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private loginService: LoginService,
-              private cookieService: CookieService){}
+              private cookieService: CookieService,
+              private sessaoService: SessaoService){}
 
   ngOnInit(){
-    this.logado = this.loginService.logado;
-    this.route.queryParams.subscribe(params => {
-      const sectionId = params['section'];
-      if (sectionId) {
-        setTimeout(() => {
-          this.scrollToSection(sectionId);
-        }, 10); // Aguarde 100ms para garantir que o DOM está renderizado
-      }
-    });
+    this.empresa = this.sessaoService.getEmpresa();
   }
 
   @HostListener('window:scroll', [])
@@ -45,7 +35,7 @@ export class HomeComponent implements OnInit {
   }
 
   formataWatssap(): string{
-    return environment.url_whatsapp+this.empresaGeral.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
+    return environment.url_whatsapp+this.sessaoService.getEmpresa().contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
   }
 
   scrollToSection(sectionId: string) {
@@ -81,11 +71,6 @@ export class HomeComponent implements OnInit {
 
   acessoHome(id: string){
     this.router.navigate(["home"], { queryParams: { section: id } })
-  }
-
-  deslogar(){
-    this.logado = false;
-   this.loginService.deslogar();
   }
 }
 

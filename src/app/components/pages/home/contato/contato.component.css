@@ -19,7 +19,7 @@
             color: white;
         }
     }
-    .conteudo{
+    .conteudo_contato{
         width: 30%;
         margin-bottom: 50px;
         .form{
@@ -74,18 +74,16 @@
                 flex-direction: row;
                 margin: 10px 0 10px 0;
                 .button_email{
-                    background-color: #B4985F;
+                    background-color: #0E2442;
                     color: white;
                     border-radius: 3px;
                     width: 45%;
-                    height: 40px;
                 }
                 .button_whatsapp{
-                    background-color: #4C2426;
+                    background-color: rgb(77, 158, 77);
                     color: white;
                     border-radius: 3px;
                     width: 45%;
-                    height: 40px;
                     span{
                         display: flex;
                         align-items: center;

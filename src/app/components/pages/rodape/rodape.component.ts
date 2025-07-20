@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../interface/geral/empresa';
 import { Util } from '../../utils/util';
 import {MatIconModule} from '@angular/material/icon';
 import { timer } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment.prod';
+import { SessaoService } from '../../service/sessao/sessao.service';
 
 @Component({
     selector: 'app-rodape',
@@ -14,12 +15,14 @@ import { environment } from '../../../../environments/environment.prod';
 })
 export class RodapeComponent implements OnInit {
 
-  @Input() empresaGeral!: Empresa;
+  empresa: Empresa = new Empresa();
   copiado = false;
   constructor(private router: Router,
-              private route: ActivatedRoute){}
+              private route: ActivatedRoute,
+              private sessaoService: SessaoService){}
 
   ngOnInit(): void {
+    this.empresa = this.sessaoService.getEmpresa();
     this.route.queryParams.subscribe(params => {
       const sectionId = params['section'];
       if (sectionId) {
@@ -35,15 +38,15 @@ export class RodapeComponent implements OnInit {
   }
 
   formatarTelefone(){
-    if(this.empresaGeral.contato?.cntWhatsapp != null){
-      const match = this.empresaGeral.contato?.cntWhatsapp.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.empresaGeral.contato?.cntWhatsapp;
+    if(this.empresa.contato?.cntWhatsapp != null){
+      const match = this.empresa.contato?.cntWhatsapp.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.empresa.contato?.cntWhatsapp;
     }
     return '';
   }
   copiarEmail(){
     this.copiado = true;
-    navigator.clipboard.writeText(this.empresaGeral.email.emaEmail);
+    navigator.clipboard.writeText(this.empresa.email.emaEmail);
     timer(5000).subscribe(() => {
       this.copiado = false;
     });
@@ -81,12 +84,12 @@ export class RodapeComponent implements OnInit {
   }
 
   formataWatssap(): string{
-    return environment.url_whatsapp+this.empresaGeral.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
+    return environment.url_whatsapp+this.empresa.contato?.cntWhatsapp+"&text=Olá, preciso de informações.";
   }
 
   formatCNPJ(): string {
-    if(this.empresaGeral.empCnpj != null){
-      const cnpj = this.empresaGeral.empCnpj.replace(/\D/g, '');
+    if(this.empresa.empCnpj != null){
+      const cnpj = this.empresa.empCnpj.replace(/\D/g, '');
       return cnpj.replace(
         /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
         '$1.$2.$3/$4-$5'

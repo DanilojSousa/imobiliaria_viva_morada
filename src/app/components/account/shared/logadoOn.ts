@@ -1,26 +1,17 @@
-import { inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../../pages/login/login/login.component';
-import { LoginService } from '../../service/acesso/login.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate} from '@angular/router';
+import { SessaoService } from '../../service/sessao/sessao.service';
 
 
 @Injectable({providedIn: 'root'})
 export class LogadoOnGuard implements CanActivate{
-    constructor(private loginService: LoginService) { }
+    constructor(private sessaoService: SessaoService) { }
 
-    readonly dialog = inject(MatDialog);
     canActivate(next: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): boolean {
-        if(this.loginService.logado){
+        if(this.sessaoService.logado()){
           return true;
         }
-        this.dialog.open(LoginComponent,{
-          width: '100%',
-          height: '100%',
-          maxWidth: '100%',
-          maxHeight: '100%',
-        });
-        return false;
+        return true;
     }
 }

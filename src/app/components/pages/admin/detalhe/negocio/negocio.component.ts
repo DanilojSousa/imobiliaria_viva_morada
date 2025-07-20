@@ -1,6 +1,6 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
@@ -9,15 +9,14 @@ import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Paginacao } from '../../../../interface/produto/paginacao';
-import { Negocio } from '../../../../interface/produto/negocio';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
+import { Negocio } from '../../../../interface/imovel/negocio';
 import { NegocioService } from '../../../../service/imovel/negocio.service';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
-import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
+import { CadastroOpcoesComponent } from '../../cadastro/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-negocio',
@@ -29,15 +28,13 @@ import { SessaoService } from '../../../../service/sessao/sessao.service';
 export class NegocioComponent implements OnInit {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Negocio>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private negocioService : NegocioService,
               private mensagem: Mensagem,
-              private route: Router,
               private sessaoServce: SessaoService){}
 
   ngOnInit(): void {
@@ -49,11 +46,9 @@ export class NegocioComponent implements OnInit {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a localização")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -84,7 +79,6 @@ export class NegocioComponent implements OnInit {
   }
 
   delete(ngcCodigo: number){
-    this.spinnerAcao = true;
     this.negocioService.delete(ngcCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Negócio deletado com sucesso")
@@ -92,12 +86,8 @@ export class NegocioComponent implements OnInit {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar o Negócio, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
-  }
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
   }
   abrirDialogDeletar(negocio: Negocio){
     const dialogRef = this.dialog.open(DeletarComponent, {

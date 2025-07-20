@@ -1,16 +1,12 @@
 <div class="content_empresa">
     @if(!isLoadingResults){
-        <div class="button">
-            <div class="novo_cadastro" (click)="novo()">
-                <mat-icon  fontIcon="add"></mat-icon>
-            </div>
-            <div class="voltar" (click)="voltar()">
-                <mat-icon  fontIcon="arrow_back"></mat-icon>
-            </div>
-        </div>
         <div class="mat-elevation-z8">
+            <div class="button">
+                <div class="novo_cadastro" (click)="novo()">
+                    Cadastrar
+                </div>
+            </div>
             <table mat-table [dataSource]="pageable.content || []">
-        
                 <ng-container matColumnDef="Ref:">
                     <th mat-header-cell *matHeaderCellDef>Ref:</th>
                     <td mat-cell *matCellDef="let row">{{row?.conCodigo}}</td>
@@ -55,8 +51,8 @@
             [showFirstLastButtons]="true"
             [hidePageSize]="pageable.page.size"
             [pageIndex]="pageable.page.number"
-            [pageSize]="10"
-            [pageSizeOptions]="[10]"
+            [pageSize]="5"
+            [pageSizeOptions]="[5]"
             aria-label="Select page">
         </mat-paginator>
         </div>

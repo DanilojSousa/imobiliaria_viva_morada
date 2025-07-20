@@ -10,13 +10,10 @@ export class EmailService {
 
   constructor(private http: HttpClient) { }
 
-  esqueceuSenha(email: string){
-    const params = {
-      email: email
-    }
-      return this.http.get(environment.api_url_public + "/email/esqueceuSenha", {params});
+  esqueceuSenha(emaEmail: string){
+      return this.http.get(environment.api_url_public + "/email/senha/"+emaEmail, {withCredentials: true});
   }
-  enviarEmail(email: Email){
-      return this.http.post(environment.api_url_public + "/email/salvar", email, { withCredentials: true });
+  enviarEmail(emaEmail: Email){
+      return this.http.post(environment.api_url_public + "/email", emaEmail, { withCredentials: true });
   }
 }

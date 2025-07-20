@@ -1,6 +1,6 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
@@ -11,11 +11,11 @@ import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Paginacao } from '../../../../interface/produto/paginacao';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
-import { TipoImovel } from '../../../../interface/produto/tipoImovel';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
+import { TipoImovel } from '../../../../interface/imovel/tipoImovel';
 import { TipoImovelService } from '../../../../service/imovel/tipo-imovel.service';
-import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { CadastroOpcoesComponent } from '../../cadastro/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 
@@ -29,10 +29,9 @@ import { SessaoService } from '../../../../service/sessao/sessao.service';
 export class TipoImovelComponent implements OnInit {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<TipoImovel>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private tipoImovelService : TipoImovelService,
@@ -49,11 +48,9 @@ export class TipoImovelComponent implements OnInit {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro ao buscar o tipo imovel")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -84,7 +81,6 @@ export class TipoImovelComponent implements OnInit {
   }
 
   delete(tpiCodigo: number){
-    this.spinnerAcao = true;
     this.tipoImovelService.delete(tpiCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Tipo imovel deletado com sucesso")
@@ -92,14 +88,10 @@ export class TipoImovelComponent implements OnInit {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar tipo imovel, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
 
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
   abrirDialogDeletar(tipoImovel: TipoImovel){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

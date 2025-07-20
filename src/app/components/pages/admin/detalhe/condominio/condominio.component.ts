@@ -9,16 +9,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { Condominio } from '../../../../interface/pessoa/condominio';
-import { Pageable } from '../../../../interface/produto/pageable';
-import { Paginacao } from '../../../../interface/produto/paginacao';
+import { Pageable } from '../../../../interface/imovel/pageable';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
 import { CondominioService } from '../../../../service/pessoa/condominio.service';
 import { Mensagem } from '../../../../utils/mensagem';
-import { Router } from '@angular/router';
-import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { CadastroOpcoesComponent } from '../../cadastro/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-condominio',
@@ -32,12 +31,11 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
   isLoadingResults = true;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Condominio>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição','Endereço','Ação'];
   constructor(private condominioService : CondominioService,
               private mensagem: Mensagem,
-              private route: Router, 
               private breakpointObserver: BreakpointObserver,
               private sessaoServce: SessaoService){}
 
@@ -67,7 +65,8 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
         this.pageable = res;
         this.isLoadingResults = false;
       },error: (err) => {
-        this.mensagem.error("Erro ao buscar o condomínio: "+err)
+        console.log("Erro ao buscar o condomínio: "+err)
+        this.mensagem.error("Erro ao buscar o condomínio")
         this.isLoadingResults = false;
       }
     })
@@ -110,9 +109,6 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
     })
   }
 
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
   abrirDialogDeletar(condominio: Condominio){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

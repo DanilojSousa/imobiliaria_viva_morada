@@ -12,9 +12,6 @@ export class ContatoService {
   constructor(private http: HttpClient) { }
 
   selecionarContatoPorUsrCodigo(usrCodigo: number): Observable<Contato>{
-    const params = {
-      usrCodigo: usrCodigo
-    }
-    return this.http.get<Contato>(environment.api_url + "/contato/getByUsrCodigo", {params});
+    return this.http.get<Contato>(environment.api_url + "/contato/usuario/"+usrCodigo, { withCredentials: true });
   }
 }

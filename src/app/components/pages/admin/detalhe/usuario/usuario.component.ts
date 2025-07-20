@@ -1,4 +1,4 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
@@ -11,11 +11,10 @@ import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Paginacao } from '../../../../interface/produto/paginacao';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 import { Usuario } from '../../../../interface/acesso/usuario';
 import { UsuarioService } from '../../../../service/acesso/usuario.service';
-import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
 
 @Component({
@@ -28,10 +27,9 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 export class UsuarioComponent implements OnInit, AfterViewInit  {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Usuario>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Nome','Nível','Situação','Ação'];
   constructor(private usuarioService : UsuarioService,
@@ -72,11 +70,9 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro ao buscar o usuário")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -87,11 +83,10 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
   }
 
   detalhe(usrCodigo: number){
-    this.route.navigate(['cadastro/usuario/'+usrCodigo]);
+    this.route.navigate(['acesso/sistema/cadastro/usuario/'+usrCodigo]);
   }
 
   delete(usrCodigo: number){
-    this.spinnerAcao = true;
     this.usuarioService.delete(usrCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Usuário deletado com sucesso")
@@ -99,12 +94,10 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar usuário, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
   desativar(usrCodigo: number){
-    this.spinnerAcao = true;
     this.usuarioService.desativar(usrCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Usuário alterado com sucesso")
@@ -112,16 +105,13 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao alterar o Usuário")
-        this.spinnerAcao = false;
       }
     })
   }
   novo(){
-    this.route.navigate(['cadastro/usuario']);
+    this.route.navigate(['acesso/sistema/cadastro/usuario']);
   }
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
+
   abrirDialogDeletar(usuario: Usuario){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

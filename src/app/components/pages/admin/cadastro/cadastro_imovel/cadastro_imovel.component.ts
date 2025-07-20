@@ -1,23 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Imovel } from '../../../../interface/produto/imovel';
+import { Imovel } from '../../../../interface/imovel/imovel';
 import { ImovelService } from '../../../../service/imovel/imovel.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyMaskDirectiveDirective } from '../../../../diretivas/currency-mask-directive.directive';
 import { MetragemMaskDirective } from '../../../../diretivas/metragem-mask-directive.directive';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { TipoImovel } from '../../../../interface/produto/tipoImovel';
-import { Negocio } from '../../../../interface/produto/negocio';
+import { TipoImovel } from '../../../../interface/imovel/tipoImovel';
+import { Negocio } from '../../../../interface/imovel/negocio';
 import { Usuario } from '../../../../interface/acesso/usuario';
-import { SituacaoImovel } from '../../../../interface/produto/situacaoImovel';
-import { LocalizacaoPraia } from '../../../../interface/produto/localizacaoPraia';
+import { SituacaoImovel } from '../../../../interface/imovel/situacaoImovel';
+import { LocalizacaoPraia } from '../../../../interface/imovel/localizacaoPraia';
 import { EnderecoDTO } from '../../../../interface/pessoa/endereco';
 import { NegocioService } from '../../../../service/imovel/negocio.service';
 import { TipoImovelService } from '../../../../service/imovel/tipo-imovel.service';
@@ -30,11 +30,15 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { AdicionarImagemDialogComponent } from '../../../home/dialog/adicionar-imagem-dialog/adicionar-imagem-dialog.component';
 import { forkJoin } from 'rxjs';
-import { AreaLazer } from '../../../../interface/produto/areaLazer';
-import { Proximidade } from '../../../../interface/produto/proximidade';
+import { AreaLazer } from '../../../../interface/imovel/areaLazer';
+import { Proximidade } from '../../../../interface/imovel/proximidade';
 import { AreaLazerService } from '../../../../service/imovel/area-lazer.service';
 import { ProximidadeService } from '../../../../service/imovel/proximidade.service';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
+import { CadastroEnderecoComponent } from '../cadastro-endereco/cadastro-endereco.component';
+import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
+import { CadastroUsuarioComponent } from '../cadastro-usuario/cadastro-usuario.component';
+import { CadastroOpcoesComponent } from '../dialog/cadastro-opcoes/cadastro-opcoes.component';
 
 @Component({
     selector: 'app-cadastro',
@@ -70,7 +74,7 @@ export class CadastroImovelComponent implements OnInit {
   listaAreaLazer: AreaLazer[] = []
   listaProximidade: Proximidade[] = []
   spinnerAcao = false;
-
+  
   constructor(private imovelService: ImovelService,
               private route: ActivatedRoute,
               private router: Router,
@@ -173,7 +177,11 @@ export class CadastroImovelComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['detalhe/imovel'])
+    this.router.navigate(['acesso/sistema/detalhe/imovel'])
+  }
+  novo(){
+    this.imovel = new Imovel();
+    this.router.navigate(['acesso/sistema/cadastro/imovel'])
   }
   salvar(){
     this.spinnerAcao = true;
@@ -188,7 +196,7 @@ export class CadastroImovelComponent implements OnInit {
         this.spinnerAcao = false;
       }, error:(err)=>{
         this.mensagem.error("Erro ao salvar o Imóvel");
-        console.log("Erro ao salvar o Imóvel: "+ err);
+        console.log("Erro ao salvar o Imóvel: "+ err.error?.message);
         this.spinnerAcao = false;
       }
     });
@@ -206,7 +214,7 @@ export class CadastroImovelComponent implements OnInit {
       && this.imovel.situacaoImovel.stiDescricao === undefined || this.imovel.situacaoImovel.stiDescricao.length === 0
       && this.imovel.usuario.usrNome === undefined || this.imovel.usuario.usrNome.length === 0
       && this.imovel.imvAtivo === undefined
-    ){
+    ){   
       return true;
     }
     return false;
@@ -242,4 +250,56 @@ export class CadastroImovelComponent implements OnInit {
     return !this.sessaoServce.permissao() && !!this.imovel.imvCodigo;
   }
 
+  cadastrarEndereco(){
+    const dialogRef = this.dialog.open(CadastroEnderecoComponent, {
+      width: '800px',
+      height: '600px',
+      maxWidth: '100%',
+      maxHeight: 'auto',
+      data:{dialog: true}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        this.carregaListas();
+    });
+  }
+
+  cadastrarLocalizacao(){
+    const dialogRef = this.dialog.open(CadastroOpcoesComponent, {
+      width: '500px',
+      data:{tipo: TipoCadastro.LOCALIZACAO_PRAIA}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.carregaListas();
+    });
+  }
+  cadastrarAreaLazer(){
+    const dialogRef = this.dialog.open(CadastroOpcoesComponent, {
+      width: '500px',
+      data:{tipo: TipoCadastro.AREA_LAZER}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.carregaListas();
+    });
+  }
+  cadastrarProximidade(){
+    const dialogRef = this.dialog.open(CadastroOpcoesComponent, {
+      width: '500px',
+      data:{tipo: TipoCadastro.PROXIMIDADE}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.carregaListas();
+    });
+  }
+  cadastrarUsuario(){
+    const dialogRef = this.dialog.open(CadastroUsuarioComponent, {
+      width: '1000px',
+      height: '600px',
+      maxWidth: '100%',
+      maxHeight: 'auto',
+      data:{dialog: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.carregaListas();
+    });
+  }
 }

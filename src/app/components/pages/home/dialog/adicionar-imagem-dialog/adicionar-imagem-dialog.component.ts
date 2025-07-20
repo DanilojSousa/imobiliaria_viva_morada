@@ -1,7 +1,7 @@
-import { Imagens } from './../../../../interface/produto/imagens';
+import { Imagens } from '../../../../interface/imovel/imagens';
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Imovel } from '../../../../interface/produto/imovel';
+import { Imovel } from '../../../../interface/imovel/imovel';
 import { FormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
@@ -74,29 +74,30 @@ export class AdicionarImagemDialogComponent implements OnInit {
 
   // Valida e processa os arquivos
   private validateAndProcessFiles(files: File[]): void {
+    const extensaoValida = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
     files.forEach((file) => {
-      if (file.type === 'image/png') {
+      if (file.type === 'image/' || extensaoValida.some(ext => file.name.toLowerCase().endsWith(ext))) {
         const reader = new FileReader();
         reader.onload = () => {
           const base64String = (reader.result as string).split(',')[1]; // Remove o prefixo "data:image/png;base64,"
           const image = new Image();
-          image.src = `data:image/png;base64,${base64String}`;
+          image.src = `data:${file.type};base64,${base64String}`;
           image.onload = () => {
-            if (image.width === 1920 && image.height === 1080) {
+            if (image.width >= 800 && image.height >= 800) {
               const imagens = new Imagens();
               imagens.imgImagem = base64String; // Armazena apenas o conteúdo Base64
-              imagens.imgPrincipal = this.imovel.imagens.length === 0;
+              imagens.imgPrincipal = this.imovel!.imagens.length === 0;
               this.imovel.imagens.push(imagens);
             } else {
-              this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões diferente do tamanho 1920x1080.`);
-              console.error(`Arquivo ${file.name} inválido: dimensões diferente do tamanho 1920x1080`);
+              this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões inferior ao tamanho 800x800.`);
+              console.error(`Arquivo ${file.name} inválido: dimensões inferior ao tamanho 800x800`);
             }
           };
         };
         reader.readAsDataURL(file);
       } else {
-        this.mensagemService.atencao(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
-        console.error(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
+        this.mensagemService.atencao(`Arquivo ${file.name} inválido: compatível.`);
+        console.error(`Arquivo ${file.name} inválido: não é uma imagem compatível.`);
       }
     });
   }

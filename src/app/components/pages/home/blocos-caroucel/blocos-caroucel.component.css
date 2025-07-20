@@ -1,7 +1,7 @@
 .bloco1{
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap; /* Permite quebrar para a próxima linha */
     gap: 15px; /* Espaço entre os blocos */
     overflow: hidden!important;
@@ -17,7 +17,6 @@
             width: 306px;
             height: 20px;
             color:white;
-            background-color: #4C2426;
             transition: all 0.5s ease;
             position: absolute;
             z-index: 2;
@@ -38,19 +37,19 @@
     }
         .arrow-left,
         .arrow-right {
-        width: auto;
-        height: 10px;
-        position: absolute;
-        top: 30%;
-        display: flex;
-        align-items: center;
-        color: rgb(255, 255, 255) !important;
-        transform: translateY(-50%);
-        font-size: 30px;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 20px;
-        cursor: pointer;
-        z-index: 0;
+            width: auto;
+            height: 10px;
+            position: absolute;
+            top: 30%;
+            display: flex;
+            align-items: center;
+            color: rgb(255, 255, 255) !important;
+            transform: translateY(-50%);
+            font-size: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            cursor: pointer;
+            z-index: 0;
         }
 
         .arrow-left {
@@ -92,6 +91,8 @@
         margin-top: 60%;
         margin-left: 5%;
         transition: all 0.5s ease;
+        justify-content: space-between;
+        z-index: 3;
         .codigo{
             margin: 5px;
             display: inline-block;
@@ -103,15 +104,32 @@
             border-radius: 4px;
             padding: 10px;
         }
-        .compartilhar{
-            padding: 5px;
-            background-color: white;
-            color: #4C2426;
-            border-radius: 100%;
+        .icones_acoes{
             display: flex;
-            align-items: center;
             justify-content: center;
-            margin-left: 58%;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+            .compartilhar, .favorito{
+                padding: 5px;
+                background-color: white;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                .curtido{
+                    color: red!important;
+                }
+                .naoCurtido{
+                    color: #0E2442!important;
+                }
+            }
+            .compartilhar:hover, .favorito:hover{
+                cursor: pointer;
+                z-index: 11;
+                position: relative;
+            }
         }
     }
     .informacoes{
@@ -151,7 +169,7 @@
             display: block;
             margin-top: 5px;
             white-space: pre-wrap;
-            color: #B4985F;
+            color: #0E2442;
             .tipo{
                 font-size: 12px;
                 font-weight: 400;
@@ -162,7 +180,8 @@
             border-color: #E6E6E6;
             margin: 10px 0 10px 0;
         }
-        .icones{
+        .icones_caroucel{
+            width: 100%;
             display: flex;
             justify-content: flex-start;
             .icone{
@@ -173,7 +192,7 @@
                 color: rgb(60, 72, 88);
                 font-size: 14px;
                 mat-icon{
-                    color: #4C2426;
+                    color: #0E2442;
                     font-size: 22;
                     padding-right: 5px;
                 }
@@ -188,7 +207,7 @@
             color: rgb(60, 72, 88);
             font-size: 14px;
             mat-icon{
-                color: #4C2426;
+                color: #0E2442;
                 font-size: 22;
                 padding-right: 5px;
             }

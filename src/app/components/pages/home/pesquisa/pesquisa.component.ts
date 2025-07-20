@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Negocio } from '../../../interface/produto/negocio';
-import { TipoImovel } from '../../../interface/produto/tipoImovel';
+import { Negocio } from '../../../interface/imovel/negocio';
+import { TipoImovel } from '../../../interface/imovel/tipoImovel';
 import { EnderecoDTO } from '../../../interface/pessoa/endereco';
 import { EstadoService } from '../../../service/pessoa/estado.service';
 import { EnderecoService } from '../../../service/pessoa/endereco.service';
-import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';
+import { PesquisaFiltradaImovel } from '../../../interface/imovel/pesquisaFiltradaImovel';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { EstadoCidade } from '../../../interface/pessoa/estadoCidade';
@@ -29,7 +29,7 @@ import { Empresa } from '../../../interface/geral/empresa';
 })
 export class PesquisaComponent implements OnInit{
 
-  @Input() empresaGeral!: Empresa;
+  empresa: Empresa = new Empresa();
   listaNegocio: Negocio[] = [];
   listaTipoImovel: TipoImovel[] = [];
   listaEstadoCidade: EstadoCidade[] = [];
@@ -47,6 +47,7 @@ export class PesquisaComponent implements OnInit{
               private tipoImovelService: TipoImovelService,
               private router: Router){}
   ngOnInit(): void {
+    this.empresa = this.sessaoService.getEmpresa();
     this.carregaNegocio();
     this.carregaTipoImovel();
     this.carregaEstado();
@@ -64,7 +65,7 @@ export class PesquisaComponent implements OnInit{
       this.pesquisaFiltradaImovel.cidCodigo = this.listaCidadeSelecionado.value.cidCodigo;
     }
     if(this.listaEnderecoSelecionado.value != null){
-      this.pesquisaFiltradaImovel.endCodigo = this.listaEnderecoSelecionado.value.map(x => x.endCodigo);
+       this.pesquisaFiltradaImovel.endCodigo = this.listaEnderecoSelecionado.value.map(x => x.endCodigo);
     }
     localStorage.setItem('pesquisaFiltradaImovel', JSON.stringify(this.pesquisaFiltradaImovel));
     this.sessaoService.setPesquisaFiltradaImovel(this.pesquisaFiltradaImovel);

@@ -1,28 +1,27 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../../../login/login/login.component'
 import { AfterViewInit, Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ImovelService } from '../../../../service/imovel/imovel.service';
-import { PesquisaFiltradaImovel } from '../../../../interface/produto/pesquisaFiltradaImovel';
-import { Imovel } from '../../../../interface/produto/imovel';
+import { PesquisaFiltradaImovel } from '../../../../interface/imovel/pesquisaFiltradaImovel';
+import { Imovel } from '../../../../interface/imovel/imovel';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-imovel',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule,
-        MatTableModule, MatPaginatorModule, CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule],
+        CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule],
     providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
     templateUrl: './imovel.component.html',
     styleUrl: './imovel.component.css'
@@ -30,7 +29,6 @@ import { BreakpointObserver } from '@angular/cdk/layout'
 export class ImovelComponent implements OnInit, AfterViewInit  {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pesquisaFiltradaImovel: PesquisaFiltradaImovel = new PesquisaFiltradaImovel();
   pageable!: Pageable<Imovel>;
@@ -52,16 +50,14 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
   }
 
   pesquisaFiltrada() {
-    this.pesquisaFiltradaImovel.size = 10
-    this.imovelService.getAll(this.pesquisaFiltradaImovel).subscribe({
+    this.pesquisaFiltradaImovel.size = 5
+    this.imovelService.pesquisaFiltradaDetalhes(this.pesquisaFiltradaImovel).subscribe({
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar imóvel cadastrado")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -72,11 +68,10 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
   }
 
   detalhe(imvCodigo: number){
-    this.route.navigate(['cadastro/imovel/'+imvCodigo]);
+    this.route.navigate(['acesso/sistema/cadastro/imovel/'+imvCodigo]);
   }
 
   delete(imvCodigo: number){
-    this.spinnerAcao = true;
     this.imovelService.delete(imvCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Imovel deletado com sucesso")
@@ -84,12 +79,10 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar o Imovel")
-        this.spinnerAcao = false;
       }
     })
   }
   desativar(imvCodigo: number){
-    this.spinnerAcao = true;
     this.imovelService.desativar(imvCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Imovel destivado com sucesso")
@@ -97,18 +90,14 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao desativar o Imovel")
-        this.spinnerAcao = false;
       }
     })
   }
 
   novo(){
-    this.route.navigate(['cadastro/imovel']);
+    this.route.navigate(['acesso/sistema/cadastro/imovel']);
   }
 
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
   abrirDialogDeletar(imovel: Imovel){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

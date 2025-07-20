@@ -9,16 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SobreComponent implements OnInit {
 
-  mostraTexto = false;
   constructor(){}
 
   ngOnInit(): void {
     
   }
-  mostrarTexto(){
-    this.mostraTexto = !this.mostraTexto;
-  }
-
-  
 
 }

@@ -1,57 +1,68 @@
-import { inject, Injectable } from '@angular/core';
-import { Empresa } from '../../interface/geral/empresa';
-import { PesquisaFiltradaImovel } from '../../interface/produto/pesquisaFiltradaImovel';
+import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginComponent } from '../../pages/login/login/login.component';
-import { Pageable } from '../../interface/produto/pageable';
-import { Imovel } from '../../interface/produto/imovel';
-import { MatDialog } from '@angular/material/dialog';
 import { Util } from '../../utils/util';
+import { Router } from '@angular/router';
+import { Mensagem } from '../../utils/mensagem';
+import { EmpresaService } from '../geral/empresa.service';
+import { Empresa } from '../../interface/geral/empresa';
+import { PesquisaFiltradaImovel } from '../../interface/imovel/pesquisaFiltradaImovel';
+import { Imovel } from '../../interface/imovel/imovel';
+import { Pageable } from '../../interface/imovel/pageable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SessaoService {
+export class SessaoService{
 
-  private empresa: Empresa = new Empresa();
-  private usrLogin!: string;
-  private role!: string;
-  private token!: string | null;
+  private token!: string;
+  private empresa: Empresa = new Empresa;
   private pesquisaFiltradaImovel = new PesquisaFiltradaImovel()
-  readonly dialog = inject(MatDialog);
   private pageable!: Pageable<Imovel>
-  constructor(private cookieService: CookieService){}
+  private imovel: Imovel = new Imovel();
+  constructor(private cookieService: CookieService,
+              private router: Router, 
+              private mensagem: Mensagem,
+              private empresaService: EmpresaService){
+                this.carregaEmpresa()
+              }
 
-  inicializa(){
-    this.setUsrLogin('');
-    this.setRole('');
+  getUsrLogin(): string{
+    const user = this.cookieService.get('user');
+    return this.valida(user);
+  }
+  getRole(): string{
+    const role = this.cookieService.get('role')
+    const roleFormatado = this.valida(role);
+    return roleFormatado === 'ADMIN' ? 'Admin' : 'User'; 
   }
 
- setEmpresa(empresa: Empresa): void{
-    this.empresa = empresa;
- }
- getEmpresa(): Empresa{
-  return this.empresa;
- }
-
- setUsrLogin(usrLogin: string){
-  this.usrLogin = usrLogin;
- }
- getUsrLogin(): string{
-    return this.usrLogin;
- }
- setRole(role: string){
-   this.role = role;
- }
- getRole(): string{
-  return this.role;
- }
-
-  setToken(token: string | null){
-    this.token = token;
+  getEmpresa(): Empresa{
+    return this.empresa;
   }
-  getToken(): string | null{
-  return this.token;
+  obterToken(): any {
+    return this.token;
+  }
+  valida(valor: any): any {
+    if(valor != ''){
+      return Util.decode(valor);
+    }
+    this.limparCookies();
+    return valor;
+  }
+  sair(): void{
+    this.mensagem.sucesso("Deslogado com sucesso")
+    this.limparCookies();
+  }
+  limparCookies(): void{
+    this.cookieService.deleteAll();
+    this.cookieService.delete('XAuthorization')
+    this.router.navigate(['home'])
+  }
+  logado(): boolean {
+    if(this.token != undefined){
+      return true;
+    }
+    return false;
   }
 
   setPesquisaFiltradaImovel(pesquisaFiltradaImovel: PesquisaFiltradaImovel){
@@ -60,31 +71,41 @@ export class SessaoService {
   getPesquisaFiltradaImovel(): PesquisaFiltradaImovel{
   return this.pesquisaFiltradaImovel;
   }
- setPageable(pageable: Pageable<Imovel>){
+  setPageable(pageable: Pageable<Imovel>){
   this.pageable = pageable;
- }
- getPageable(): Pageable<Imovel>{
-  return this.pageable;
- }
- validaLogin(): boolean{
-  if(this.cookieService.get('XAuthorization') === ''){
-    localStorage.removeItem('XAuthorization');
-    this.dialog.open(LoginComponent,{
-      width: '100%',
-      height: '100%',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    });
-    return false;
   }
-  return true;
- }
+  getPageable(): Pageable<Imovel>{
+    return this.pageable;
+  }
 
   permissao(): boolean{
-    const valor = localStorage.getItem('role');
-    if(valor === null || Util.decode(valor) === 'USER'){
+    const valor = this.cookieService.get('role');
+    const role = this.valida(valor)
+    if(role === null || role === 'USER'){
       return false;
     }
     return true;
+  }
+
+  getUsrCodigo(){
+    const usrCodigo = this.cookieService.get('codUser')
+    return this.valida(usrCodigo)
+  }
+
+  carregaEmpresa() {
+    this.empresaService.selecionarAtivo().subscribe({
+      next:(res)=>{
+         this.empresa = res;
+      }, error:(err)=>{
+          this.mensagem.error("Erro ao buscar a empresa: "+ err.error?.message);
+      }
+    });
+  }
+  
+  setImovel(imovel: Imovel){
+    this.imovel = imovel;
+  }
+  getImovel(): Imovel{
+    return this.imovel;
   }
 }

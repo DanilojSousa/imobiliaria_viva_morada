@@ -1,0 +1,80 @@
+<div class="dashboard-container">
+  <div class="dados_dashbard">
+    <div class="bloco">
+      <div class="cards">
+        <div class="card green" (click)="carregaDialog('Total')">
+          <h4>Total Imóvel</h4>
+          <div class="icone_dados">
+            <mat-icon>home</mat-icon>
+            <h3>{{dashboard.totalImovel}}</h3>
+          </div>
+        </div>
+        <div class="card red" (click)="carregaDialog('Ativo')">
+          <h4>Ativos</h4>
+          <div class="icone_dados">
+            <mat-icon>check_box</mat-icon>
+            <h3>{{dashboard.totalAtivo}}</h3>
+          </div>
+        </div>
+        <div class="card yellow" (click)="carregaDialog('Inativo')">
+          <h4>Inativos</h4>
+          <div class="icone_dados">
+            <mat-icon>cancel</mat-icon>
+            <h3>{{dashboard.totalInativo}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="grafico">
+        <div>
+          <ngx-charts-advanced-pie-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="pieChart"
+          [gradient]="gradient"
+          (select)="onSelect($event)">
+          </ngx-charts-advanced-pie-chart>
+        </div>
+      </div>
+    </div>
+    <div class="bloco">
+      <div class="cards">
+        <div class="card green" (click)="carregaDialog('Favorito')">
+          <h4>Favorito</h4>
+          <div class="icone_dados">
+            <mat-icon>favorite</mat-icon>
+            <h3>{{dashboard.imvFavorito}}</h3>
+          </div>
+        </div>
+        <div class="card red" (click)="carregaDialog('Compartilhamento')">
+          <h4>Compartilhamento</h4>
+          <div class="icone_dados">
+            <mat-icon>share</mat-icon>
+            <h3>{{dashboard.imvCompartilhamento}}</h3>
+          </div>
+        </div>
+        <div class="card yellow" (click)="carregaDialog('Visualizacao')">
+          <h4>Visualização</h4>
+          <div class="icone_dados">
+            <mat-icon>visibility</mat-icon>
+            <h3>{{dashboard.imvVisualizacao}}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="grafico">
+        <div>
+          <ngx-charts-bar-vertical
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="chartsBar"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            (select)="onSelect($event)">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

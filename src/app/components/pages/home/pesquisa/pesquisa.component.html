@@ -1,7 +1,7 @@
 <div id="pesquisa">
-    @if(empresaGeral.empCodigo != null){
+    @if(empresa.empCodigo != null){
         <div class="logo">
-          <img [src]="mostraImagem(empresaGeral.empCodigo!)" width="300" height="300">
+          <img [src]="mostraImagem(empresa.empCodigo!)" width="300" height="300">
         </div>
     }
     <div class="pesquisa_form">
@@ -85,7 +85,7 @@
                             }
                         </mat-select>
                     </div>      
-                    <button (click)="pesquisaFiltrada()">Pesquisar</button>
+                    <button class="button_pesquisa" (click)="pesquisaFiltrada()">Pesquisar</button>
                 </div>
             </form>
         </div>

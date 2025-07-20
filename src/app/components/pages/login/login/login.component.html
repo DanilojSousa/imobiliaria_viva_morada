@@ -1,47 +1,53 @@
-<div class="close" (click)="closeSair()">&#x2716;</div>
-<div class="conteiner_login">
-  @if(carregaPagina){
-    <div class="conteudo">
-        <div class="logo">
-            <div>
-              <img [src]="mostrarImagem()"/>
-            </div>
-        </div>
+<div class="content_login">
+  <div class="conteudo_login">
+      <div class="dados_empresa">
+          <img [src]="mostrarImagem()" width="100%" height="100%">
+      </div>
+      <div class="login">
+        @if(!config.novaSenha && !config.recuperarSenha){
+          <a class="voltar_login"
+                    (click)="sair()">
+                    <mat-icon class="mat-icon">keyboard_return_24</mat-icon>
+          </a>
+        }
         <div class="formulario">
-            <p>{{config.titulo}}</p>
+            <p class="titulo">{{config.titulo}}</p>
             <form [formGroup]="loginForm"
                   (ngSubmit)="onSubmit()">
               @if(config.recuperarSenha){
-                <mat-form-field class="example-form-field email">
-                  <mat-label>E-mail</mat-label>
-                  <input matInput required="true" formControlName="email" type="text">
-                </mat-form-field>
+                <div class="form-input">
+                  <label>E-mail</label>
+                  <input required="true" formControlName="email" type="text">
+                </div>
               }
               @if(!config.novaSenha && !config.recuperarSenha){
-                <mat-form-field class="example-form-field email">
-                  <mat-label>CPF / Email / Nome</mat-label>
-                  <input matInput required="true" formControlName="login" type="text">
-                </mat-form-field>
+                <div class="form-input">
+                  <label>CPF / Email / Nome</label>
+                  <input required="true" formControlName="login" type="text">
+                </div>
+
               }
               @if(config.novaSenha || !config.recuperarSenha){
-                <mat-form-field class="example-form-field senha">
-                  <mat-label>Senha</mat-label>
-                  <input matInput required="true"
-                         formControlName="senha"
-                         [type]="hide ? 'password' : 'text'">
-                        </mat-form-field>
-                        <mat-icon class="mat-icon"
-                             (click)="clickEvent($event)">
-                             {{hide ? 'visibility_off' : 'visibility'}}
-                        </mat-icon>
+                <div class="form-input">
+                  <label>Senha</label>
+                  <div class="senha_icone">
+                  <input required="true"
+                          formControlName="senha"
+                          [type]="hide ? 'password' : 'text'">
+                          <mat-icon class="mat-icon"
+                                (click)="clickEvent($event)">
+                                {{hide ? 'visibility_off' : 'visibility'}}
+                          </mat-icon>
+                  </div>
+                </div>
               }
               @if(config.novaSenha){
-                <mat-form-field class="example-form-field senha">
-                  <mat-label>Confirmar Senha</mat-label>
-                  <input matInput required="true"
-                         formControlName="confirmarSenha"
-                         [type]="hide ? 'password' : 'text'">
-                        </mat-form-field>
+                <div class="form-input">
+                  <label>Confirmar Senha</label>
+                  <input required="true"
+                          formControlName="confirmarSenha"
+                          [type]="hide ? 'password' : 'text'">
+                </div>
                         <mat-icon class="mat-icon"
                                   (click)="clickEvent($event)">
                                   {{hide ? 'visibility_off' : 'visibility'}}
@@ -53,22 +59,19 @@
               </button>
             </form>
             @if(!config.novaSenha && !config.recuperarSenha){
-              <p>Esqueceu a senha?
-                  <a class="a2"
-                     (click)="enviarEmail()">clique aqui!
+              <p class="esqueceu_senha">Esqueceu a senha? 
+                  <a class="clique_aqui"
+                      (click)="enviarEmail()">clique aqui!
                   </a>
               </p>
             }
             @if(config.novaSenha || config.recuperarSenha){
-              <a class="voltar"
-                 href="#"
-                 (click)="voltar()">
-                 VOLTAR
+              <a class="voltar_login"
+                  (click)="voltar()">
+                  <mat-icon class="mat-icon">keyboard_return_24</mat-icon>
               </a>
             }
         </div>
       </div>
-  }@else{
-    <mat-spinner></mat-spinner>
-  }
+  </div>
 </div>
