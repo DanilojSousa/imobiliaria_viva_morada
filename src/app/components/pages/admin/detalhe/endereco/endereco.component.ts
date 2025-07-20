@@ -33,7 +33,7 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
   readonly dialog = inject(MatDialog);
 
   pageable!: Pageable<EnderecoDTO>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Endereço', 'Bairro', 'Cidade/UF', 'Ação'];
   constructor(private enderecoService : EnderecoService,

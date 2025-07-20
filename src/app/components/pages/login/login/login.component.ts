@@ -6,7 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmpresaDTO } from '../../../interface/geral/empresa';
+import { Empresa } from '../../../interface/geral/empresa';
 import { Util } from '../../../utils/util';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoginService } from '../../../service/acesso/login.service';
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   config: Config = new Config();
   loginForm: FormGroup
-  empresa: EmpresaDTO = new EmpresaDTO();
+  empresa: Empresa = new Empresa();
   usuarioAlterarSenha: UsuarioAlterarSenha = new UsuarioAlterarSenha();
   acesso: Login = new Login();
   carregaPagina = false;

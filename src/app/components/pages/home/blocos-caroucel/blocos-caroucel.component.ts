@@ -3,7 +3,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';
 import { Pageable } from '../../../interface/produto/pageable';
 import { Imovel } from '../../../interface/produto/imovel';
-import { ImovelService } from '../../../service/produto/imovel.service';
+import { ImovelService } from '../../../service/imovel/imovel.service';
 import localePt from '@angular/common/locales/pt';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule, registerLocaleData } from '@angular/common';

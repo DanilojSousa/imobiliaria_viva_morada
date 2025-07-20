@@ -3,20 +3,48 @@
 html, body { height: 100%; display: flex; flex-direction: column; }
 body { margin: 0; font-family: Montserrat, "Roboto", "Open Sans"; }
 
-a, p, h1, h2, h3, h4, h5, h6, label{
-    font-family: Montserrat, "Trebuchet MS", serif;
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #002f6c;
+  }
+  
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+  }
+  
+  h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+  }
+  
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: rgb(60, 72, 88);
+    line-height: 1.6;
+  }
+.icones_contato, .conteudo, .menu_fixo, button, .conteiner_rodape{
+    background-color: #0e2442;
 }
-a{
-    color: rgba(255, 255, 255, 0.7);
+.reservados{
+  background-color: #233b5c;
 }
-p, h5, h6{
-    color: #333333;
+
+/* CARD*/
+.arrow-left, .arrow-right {
+  color: #233b5c!important;
 }
-h1, h2, h3, h4{
-    font-family: Montserrat, "Trebuchet MS", serif!important;
-    line-height: 1.15em;
-    color: #4C2426;
+.arrow-left:hover,
+.arrow-right:hover {
+  background-color: #233b5c!important;
+  color: #ffffff!important;
 }
+/* ------ */
+
 .success-snackbar{
     --mat-mdc-snack-bar-button-color: rgb(255, 255, 255)!important;
     --mdc-snackbar-container-color: rgb(50, 104, 50)!important;
@@ -37,12 +65,12 @@ h1, h2, h3, h4{
     border-radius: 0;
 }
 .mat-mdc-select-placeholder{
-    color: #4C2426!important;
+    color: #0e2442!important;
     font-family: "Montserrat"!important;
     margin: 10px!important;
 }
 .mat-mdc-select-arrow{
-    color: #4C2426!important;
+    color: #0e2442!important;
     margin: 10px!important;
 }
 .cdk-overlay-pane:not(.mat-mdc-select-panel-above) div.mat-mdc-select-panel{
@@ -50,13 +78,13 @@ h1, h2, h3, h4{
     margin: 10px!important;
 }
 .mat-mdc-option .mdc-list-item__primary-text{
-    color: #4C2426!important;
+    color: #0e2442!important;
 }
 .mat-mdc-select-panel-above div.mat-mdc-select-panel{
     background-color: #ffffff!important;
 }
 .mat-mdc-option .mat-icon, .mat-mdc-option .mat-pseudo-checkbox-full{
-    border: 2px solid #4C2426!important;
+    border: 2px solid #0e2442!important;
 }
 .mat-mdc-select-value-text{
     margin: 10px!important;
@@ -94,17 +122,15 @@ h1, h2, h3, h4{
     border-color: rgb(60, 72, 88,0.4)!important;
   }
   .mdc-checkbox:hover .mdc-checkbox__native-control:checked~.mdc-checkbox__background{
-    background-color: #4C2426!important;
+    background-color: #0e2442!important;
   }
   .mdc-checkbox__native-control:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background{
-    background-color: #4C2426!important
+    background-color: #0e2442!important
   }
   .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{
-    background-color: #4C2426!important
+    background-color: #0e2442!important
   }
   .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
     stroke: #BB9D5C!important;
   }
-button{
-    height: 40px!important;
-}
+

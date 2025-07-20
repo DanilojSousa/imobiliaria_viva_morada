@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { EmpresaDTO } from '../../interface/geral/empresa';
+import { Empresa } from '../../interface/geral/empresa';
 import { PesquisaFiltradaImovel } from '../../interface/produto/pesquisaFiltradaImovel';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginComponent } from '../../pages/login/login/login.component';
@@ -13,7 +13,7 @@ import { Util } from '../../utils/util';
 })
 export class SessaoService {
 
-  private empresa: EmpresaDTO = new EmpresaDTO();
+  private empresa: Empresa = new Empresa();
   private usrLogin!: string;
   private role!: string;
   private token!: string | null;
@@ -27,10 +27,10 @@ export class SessaoService {
     this.setRole('');
   }
 
- setEmpresa(empresa: EmpresaDTO): void{
+ setEmpresa(empresa: Empresa): void{
     this.empresa = empresa;
  }
- getEmpresa(): EmpresaDTO{
+ getEmpresa(): Empresa{
   return this.empresa;
  }
 

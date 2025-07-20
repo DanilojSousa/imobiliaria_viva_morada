@@ -4,7 +4,7 @@ import { EnderecoDTO } from "../pessoa/endereco";
 import { RedeSocial } from "../pessoa/redeSocial";
 import { Situacao } from "../pessoa/situacao";
 
-export class EmpresaDTO{
+export class Empresa{
 
   public empCodigo!: number;
 	public empRazaoSocial!: string;

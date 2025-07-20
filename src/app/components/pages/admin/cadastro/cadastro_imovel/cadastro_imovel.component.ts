@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Imovel } from '../../../../interface/produto/imovel';
-import { ImovelService } from '../../../../service/produto/imovel.service';
+import { ImovelService } from '../../../../service/imovel/imovel.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,12 +19,12 @@ import { Usuario } from '../../../../interface/acesso/usuario';
 import { SituacaoImovel } from '../../../../interface/produto/situacaoImovel';
 import { LocalizacaoPraia } from '../../../../interface/produto/localizacaoPraia';
 import { EnderecoDTO } from '../../../../interface/pessoa/endereco';
-import { NegocioService } from '../../../../service/produto/negocio.service';
-import { TipoImovelService } from '../../../../service/produto/tipo-imovel.service';
+import { NegocioService } from '../../../../service/imovel/negocio.service';
+import { TipoImovelService } from '../../../../service/imovel/tipo-imovel.service';
 import { UsuarioService } from '../../../../service/acesso/usuario.service';
-import { LocalizacaoPraiaService } from '../../../../service/produto/localizacao-praia.service';
+import { LocalizacaoPraiaService } from '../../../../service/imovel/localizacao-praia.service';
 import { EnderecoService } from '../../../../service/pessoa/endereco.service';
-import { SituacaoImovelService } from '../../../../service/produto/situacao-imovel.service';
+import { SituacaoImovelService } from '../../../../service/imovel/situacao-imovel.service';
 import { MatSelectModule } from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,8 +32,8 @@ import { AdicionarImagemDialogComponent } from '../../../home/dialog/adicionar-i
 import { forkJoin } from 'rxjs';
 import { AreaLazer } from '../../../../interface/produto/areaLazer';
 import { Proximidade } from '../../../../interface/produto/proximidade';
-import { AreaLazerService } from '../../../../service/produto/area-lazer.service';
-import { ProximidadeService } from '../../../../service/produto/proximidade.service';
+import { AreaLazerService } from '../../../../service/imovel/area-lazer.service';
+import { ProximidadeService } from '../../../../service/imovel/proximidade.service';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 
 @Component({

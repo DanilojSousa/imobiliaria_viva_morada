@@ -14,9 +14,9 @@ export class EmailService {
     const params = {
       email: email
     }
-      return this.http.get(environment.api_url + "/email/esqueceuSenha", {params});
+      return this.http.get(environment.api_url_public + "/email/esqueceuSenha", {params});
   }
   enviarEmail(email: Email){
-      return this.http.post(environment.api_url + "/email/salvar", email, { withCredentials: true });
+      return this.http.post(environment.api_url_public + "/email/salvar", email, { withCredentials: true });
   }
 }

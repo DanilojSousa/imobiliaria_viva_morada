@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
 import { Mensagem } from '../../../../utils/mensagem';
 import { Util } from '../../../../utils/util';
-import { ImagensService } from '../../../../service/produto/imagens.service';
+import { ImagensService } from '../../../../service/imovel/imagens.service';
 
 @Component({
     selector: 'app-adicionar-imagem-dialog',

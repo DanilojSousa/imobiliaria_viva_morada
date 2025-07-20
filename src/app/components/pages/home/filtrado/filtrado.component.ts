@@ -1,6 +1,6 @@
 import { Pageable } from './../../../interface/produto/pageable';
 import { Component, ElementRef, HostListener, LOCALE_ID, OnInit, Renderer2 } from '@angular/core';
-import { ImovelService } from '../../../service/produto/imovel.service';
+import { ImovelService } from '../../../service/imovel/imovel.service';
 import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';
 import { Imovel } from '../../../interface/produto/imovel';
 import { MatIcon } from '@angular/material/icon';

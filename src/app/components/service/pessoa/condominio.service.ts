@@ -15,39 +15,25 @@ export class CondominioService {
   constructor(private http: HttpClient) { }
 
   getById(id: number): Observable<Condominio> {
-    return this.http.get<Condominio>(environment.api_url + "/condominio/getById?conCodigo="+id, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<Condominio>(environment.api_url + "/condominio/getById?conCodigo="+id, { withCredentials: true });
   }
   salvar(condominio: Condominio): Observable<Condominio> {
-    return this.http.post<Condominio>(environment.api_url + "/condominio/salvar",condominio, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.post<Condominio>(environment.api_url + "/condominio/salvar",condominio, { withCredentials: true });
   }
 
   getAllPorEndCodigo(endCodigo: number): Observable<Condominio[]> {
-    return this.http.get<Condominio[]>(environment.api_url + "/condominio/getAllPorEndCodigo?endCodigo="+endCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<Condominio[]>(environment.api_url + "/condominio/getAllPorEndCodigo?endCodigo="+endCodigo, { withCredentials: true });
   }
   carregaCondominioPorEnderecos(enderecos: number[]): Observable<Condominio[]> {
-    return this.http.post<Condominio[]>(environment.api_url + "/condominio/getAllPorEnderecos", enderecos, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.post<Condominio[]>(environment.api_url + "/condominio/getAllPorEnderecos", enderecos, { withCredentials: true });
   }
   getAllPorImovelAtivo(): Observable<Condominio[]> {
-    return this.http.get<Condominio[]>(environment.api_url + "/condominio/getAllPorImovelAtivo", { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<Condominio[]>(environment.api_url + "/condominio/getAllPorImovelAtivo", { withCredentials: true });
   }
   getAllPaginado(paginacao:Paginacao): Observable<Pageable<Condominio>> {
-    return this.http.post<Pageable<Condominio>>(environment.api_url + "/condominio/getAllPaginado", paginacao, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.post<Pageable<Condominio>>(environment.api_url + "/condominio/getAllPaginado", paginacao, { withCredentials: true });
   }
   delete(conCodigo: number) {
-    return this.http.get(environment.api_url + "/condominio/delete?conCodigo="+ conCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.delete(environment.api_url + "/condominio/delete?conCodigo="+ conCodigo, { withCredentials: true });
   }
 }

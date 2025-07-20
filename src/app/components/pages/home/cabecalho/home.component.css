@@ -1,23 +1,80 @@
-#content_home::before {
-  width: 100%; /* Largura 100% para que a imagem ocupe a largura do container */
-  height: 400px; /* A altura será ajustada automaticamente */
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-image: url("../../../../../assets/home/home_fundo.png");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -1;
+#content_home {
+.icones_contato{
+  width: 100%;
+  min-height: 45px;
+  display: flex;
+  justify-content: flex-end;
+  .icones{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 50px;
+    .instagran, .whatssap{
+      margin: 10px 5px 10px 5px;
+    }
+
+    /*icone social*/
+    .card {
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 25px;
+      gap: 20px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
+    }
+
+    /* for all social containers*/
+    .socialContainer {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition-duration: .3s;
+      border-radius: 100%;
+    }
+    /* instagram*/
+    .instagran .containerOne:hover {
+      background-color: #d62976;
+      transition-duration: .3s;
+    }
+
+    /* Whatsapp*/
+    .whatssap .containerFour:hover {
+      background-color: #128C7E;
+      transition-duration: .3s;
+    }
+
+    .containerThree:hover{
+      background-color: #1a5bd3;
+      transition-duration: .3s;
+    }
+
+    .socialContainer:active {
+      transform: scale(0.9);
+      transition-duration: .3s;
+    }
+
+    .socialSvg {
+      width: 17px;
+    }
+
+    .socialSvg path {
+      fill: rgb(255, 255, 255);
+    }
+
+    .socialContainer:hover .socialSvg {
+      animation: slide-in-top 0.3s both;
+    }
+  }
 }
 .conteudo{
   display: flex;
-  .logo{
-    width: 200px;
-    height: 200px;
-  }
+  min-height: 85px;
   .menu{
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,94 +90,39 @@
         cursor: pointer;
       }
     }
-    .icones{
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-      .instagran, .whatssap{
-        margin: 10px 5px 10px 5px;
-      }
-    }
-    .linha{
-      width: 100%;
-      border: 0.01em Dashed rgb(199, 174, 128, 0.5);
-    }
     .menus_acesso{
       display: flex;
+      div{
+        height: 85px;
+        display: flex;
+      }
       a{
-        margin-right: 20px;
         text-decoration: auto;
+        color: white;
+        display: flex;
+        align-items: center;
+        margin: 20px;
       }
-      a.selected {
-        color: white; /* Cor para o item ativo */
-        font-weight: 500;
+      div.selected {
+        background-color: white;
+        a{
+          color: #0e2442;
+          font-weight: 500;
+        }
       }
-      a:hover{
+      div:hover{
         cursor: pointer;
-        color: #ffffff;
+        background-color: white;
+        a{
+          color: #0e2442;
+          font-weight: 500;
+        }   
       }
     }
   }
 
 }
 
-/*icone social*/
-
-.card {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px 25px;
-  gap: 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
-}
-
-/* for all social containers*/
-.socialContainer {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition-duration: .3s;
-  border-radius: 100%;
-}
-/* instagram*/
-.instagran .containerOne:hover {
-  background-color: #d62976;
-  transition-duration: .3s;
-}
-
-/* Whatsapp*/
-.whatssap .containerFour:hover {
-  background-color: #128C7E;
-  transition-duration: .3s;
-}
-
-.containerThree:hover{
-  background-color: #1a5bd3;
-  transition-duration: .3s;
-}
-
-.socialContainer:active {
-  transform: scale(0.9);
-  transition-duration: .3s;
-}
-
-.socialSvg {
-  width: 17px;
-}
-
-.socialSvg path {
-  fill: rgb(255, 255, 255);
-}
-
-.socialContainer:hover .socialSvg {
-  animation: slide-in-top 0.3s both;
-}
 .sair{
   background-color: #4C2426;
   display: flex;
@@ -152,7 +154,6 @@
   width: 100%;
   height: 50px;
   position: fixed;
-  background-color: #4C2426;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,4 +204,5 @@
       justify-content: flex-start!important;
     }
   }
+}
 }

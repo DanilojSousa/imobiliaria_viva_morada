@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.prod';
 
 export class Util{
 
+
   private static CHAVE: string = "BR_COM_CONTROLES"
     jwtHelper: any;
     static jwtHelper: any;
@@ -78,9 +79,15 @@ export class Util{
 
     static mostraImagemEmpresa(empCodigo: number): string {
       if(empCodigo != undefined){
-        return `${environment.api_url}/empresa/imagem?empCodigo=${empCodigo}`;
+        return `${environment.api_url_public}/empresa/imagem?empCodigo=${empCodigo}`;
       }
       return '';
+    }
+    static getImagemImovel(imgCodigo: number): string {
+      return `${environment.api_url_public}/imagens/getImagem?imgCodigo=${imgCodigo}`;
+    }
+    static mostraImagemUsuario(usrCodigo:number){
+      return `${environment.api_url_public}/usuario/getImagem?usrCodigo=${usrCodigo}`
     }
 }
 

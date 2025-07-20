@@ -1,6 +1,6 @@
 import { AreaLazer } from './../../../../interface/produto/areaLazer';
 import { Subscription } from 'rxjs';
-import { LocalizacaoPraiaService } from './../../../../service/produto/localizacao-praia.service';
+import { LocalizacaoPraiaService } from '../../../../service/imovel/localizacao-praia.service';
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { LocalizacaoPraia } from '../../../../interface/produto/localizacaoPraia';
@@ -8,9 +8,9 @@ import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { Negocio } from '../../../../interface/produto/negocio';
 import { TipoImovel } from '../../../../interface/produto/tipoImovel';
 import { SituacaoImovel } from '../../../../interface/produto/situacaoImovel';
-import { NegocioService } from '../../../../service/produto/negocio.service';
-import { TipoImovelService } from '../../../../service/produto/tipo-imovel.service';
-import { SituacaoImovelService } from '../../../../service/produto/situacao-imovel.service';
+import { NegocioService } from '../../../../service/imovel/negocio.service';
+import { TipoImovelService } from '../../../../service/imovel/tipo-imovel.service';
+import { SituacaoImovelService } from '../../../../service/imovel/situacao-imovel.service';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,8 +22,8 @@ import { CondominioService } from '../../../../service/pessoa/condominio.service
 import { EnderecoService } from '../../../../service/pessoa/endereco.service';
 import { MatSelectModule } from '@angular/material/select';
 import { Proximidade } from '../../../../interface/produto/proximidade';
-import { ProximidadeService } from '../../../../service/produto/proximidade.service';
-import { AreaLazerService } from '../../../../service/produto/area-lazer.service';
+import { ProximidadeService } from '../../../../service/imovel/proximidade.service';
+import { AreaLazerService } from '../../../../service/imovel/area-lazer.service';
 
 @Component({
     selector: 'app-cadastro-opcoes',

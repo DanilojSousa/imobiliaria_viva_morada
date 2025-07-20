@@ -15,9 +15,7 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(environment.api_url + "/usuario/getAll", { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get<Usuario[]>(environment.api_url + "/usuario/getAll", { withCredentials: true });
   }
 
   selecionarPorId(usrCodigo: number): Observable<Usuario>{
@@ -38,22 +36,16 @@ export class UsuarioService {
   }
 
   alteraSenha(usuarioAlterarSenha: UsuarioAlterarSenha): Observable<UsuarioAlterarSenha> {
-    return this.http.put<any>(environment.api_url + "/usuario/alterarSenha", usuarioAlterarSenha, { withCredentials: true })
+    return this.http.put<any>(environment.api_url_public + "/usuario/alterarSenha", usuarioAlterarSenha, { withCredentials: true })
   }
   getAllPaginado(paginacao:Paginacao): Observable<Pageable<Usuario>> {
-    return this.http.post<Pageable<Usuario>>(environment.api_url + "/usuario/getAllPaginado", paginacao, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.post<Pageable<Usuario>>(environment.api_url + "/usuario/getAllPaginado", paginacao, { withCredentials: true });
   }
 
   delete(usrCodigo: number) {
-    return this.http.get(environment.api_url + "/usuario/delete?usrCodigo="+ usrCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.delete(environment.api_url + "/usuario/delete?usrCodigo="+ usrCodigo, { withCredentials: true });
   }
   desativar(usrCodigo: number) {
-    return this.http.get(environment.api_url + "/usuario/desativar?usrCodigo="+usrCodigo, { withCredentials: true }).pipe(
-      map((obj) => obj),
-    );
+    return this.http.get(environment.api_url + "/usuario/desativar?usrCodigo="+usrCodigo, { withCredentials: true });
   }
 }

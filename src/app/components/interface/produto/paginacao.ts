@@ -1,8 +1,8 @@
 export class Paginacao{
     public page!: number;
     public size!: number;
-    constructor(){
-        this.page = 0;
-        this.size = 10;
+    constructor(page:number, size:number){
+        this.page = page;
+        this.size = size;
     }
 }

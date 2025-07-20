@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { LocalizacaoPraia } from '../../../../interface/produto/localizacaoPraia';
 import { Paginacao } from '../../../../interface/produto/paginacao';
-import { LocalizacaoPraiaService } from '../../../../service/produto/localizacao-praia.service';
+import { LocalizacaoPraiaService } from '../../../../service/imovel/localizacao-praia.service';
 import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
@@ -32,7 +32,7 @@ export class LocalizacaoComponent implements OnInit  {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<LocalizacaoPraia>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private localizacaoService : LocalizacaoPraiaService,

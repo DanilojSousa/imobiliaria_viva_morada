@@ -10,9 +10,6 @@ import {
   coerceCssPixelValue
 } from "./chunk-7CA54YE4.js";
 import {
-  coerceArray
-} from "./chunk-ORAUIUNY.js";
-import {
   ScrollDispatcher,
   ScrollingModule,
   ViewportRuler
@@ -20,6 +17,9 @@ import {
 import {
   supportsScrollBehavior
 } from "./chunk-65RJ5ZZ2.js";
+import {
+  coerceArray
+} from "./chunk-ORAUIUNY.js";
 import {
   ESCAPE,
   _IdGenerator,
@@ -2894,4 +2894,4 @@ export {
   CdkConnectedOverlay,
   OverlayModule
 };
-//# sourceMappingURL=chunk-KWA3TKBV.js.map
+//# sourceMappingURL=chunk-TLZJNWL4.js.map

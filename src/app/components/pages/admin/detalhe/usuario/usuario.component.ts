@@ -31,7 +31,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Usuario>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Nome','Nível','Situação','Ação'];
   constructor(private usuarioService : UsuarioService,

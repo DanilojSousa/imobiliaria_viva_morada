@@ -1,4 +1,4 @@
-import { EmpresaDTO } from './../../../../interface/geral/empresa';
+import { Empresa } from './../../../../interface/geral/empresa';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
@@ -31,7 +31,7 @@ import { Util } from '../../../../utils/util';
 export class CadastroUsuarioComponent implements OnInit {
 
   usuario: Usuario = new Usuario();
-  listaEmpresa: EmpresaDTO[] = [];
+  listaEmpresa: Empresa[] = [];
   listaSituacao: Situacao[] = [];
   listaEndereco: EnderecoDTO[] = [];
   valida = false;

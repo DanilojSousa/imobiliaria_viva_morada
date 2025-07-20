@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Paginacao } from '../../../../interface/produto/paginacao';
 import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { SituacaoImovel } from '../../../../interface/produto/situacaoImovel';
-import { SituacaoImovelService } from '../../../../service/produto/situacao-imovel.service';
+import { SituacaoImovelService } from '../../../../service/imovel/situacao-imovel.service';
 import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
@@ -32,7 +32,7 @@ export class SituacaoComponent implements OnInit {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<SituacaoImovel>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private situacaoImovelService : SituacaoImovelService,

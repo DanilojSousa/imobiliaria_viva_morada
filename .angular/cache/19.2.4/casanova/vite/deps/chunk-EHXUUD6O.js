@@ -11,6 +11,12 @@ import {
   MatRippleModule
 } from "./chunk-HWUWY5IE.js";
 import {
+  MatRipple
+} from "./chunk-RB25D2FV.js";
+import {
+  _StructuralStylesLoader
+} from "./chunk-B2GA3NOI.js";
+import {
   MAT_FORM_FIELD,
   MatFormFieldControl,
   MatFormFieldModule
@@ -20,13 +26,7 @@ import {
   CdkOverlayOrigin,
   Overlay,
   OverlayModule
-} from "./chunk-KWA3TKBV.js";
-import {
-  MatRipple
-} from "./chunk-RB25D2FV.js";
-import {
-  _StructuralStylesLoader
-} from "./chunk-B2GA3NOI.js";
+} from "./chunk-TLZJNWL4.js";
 import {
   ActiveDescendantKeyManager,
   LiveAnnouncer,
@@ -2212,4 +2212,4 @@ export {
   MatSelectTrigger,
   MatSelectModule
 };
-//# sourceMappingURL=chunk-M3IJ447C.js.map
+//# sourceMappingURL=chunk-EHXUUD6O.js.map

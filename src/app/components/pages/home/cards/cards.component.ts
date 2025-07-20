@@ -1,9 +1,9 @@
-import { ImovelLancamento } from '../../../interface/produto/imovelLancamento';
+import { ImovelCard } from '../../../interface/produto/imovel-card';
 import {  Component, inject, Inject, Input, LOCALE_ID, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { ImovelService } from '../../../service/produto/imovel.service';
+import { ImovelService } from '../../../service/imovel/imovel.service';
 import { Subscription, timer } from 'rxjs';
 import { Util } from '../../../utils/util';
 import { CommonModule, isPlatformBrowser, registerLocaleData } from '@angular/common';
@@ -11,11 +11,10 @@ import localePt from '@angular/common/locales/pt';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { EmpresaDTO } from '../../../interface/geral/empresa';
+import { Empresa } from '../../../interface/geral/empresa';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ContatoService } from '../../../service/pessoa/contato.service';
-import { environment } from '../../../../../environments/environment.prod';
+import { Paginacao } from '../../../interface/produto/paginacao';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -30,12 +29,11 @@ export class CardsComponent implements OnInit {
 
   selected!: string;
   timerSubs!: Subscription;
-  empresa: EmpresaDTO = new EmpresaDTO();
+  empresa: Empresa = new Empresa();
   readonly dialog = inject(MatDialog);
-  @Input() imovelLancamento: ImovelLancamento[] = [];
+  imovelCard: ImovelCard[] = [];
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private imovelService: ImovelService,
-              private contatoService: ContatoService,
               private router: Router){}
 
   ngOnInit(): void {
@@ -52,7 +50,7 @@ export class CardsComponent implements OnInit {
 
   set indexImagemAtiva(value: number) {
     this._indexImagemAtiva =
-      value < this.imovelLancamento.length ? value : 0;
+      value < this.imovelCard.length ? value : 0;
   }
 
   ngOnDestroy(): void {
@@ -60,15 +58,16 @@ export class CardsComponent implements OnInit {
   }
 
   carregaLista() {
-    this.imovelService.getAllLancamento().subscribe({
+    const page = new Paginacao(0, 5);
+    this.imovelService.getAllCard(page).subscribe({
       next:(res)=>{
-        this.imovelLancamento = res;
+        this.imovelCard = res;
       }
     })
   }
 
   mostraImagem(imgCodigo: number): string{
-    return `${environment.api_url}/imagens/getImagem?imgCodigo=${imgCodigo}`;
+    return Util.getImagemImovel(imgCodigo);
   }
 
   //slide
@@ -90,28 +89,29 @@ export class CardsComponent implements OnInit {
 
   navegarImagem(direcao: string): void {
     if (direcao === 'prev') {
-      this.indexImagemAtiva = (this.indexImagemAtiva === 0) ? this.imovelLancamento.length - 1 : this.indexImagemAtiva - 1;
+      this.indexImagemAtiva = (this.indexImagemAtiva === 0) ? this.imovelCard.length - 1 : this.indexImagemAtiva - 1;
     } else if (direcao === 'next') {
-      this.indexImagemAtiva = (this.indexImagemAtiva === this.imovelLancamento.length - 1) ? 0 : this.indexImagemAtiva + 1;
+      this.indexImagemAtiva = (this.indexImagemAtiva === this.imovelCard.length - 1) ? 0 : this.indexImagemAtiva + 1;
     }
     this.pararTimer(); // Se necessário parar o timer de navegação automática
     this.ativarImagem(this.indexImagemAtiva); // Atualiza a imagem ativa
   }
 
-  formataWatssap(imovel : ImovelLancamento){
-    this.contatoService.selecionarContatoPorUsrCodigo(imovel.usuario.usrCodigo).subscribe({
-      next:(res)=>{
-        const url =  "https://api.whatsapp.com/send?phone=55"+res.cntWhatsapp+"&text=Olá, tenho interesse.";
-        window.open(url, '_blank')
-      }
-    })
-
+  detalhes(imvCodigo : number){
+    this.router.navigate(['imovel/detalhes/'+imvCodigo])
   }
-
-  detalhes(imovel : ImovelLancamento){
-    this.router.navigate(['imovel/detalhes/'+imovel.imvCodigo])
+  formataTextoDormitorio(imvDormitorio: number, imvSuite:number): string{
+    const texto1 = imvDormitorio > 1 ? imvDormitorio + ' Dormitórios, sendo ': imvDormitorio + ' Dormitório, sendo '
+    const texto2 = imvSuite > 1 ? imvSuite + ' suítes, ': imvSuite + ' suíte, '
+    return  texto1 + texto2;
   }
-
+  formataTextoGaragem(imvGaragem: number): string{
+    return  imvGaragem > 1 ? imvGaragem + ' Garagens, ': imvGaragem + ' Garage, ';
+  }
+    
+  mostraImagemUsuario(usrCodigo: number): string{
+    return Util.mostraImagemUsuario(usrCodigo);
+  }
 }
 
 

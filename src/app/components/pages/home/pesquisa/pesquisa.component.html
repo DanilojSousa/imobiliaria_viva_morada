@@ -1,8 +1,10 @@
 <div id="pesquisa">
-    <div class="pesquisa_form">
-        <div class="titulo">
-            <p>Encontre seu imóvel ideal</p>
+    @if(empresaGeral.empCodigo != null){
+        <div class="logo">
+          <img [src]="mostraImagem(empresaGeral.empCodigo!)" width="300" height="300">
         </div>
+    }
+    <div class="pesquisa_form">
         <div class="formulario">
             <form class="form" #myForm="ngForm">
                 <div class="linha1_formulario">
@@ -69,8 +71,7 @@
                         [formControl]="listaEnderecoSelecionado" 
                         name="endCodigo"
                         placeholder="Selecione"
-                        multiple
-                        (selectionChange)="carregaCondominioSelecionado()">
+                        multiple>
                         <mat-select-trigger>
                             {{listaEnderecoSelecionado.value?.[0]?.endEndereco || ''}}
                             @if ((listaEnderecoSelecionado.value?.length || 0) > 1) {
@@ -83,29 +84,9 @@
                                 <mat-option [value]="end">{{end.endEndereco}}</mat-option>
                             }
                         </mat-select>
-                    </div>
-                    <div>
-                        <label for="condominio">Condomínios</label>
-                        <mat-select id="condominio" 
-                                    [formControl]="listaCondominioSelecionado" 
-                                    name="conCodigo" 
-                                    placeholder="Selecione"
-                                    multiple>
-                            <mat-select-trigger>
-                                {{listaCondominioSelecionado.value?.[0]?.conDescricao || ''}}
-                                @if ((listaCondominioSelecionado.value?.length || 0) > 1) {
-                                  <span class="example-additional-selection">
-                                    (+{{(listaCondominioSelecionado.value?.length || 0) - 1}} {{listaCondominioSelecionado.value?.length === 2 ? 'outro' : 'outros'}})
-                                  </span>
-                                }
-                              </mat-select-trigger>
-                            @for (cond of listaCondominio; track cond; let i = $index) {
-                                <mat-option [value]="cond">{{cond.conDescricao}}</mat-option>
-                            }
-                        </mat-select>
-                    </div>
+                    </div>      
+                    <button (click)="pesquisaFiltrada()">Pesquisar</button>
                 </div>
-                <button (click)="pesquisaFiltrada()">Pesquisar</button>
             </form>
         </div>
     </div>

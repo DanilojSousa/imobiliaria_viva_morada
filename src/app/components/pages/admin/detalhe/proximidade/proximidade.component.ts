@@ -18,7 +18,7 @@ import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/ca
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { AreaLazer } from '../../../../interface/produto/areaLazer';
-import { ProximidadeService } from '../../../../service/produto/proximidade.service';
+import { ProximidadeService } from '../../../../service/imovel/proximidade.service';
 import { Proximidade } from '../../../../interface/produto/proximidade';
 
 @Component({
@@ -34,7 +34,7 @@ export class ProximidadeComponent implements OnInit  {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Proximidade>;
-  paginacao: Paginacao = new Paginacao();
+  paginacao: Paginacao = new Paginacao(0, 10);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private proximidadeService : ProximidadeService,

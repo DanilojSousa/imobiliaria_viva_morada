@@ -7,9 +7,10 @@
              <div class="card" (click)="detalhes(imovel.imvCodigo)">
                 <img [src]="mostraImagem(imovel.imgCodigo)" width="415px" height="450px"/>
                 <div class="informacao">
-                    <div class="conteudo">
+                    <div class="conteudo_oprtunidade">
                         <div class="titulo">{{imovel.imvDescricao}}</div>
                         <div class="descricao">{{imovel.imvObservacao}}</div>
+                        <div class="valor">{{imovel.imvValor | currency: 'BRL':'symbol':'1.2-2'}}</div>
                         <button class="buttons" mat-flat-button>Detalhes</button>
                     </div>
 
