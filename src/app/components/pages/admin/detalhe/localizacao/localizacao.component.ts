@@ -1,6 +1,6 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
@@ -11,13 +11,13 @@ import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { LocalizacaoPraia } from '../../../../interface/produto/localizacaoPraia';
-import { Paginacao } from '../../../../interface/produto/paginacao';
+import { LocalizacaoPraia } from '../../../../interface/imovel/localizacaoPraia';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
 import { LocalizacaoPraiaService } from '../../../../service/imovel/localizacao-praia.service';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
-import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
+import { CadastroOpcoesComponent } from '../../cadastro/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-localizacao',
@@ -29,10 +29,9 @@ import { SessaoService } from '../../../../service/sessao/sessao.service';
 export class LocalizacaoComponent implements OnInit  {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<LocalizacaoPraia>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private localizacaoService : LocalizacaoPraiaService,
@@ -49,11 +48,9 @@ export class LocalizacaoComponent implements OnInit  {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a localização")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -84,7 +81,6 @@ detalhe(lcpCodigo: number | null){
   }
 
   delete(lcpCodigo: number){
-    this.spinnerAcao = true;
     this.localizacaoService.delete(lcpCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Localização deletado com sucesso")
@@ -92,14 +88,10 @@ detalhe(lcpCodigo: number | null){
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar a localização, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
 
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
   abrirDialogDeletar(localizacao: LocalizacaoPraia){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

@@ -1,10 +1,10 @@
 import { Empresa } from './../../../../interface/geral/empresa';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, Optional } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,7 @@ import { SituacaoService } from '../../../../service/pessoa/situacao.service';
 import { EnderecoDTO } from '../../../../interface/pessoa/endereco';
 import { EnderecoService } from '../../../../service/pessoa/endereco.service';
 import { Util } from '../../../../utils/util';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-cadastro-usuario',
@@ -30,6 +31,7 @@ import { Util } from '../../../../utils/util';
 })
 export class CadastroUsuarioComponent implements OnInit {
 
+  readonly dialogRef = inject(MatDialogRef<CadastroUsuarioComponent>, { optional: true });
   usuario: Usuario = new Usuario();
   listaEmpresa: Empresa[] = [];
   listaSituacao: Situacao[] = [];
@@ -44,7 +46,8 @@ export class CadastroUsuarioComponent implements OnInit {
   validaSenha = false;
   validaSenha2 = false;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: { dialog: boolean } | null,
+              private usuarioService: UsuarioService,
               private route: ActivatedRoute,
               private router: Router,
               private mensagemService: Mensagem,
@@ -76,7 +79,7 @@ export class CadastroUsuarioComponent implements OnInit {
   detalhe() {
     const usrCodigo =  this.route.snapshot.paramMap.get('usrCodigo');
     if(usrCodigo != null){
-      this.usuarioService.getById(usrCodigo).subscribe({
+      this.usuarioService.getById(Number(usrCodigo)).subscribe({
         next:(res)=>{
           this.usuario = res;
           this.sicronizarListas();
@@ -88,9 +91,9 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   sicronizarListas(){
-    const empresa = this.listaEmpresa.find(empresa => empresa.empCodigo === this.usuario.empresa.empCodigo);
-    const situacao = this.listaSituacao.find(situacao => situacao.stcCodigo === this.usuario.situacao.stcCodigo);
-    const endereco = this.listaEndereco.find(endereco => endereco.endCodigo === this.usuario.endereco.endCodigo);
+    const empresa = this.listaEmpresa.find(empresa => empresa.empCodigo === this.usuario.empresa!.empCodigo);
+    const situacao = this.listaSituacao.find(situacao => situacao.stcCodigo === this.usuario.situacao!.stcCodigo);
+    const endereco = this.listaEndereco.find(endereco => endereco.endCodigo === this.usuario.endereco!.endCodigo);
     // Atualiza as propriedades do objeto imovel
     if (empresa) this.usuario.empresa = empresa;
     if (situacao) this.usuario.situacao = situacao;
@@ -98,7 +101,11 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['detalhe/usuario'])
+    this.router.navigate(['acesso/sistema/detalhe/usuario'])
+  }
+  novo(){
+    this.usuario = new Usuario();
+    this.router.navigate(['acesso/sistema/cadastro/usuario'])
   }
   salvar(){;
     if(this.validaCampos()){
@@ -111,9 +118,12 @@ export class CadastroUsuarioComponent implements OnInit {
       next:(res)=>{
         this.usuario = res;
         this.mensagemService.sucesso("Usuário salvo com sucesso");
+        if(this.data!.dialog){
+          this.dialogRef!.close();
+        }
       }, error:(err)=>{
         this.mensagemService.error("Erro ao salvar o Usuário");
-        console.log("Erro ao salvar o Usuário: "+ err);
+        console.log("Erro ao salvar o Usuário: "+ err.error?.message);
       }
     });
   }
@@ -135,7 +145,6 @@ export class CadastroUsuarioComponent implements OnInit {
       this.valida = true;
       return true;
     }
-
     this.valida = false;
     return false;
   }
@@ -179,30 +188,32 @@ export class CadastroUsuarioComponent implements OnInit {
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) {
-      return;
-    }
-    if (file.type === 'image/png') {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64String = (reader.result as string).split(',')[1]; // Remove o prefixo "data:image/png;base64,"
-        const image = new Image();
-        image.src = `data:image/png;base64,${base64String}`;
-        image.onload = () => {
-          if (image.width <= 150 && image.height <= 150) {
-            this.usuario.usrImagem = base64String;
-          } else {
-            this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões maiores que 150x150.`);
-            console.error(`Arquivo ${file.name} inválido: dimensões maiores que 150x150.`);
-          }
-        };
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.mensagemService.atencao(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
-      console.error(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
-    }
+  if (!file) {
+    return;
   }
+
+  // Verifica se o tipo do arquivo começa com 'image/'
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = (reader.result as string).split(',')[1]; // Remove o prefixo "data:image/png;base64,..."
+      const image = new Image();
+      image.src = reader.result as string;
+      image.onload = () => {
+        if (image.width >= 150 && image.height >= 150) {
+          this.usuario.usrImagem = base64String;
+        } else {
+          this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões menores que 150x150.`);
+          console.error(`Arquivo ${file.name} inválido: dimensões menores que 150x150.`);
+        }
+      };
+    };
+    reader.readAsDataURL(file);
+  } else {
+    this.mensagemService.atencao(`Arquivo ${file.name} inválido: não é uma imagem compatível.`);
+    console.error(`Arquivo ${file.name} inválido: não é uma imagem compatível.`);
+  }
+}
 
   mostrarImagens(): string{
     if(this.usuario.usrImagem != undefined && this.usuario.usrImagem != ''){
@@ -264,5 +275,11 @@ export class CadastroUsuarioComponent implements OnInit {
   }
   deletePhoto(){
     this.usuario.usrImagem = '';
+  }
+  liberaVoltar(): boolean{
+    if(this.data != null && this.data.dialog){
+      return false;
+    }
+    return true;
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BlocosCaroucelComponent } from "../blocos-caroucel/blocos-caroucel.component";
 import { ImovelService } from '../../../service/imovel/imovel.service';
-import { Imovel } from '../../../interface/produto/imovel';
-import { Pageable } from '../../../interface/produto/pageable';
-import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';
+import { Imovel } from '../../../interface/imovel/imovel';
+import { Pageable } from '../../../interface/imovel/pageable';
+import { PesquisaFiltradaImovel } from '../../../interface/imovel/pesquisaFiltradaImovel';
 
 @Component({
     selector: 'app-destaques',

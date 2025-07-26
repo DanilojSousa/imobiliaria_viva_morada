@@ -1,0 +1,51 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 60px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    color: #C0C0C0;
+  }
+  .empresa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 50px;
+  }
+  .sidebar:hover{
+    .empresa{
+      img{
+        display: none;
+      }
+    }
+  }
+  
+  .sidebar.expanded {
+    width: 200px;
+    overflow-y: auto; /* ativa rolagem vertical */
+    overflow-x: hidden;
+  }
+  
+  .menu {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    .titulo {
+      padding-left: 10px;
+      white-space: nowrap;
+    }
+  }
+  
+  .menu:hover{
+    background-color: #415470;
+    cursor: pointer;
+  } 
+  .icone_sitema mat-icon{
+    color: #C0C0C0!important;
+  }
+
+
+ 

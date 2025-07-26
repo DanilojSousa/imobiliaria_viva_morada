@@ -1,10 +1,10 @@
 import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { Imagens } from '../../../interface/produto/imagens';
+import { Imagens } from '../../../interface/imovel/imagens';
 import localePt from '@angular/common/locales/pt';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImagensService } from '../../../service/imovel/imagens.service';
-import { Imovel } from '../../../interface/produto/imovel';
+import { Imovel } from '../../../interface/imovel/imovel';
 import { ImovelService } from '../../../service/imovel/imovel.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -20,19 +20,20 @@ import { MatDividerModule } from '@angular/material/divider';
 import { VisualizarImagemDialogComponent } from '../dialog/visualizar-imagem/visualizar-imagem-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AreaLazerService } from '../../../service/imovel/area-lazer.service';
-import { AreaLazer } from '../../../interface/produto/areaLazer';
-import { Proximidade } from '../../../interface/produto/proximidade';
-import { environment } from '../../../../../environments/environment.prod';
-import { EmpresaService } from '../../../service/geral/empresa.service';
-import { Empresa } from '../../../interface/geral/empresa';
+import { AreaLazer } from '../../../interface/imovel/areaLazer';
+import { Proximidade } from '../../../interface/imovel/proximidade';
+import { HomeComponent } from "../cabecalho/home.component";
+import { SessaoService } from '../../../service/sessao/sessao.service';
+import { Util } from '../../../utils/util';
+import { RodapeComponent } from "../../rodape/rodape.component";
 
 registerLocaleData(localePt, 'pt-BR');
 
 @Component({
     selector: 'app-detalhe',
     imports: [MatGridListModule, MatButtonModule,
-        MatProgressSpinnerModule, MatIconModule, CommonModule,
-        FormsModule, MatSnackBarModule, MatDividerModule],
+    MatProgressSpinnerModule, MatIconModule, CommonModule,
+    FormsModule, MatSnackBarModule, MatDividerModule, HomeComponent, RodapeComponent],
     providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
     templateUrl: './detalhe.component.html',
     styleUrl: './detalhe.component.css'
@@ -47,7 +48,6 @@ export class DetalheComponent implements OnInit {
   listaProximidade: Proximidade[] = [];
   spinner: boolean = false;
   buttonFlutuante: boolean = false;
-  empresa: Empresa = new Empresa();
   mensagem = "Olá, estou interessado nesse imóvel que encontrei no site. Aguardo seu retorno.";
   listaColRow = [
     {cows: 2,rows:3},
@@ -65,9 +65,9 @@ export class DetalheComponent implements OnInit {
               private imovelService: ImovelService,
               private usuarioService: UsuarioService,
               private emailService: EmailService,
-              private empresaService: EmpresaService,
               private areaLazerService: AreaLazerService,
-              private proximidadeService: ProximidadeService){}
+              private proximidadeService: ProximidadeService,
+              private sessaoService: SessaoService){}
 
   ngOnInit(): void {
     const imvCodigo = this.route.snapshot.paramMap.get('imvCodigo');
@@ -78,17 +78,15 @@ export class DetalheComponent implements OnInit {
     if(imvCodigo != null){
       this.spinner = true;
       this.carregaImovel(imvCodigo);
+      this.populaVisualizacao(imvCodigo);
     }
-    this.carregaEmpresa();
   }
-
-  carregaEmpresa(){
-    this.empresaService.selecionarAtivo().subscribe({
-      next:(res)=>{
-        this.empresa = res;
-      }
+  populaVisualizacao(imvCodigo: string) {
+    this.imovelService.atualizaVisualizacao(Number(imvCodigo)).subscribe({
+      next:()=>{}
     })
   }
+
   carregaImovel(imvCodigo: string) {
     this.imovelService.getById(Number(imvCodigo)).subscribe({
       next:(res)=>{
@@ -114,8 +112,7 @@ export class DetalheComponent implements OnInit {
     })
   }
   carregaUsuario() {
-    console.log(this.imovel.usuario.usrCodigo)
-    this.usuarioService.getById(this.imovel.usuario.usrCodigo.toString()).subscribe({
+    this.usuarioService.getById(this.imovel.usuario.usrCodigo).subscribe({
       next:(res)=>{
         this.imovel.usuario = res;
         this.carregaArealazer();
@@ -138,10 +135,10 @@ export class DetalheComponent implements OnInit {
   }
 
   mostraImagem(imgCodigo: number): string{
-      return `${environment.api_url}/imagens/getImagem?imgCodigo=${imgCodigo}`;
+      return Util.getImagemImovel(imgCodigo);
   }
   mostraImagemUsuario(usrCodigo: number): string{
-    return `${environment.api_url}/usuario/getImagem?usrCodigo=${usrCodigo}`;
+    return Util.mostraImagemUsuario(usrCodigo);
   }
 
   carrega():string{
@@ -153,8 +150,8 @@ export class DetalheComponent implements OnInit {
       const match = imovel.usuario?.contato?.cntWhatsapp?.match(/^(\d{2})(\d{4,5})(\d{4})$/);
       return match ? `(${match[1]}) ${match[2]}-${match[3]}` : imovel.usuario?.contato?.cntWhatsapp;
     }else{
-      const match = this.empresa?.contato?.cntWhatsapp?.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.empresa?.contato?.cntWhatsapp;
+      const match = this.sessaoService.getEmpresa()?.contato?.cntWhatsapp?.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+      return match ? `(${match[1]}) ${match[2]}-${match[3]}` : this.sessaoService.getEmpresa()?.contato?.cntWhatsapp;
     }
   }
 
@@ -162,7 +159,7 @@ export class DetalheComponent implements OnInit {
     if(imovel.usuario.roles === 'ADMIN'){
       return imovel.usuario?.email?.emaEmail;
     }else{
-      return this.empresa.email.emaEmail;
+      return this.sessaoService.getEmpresa()?.email?.emaEmail;
     }
   }
 
@@ -176,7 +173,7 @@ export class DetalheComponent implements OnInit {
     if(this.imovel.usuario.roles === 'ADMIN'){
       email.evmDestinatario = this.imovel.usuario.email.emaEmail
     }else{
-      email.evmDestinatario = this.empresa.email.emaEmail
+      email.evmDestinatario = this.sessaoService.getEmpresa().email.emaEmail
     }
     email.evmConteudo = myForm.value.mensagem +"<br/><br/>"+myForm.value.nome+"<br/> Telefone: "+this.formattedPhone+"<br/> Email: "+myForm.value.email
     this.emailService.enviarEmail(email).subscribe({
@@ -189,7 +186,7 @@ export class DetalheComponent implements OnInit {
   }
   onWhatsapp(myForm: NgForm){
     const isAdmin = this.imovel.usuario.roles === 'ADMIN';
-    const telefone = isAdmin ? this.imovel.usuario.contato?.cntWhatsapp : this.empresa.contato?.cntWhatsapp;
+    const telefone = isAdmin ? this.imovel.usuario.contato?.cntWhatsapp : this.sessaoService.getEmpresa().contato?.cntWhatsapp;
     const url = `https://api.whatsapp.com/send?phone=55${telefone}&text=${myForm.value.mensagem}`;
     window.open(url, '_blank');''
   }
@@ -205,7 +202,7 @@ export class DetalheComponent implements OnInit {
 
   agendarVisita(){
     const isAdmin = this.imovel.usuario.roles === 'ADMIN';
-    const telefone = isAdmin ? this.imovel.usuario.contato?.cntWhatsapp : this.empresa.contato?.cntWhatsapp;
+    const telefone = isAdmin ? this.imovel.usuario.contato?.cntWhatsapp : this.sessaoService.getEmpresa().contato?.cntWhatsapp;
     const mensagem = encodeURIComponent("Olá, gostaria de Agendar uma visita.");
     const url = `https://api.whatsapp.com/send?phone=55${telefone}&text=${mensagem}`;
     window.open(url, '_blank');''

@@ -1,6 +1,6 @@
-import { Pageable } from '../../../../interface/produto/pageable';
+import { Pageable } from '../../../../interface/imovel/pageable';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableModule} from '@angular/material/table'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
@@ -8,18 +8,16 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Mensagem } from '../../../../utils/mensagem';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { Paginacao } from '../../../../interface/produto/paginacao';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
-import { SituacaoImovel } from '../../../../interface/produto/situacaoImovel';
-import { CadastroOpcoesComponent } from '../../../home/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
+import { CadastroOpcoesComponent } from '../../cadastro/dialog/cadastro-opcoes/cadastro-opcoes.component';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 import { TipoCadastro } from '../../../../interface/enum/tipoCadastro';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
-import { AreaLazer } from '../../../../interface/produto/areaLazer';
 import { ProximidadeService } from '../../../../service/imovel/proximidade.service';
-import { Proximidade } from '../../../../interface/produto/proximidade';
+import { Proximidade } from '../../../../interface/imovel/proximidade';
 
 @Component({
     selector: 'app-proximidade',
@@ -31,10 +29,9 @@ import { Proximidade } from '../../../../interface/produto/proximidade';
 export class ProximidadeComponent implements OnInit  {
 
   isLoadingResults = true;
-  spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Proximidade>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private proximidadeService : ProximidadeService,
@@ -51,11 +48,9 @@ export class ProximidadeComponent implements OnInit  {
       next:(res)=>{
         this.pageable = res;
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a proximidade")
         this.isLoadingResults = false;
-        this.spinnerAcao = false;
       }
     })
   }
@@ -86,7 +81,6 @@ export class ProximidadeComponent implements OnInit  {
   }
 
   delete(prxCodigo: number){
-    this.spinnerAcao = true;
     this.proximidadeService.delete(prxCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Proximidade do imovel deletado com sucesso")
@@ -94,14 +88,10 @@ export class ProximidadeComponent implements OnInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar a Proximidade, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
 
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
-  }
   abrirDialogDeletar(proximidade: Proximidade){
     const dialogRef = this.dialog.open(DeletarComponent, {
       width: '250px',

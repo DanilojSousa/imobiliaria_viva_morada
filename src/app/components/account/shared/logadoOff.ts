@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree, CanActivate } from '@angular/router';
-import { Util } from '../../utils/util';
-import { LoginService } from '../../service/acesso/login.service';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, CanActivate } from '@angular/router';
+import { SessaoService } from '../../service/sessao/sessao.service';
 
 
 @Injectable({providedIn: 'root'})
 export class LogadoOffGuard implements CanActivate{
     constructor(private router: Router,
-                private loginService: LoginService) { }
+                private sessaoService: SessaoService) { }
 
     canActivate(next: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): boolean {
-        if(!this.loginService.logado){
+        if(!this.sessaoService.logado()){
           return true;
         }
-        this.router.navigate([''])
         return false;
     }
 }

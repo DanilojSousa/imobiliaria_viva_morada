@@ -4,6 +4,24 @@
   min-height: 45px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  .login{
+    a{
+      text-decoration: auto;
+      color: white;
+      display: flex;
+      align-items: center;
+      margin: 20px;
+    }
+  }
+  .login:hover{
+    cursor: pointer;
+    background-color: white;
+    a{
+      color: #0e2442;
+      font-weight: 500;
+    }   
+  }
   .icones{
     display: flex;
     justify-content: flex-end;

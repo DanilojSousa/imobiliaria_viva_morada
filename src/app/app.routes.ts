@@ -20,6 +20,7 @@ import { EmpresaComponent } from './components/pages/admin/detalhe/empresa/empre
 import { CadastroEmpresaComponent } from './components/pages/admin/cadastro/cadastro-empresa/cadastro-empresa.component';
 import { AreaLazerComponent } from './components/pages/admin/detalhe/area-lazer/area-lazer.component';
 import { ProximidadeComponent } from './components/pages/admin/detalhe/proximidade/proximidade.component';
+import { DashboardComponent } from './components/pages/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -28,28 +29,33 @@ export const routes: Routes = [
       {path: 'home', component: InicioComponent},
     ]
   },
-  {path: 'imovel/detalhes/:imvCodigo', component: DetalheComponent},
-  {path: 'imovel/filtro', component: FiltradoComponent},
-  {path: 'acesso/sistema', component: SistemaComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'login/:id', component: LoginComponent},
-  {path: 'detalhe/imovel', component: ImovelComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/usuario', component: UsuarioComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/endereco', component: EnderecoComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/negocio', component: NegocioComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/tipoImovel', component: TipoImovelComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/situacao', component: SituacaoComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/localizacao', component: LocalizacaoComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/condominio', component: CondominioComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/empresa', component: EmpresaComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/areaLazer', component: AreaLazerComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'detalhe/proximidade', component: ProximidadeComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/imovel', component: CadastroImovelComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/imovel/:imvCodigo', component: CadastroImovelComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/endereco', component: CadastroEnderecoComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/endereco/:endCodigo', component: CadastroEnderecoComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/usuario', component: CadastroUsuarioComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/usuario/:usrCodigo', component: CadastroUsuarioComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/empresa', component: CadastroEmpresaComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
-  {path: 'cadastro/empresa/:empCodigo', component: CadastroEmpresaComponent, canLoad:[LogadoOnGuard], canActivate:[LogadoOnGuard]},
+  {path: 'imovel/detalhes/:imvCodigo', component: DetalheComponent},
+  {path: 'imovel/filtro', component: FiltradoComponent},
+  {
+    path: 'acesso/sistema', component: SistemaComponent,
+    children:[
+      {path: 'detalhe/dashboard', component: DashboardComponent},
+      {path: 'detalhe/imovel', component: ImovelComponent},
+      {path: 'detalhe/usuario', component: UsuarioComponent},
+      {path: 'detalhe/endereco', component: EnderecoComponent},
+      {path: 'detalhe/negocio', component: NegocioComponent},
+      {path: 'detalhe/tipoImovel', component: TipoImovelComponent},
+      {path: 'detalhe/situacao', component: SituacaoComponent},
+      {path: 'detalhe/localizacao', component: LocalizacaoComponent},
+      {path: 'detalhe/condominio', component: CondominioComponent},
+      {path: 'detalhe/empresa', component: EmpresaComponent},
+      {path: 'detalhe/areaLazer', component: AreaLazerComponent},
+      {path: 'detalhe/proximidade', component: ProximidadeComponent},
+      {path: 'cadastro/imovel', component: CadastroImovelComponent},
+      {path: 'cadastro/imovel/:imvCodigo', component: CadastroImovelComponent},
+      {path: 'cadastro/endereco', component: CadastroEnderecoComponent},
+      {path: 'cadastro/endereco/:endCodigo', component: CadastroEnderecoComponent},
+      {path: 'cadastro/usuario', component: CadastroUsuarioComponent},
+      {path: 'cadastro/usuario/:usrCodigo', component: CadastroUsuarioComponent},
+      {path: 'cadastro/empresa', component: CadastroEmpresaComponent},
+      {path: 'cadastro/empresa/:empCodigo', component: CadastroEmpresaComponent},
+    ]
+  },
 ];

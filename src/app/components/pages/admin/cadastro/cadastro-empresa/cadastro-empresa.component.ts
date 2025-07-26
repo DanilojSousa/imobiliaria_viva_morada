@@ -63,11 +63,12 @@ export class CadastroEmpresaComponent implements OnInit {
   detalhe() {
     const empCodigo =  this.route.snapshot.paramMap.get('empCodigo');
     if(empCodigo != null){
-      this.empresaService.getById(empCodigo).subscribe({
+      this.empresaService.getById(Number(empCodigo)).subscribe({
         next:(res)=>{
           this.empresa = res;
           this.sicronizarListas();
         },error:(err)=>{
+          console.log("Erro ao carregar a empresa: "+err.error?.message)
           this.mensagemService.error("Erro ao carregar a empresa")
         }
       })
@@ -83,7 +84,7 @@ export class CadastroEmpresaComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['detalhe/empresa'])
+    this.router.navigate(['acesso/sistema/detalhe/empresa'])
   }
   salvar(){;
     if(this.validaCampos()){
@@ -98,7 +99,7 @@ export class CadastroEmpresaComponent implements OnInit {
         this.mensagemService.sucesso("Empresa salvo com sucesso");
       }, error:(err)=>{
         this.mensagemService.error("Erro ao salvar a empresa");
-        console.log("Erro ao salvar a empresa: "+ err);
+        console.log("Erro ao salvar a empresa: "+ err.error?.message);
       }
     });
   }
@@ -137,25 +138,25 @@ export class CadastroEmpresaComponent implements OnInit {
     if (!file) {
       return;
     }
-    if (file.type === 'image/png') {
+    if (file.type === 'image/*') {
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = (reader.result as string).split(',')[1]; // Remove o prefixo "data:image/png;base64,"
         const image = new Image();
         image.src = `data:image/png;base64,${base64String}`;
         image.onload = () => {
-          if (image.width === 300 && image.height === 300) {
+          if (image.width >= 300 && image.height >= 300) {
             this.empresa.empLogo = base64String;
           } else {
-            this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões diferente de 300x300.`);
-            console.error(`Arquivo ${file.name} inválido: dimensões diferente de 300x300.`);
+            this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões menor que 300x300.`);
+            console.error(`Arquivo ${file.name} inválido: dimensões menor que 300x300.`);
           }
         };
       };
       reader.readAsDataURL(file);
     } else {
-      this.mensagemService.atencao(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
-      console.error(`Arquivo ${file.name} inválido: não é uma imagem PNG.`);
+      this.mensagemService.atencao(`Arquivo ${file.name} inválido: não é uma imagem compatível.`);
+      console.error(`Arquivo ${file.name} inválido: não é uma imagem compatível.`);
     }
   }
 
@@ -194,5 +195,9 @@ export class CadastroEmpresaComponent implements OnInit {
       value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     }
     this.empresa.empCnpj = value;
+  }
+  novo(){
+    this.empresa = new Empresa();
+    this.router.navigate(['acesso/sistema/cadastro/empresa'])
   }
 }

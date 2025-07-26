@@ -1,0 +1,78 @@
+.dashboard-container {
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+    .dados_dashbard{
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      .bloco{
+        display: flex;
+        flex-direction: column;
+        max-height: 460px;
+        margin: 10px;
+        .cards{
+          display: flex;
+          margin: 10px;
+          .card {
+            padding: 20px;
+            border-radius: 2px;
+            width: 150px;
+            margin: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            transition: 0.3s ease;
+            h4{
+              color: white;
+            }
+            .icone_dados{
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              mat-icon{
+                color: white!important;
+                font-size: 40px;
+                height: 100%;
+                width: 100%;
+              }
+              h3{
+                color: white;
+                font-size: 40px;
+                margin: 0px;
+              }
+            }
+          }
+          .green{
+            background-color: #61A75B;
+            .icone_dados{
+              border-radius: 10px;
+              padding: 5px;
+            }
+          }
+          .red{
+            background-color: #A81B37;
+            .icone_dados{
+              border-radius: 10px;
+              padding: 5px;
+            }
+          }
+          .yellow{
+            background-color: #C7B532;
+            .icone_dados{
+              border-radius: 10px;
+              padding: 5px;
+            }
+          }
+          .card:hover {
+            background-color: #e0e0e0;
+            cursor: pointer;
+          }   
+        }
+      }
+      
+    }
+    .grafico{
+      display: flex;
+      justify-content: center;
+    }
+  }

@@ -1,4 +1,4 @@
-import { ImovelCard } from '../../../interface/produto/imovel-card';
+import { ImovelCard } from '../../../interface/imovel/imovel-card';
 import {  Component, inject, Inject, Input, LOCALE_ID, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from '../../../interface/geral/empresa';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Paginacao } from '../../../interface/produto/paginacao';
+import { Paginacao } from '../../../interface/imovel/paginacao';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -106,7 +106,7 @@ export class CardsComponent implements OnInit {
     return  texto1 + texto2;
   }
   formataTextoGaragem(imvGaragem: number): string{
-    return  imvGaragem > 1 ? imvGaragem + ' Garagens, ': imvGaragem + ' Garage, ';
+    return  imvGaragem > 1 ? imvGaragem + ' Garagens ': imvGaragem + ' Garage ';
   }
     
   mostraImagemUsuario(usrCodigo: number): string{

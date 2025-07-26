@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { DeletarComponent } from '../../../home/dialog/deletar/deletar.component';
 import { Empresa } from '../../../../interface/geral/empresa';
 import { EmpresaService } from '../../../../service/geral/empresa.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,10 +12,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { Mensagem } from '../../../../utils/mensagem';
-import { Pageable } from '../../../../interface/produto/pageable';
-import { Paginacao } from '../../../../interface/produto/paginacao';
+import { Pageable } from '../../../../interface/imovel/pageable';
+import { Paginacao } from '../../../../interface/imovel/paginacao';
 import { Router } from '@angular/router';
-import { SessaoService } from '../../../../service/sessao/sessao.service';
+import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
 
 @Component({
     selector: 'app-empresa',
@@ -31,7 +30,7 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
   spinnerAcao = false;
   readonly dialog = inject(MatDialog);
   pageable!: Pageable<Empresa>;
-  paginacao: Paginacao = new Paginacao(0, 10);
+  paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
   displayedColumns: string[] = ['Ref:', 'Razão Social','CNPJ','Situação','Ação'];
   constructor(private empresaService : EmpresaService,
@@ -88,11 +87,10 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
   }
 
   detalhe(empCodigo: number){
-    this.route.navigate(['cadastro/empresa/'+empCodigo]);
+    this.route.navigate(['cadastro/sistema/empresa/'+empCodigo]);
   }
 
   delete(empCodigo: number){
-    this.spinnerAcao = true;
     this.empresaService.delete(empCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Empresa deletado com sucesso")
@@ -100,12 +98,10 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao deletar empresa, favor validar se possui vinculação com outros cadastros")
-        this.spinnerAcao = false;
       }
     })
   }
   desativar(empCodigo: number){
-    this.spinnerAcao = true;
     this.empresaService.desativar(empCodigo).subscribe({
       next:(res)=>{
         this.mensagem.sucesso("Empresa alterado com sucesso")
@@ -113,15 +109,11 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao alterar a Empresa")
-        this.spinnerAcao = false;
       }
     })
   }
   novo(){
-    this.route.navigate(['cadastro/empresa']);
-  }
-  voltar(){
-    this.route.navigate(['acesso/sistema']);
+    this.route.navigate(['acesso/sistema/cadastro/empresa']);
   }
   abrirDialogDeletar(empresa: Empresa){
     const dialogRef = this.dialog.open(DeletarComponent, {

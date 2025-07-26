@@ -63,7 +63,7 @@ select optgroup{
     color: black;
     font-family: "Montserrat";
 }
-button {
+.button_pesquisa {
     width: 500px;
     height: 40px;
     padding: 10px 15px;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, Optional } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { Cidade } from '../../../../interface/pessoa/cidade';
 import { Estado } from '../../../../interface/pessoa/estado';
 import { EstadoService } from '../../../../service/pessoa/estado.service';
 import { CidadeService } from '../../../../service/pessoa/cidade.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-cadastro-endereco',
@@ -26,20 +27,22 @@ import { CidadeService } from '../../../../service/pessoa/cidade.service';
 })
 export class CadastroEnderecoComponent implements OnInit {
 
+  readonly dialogRef = inject(MatDialogRef<CadastroEnderecoComponent>, { optional: true });
   endereco: EnderecoDTO = new EnderecoDTO();
   listaEstado: Estado[] = [];
   listaCidade: Cidade[] = [];
   estado: Estado = new Estado();
   valida = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: { dialog: boolean } | null,
+              private route: ActivatedRoute,
               private router: Router,
               private mensagemService: Mensagem,
               private estadoService: EstadoService,
               private cidadeService: CidadeService,
               private enderecoService: EnderecoService){}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.carregaListas();
   }
   carregaListas() {
@@ -61,7 +64,8 @@ export class CadastroEnderecoComponent implements OnInit {
           this.endereco = res;
           this.sicronizarListas();
         },error:(err)=>{
-          this.mensagemService.error("Erro ao carregar o endereço: "+ err)
+          console.log("Erro ao carregar o endereço: "+ err);
+          this.mensagemService.error("Erro ao carregar o endereço")
         }
       })
     }
@@ -95,7 +99,7 @@ export class CadastroEnderecoComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['detalhe/endereco'])
+    this.router.navigate(['acesso/sistema/detalhe/endereco'])
   }
   salvar(){;
     if(this.validaCampos()){
@@ -106,9 +110,12 @@ export class CadastroEnderecoComponent implements OnInit {
       next:(res)=>{
         this.endereco = res;
         this.mensagemService.sucesso("Endereço salvo com sucesso");
+        if(this.data!.dialog){
+          this.dialogRef!.close();
+        }
       }, error:(err)=>{
         this.mensagemService.error("Erro ao salvar o endereço");
-        console.log("Erro ao salvar o endereço: "+ err);
+        console.log("Erro ao salvar o endereço: "+ err.error?.message);
       }
     });
   }
@@ -131,5 +138,14 @@ export class CadastroEnderecoComponent implements OnInit {
     // Formata no padrão 00000-000
     this.endereco.endCep = cep.replace(/^(\d{5})(\d{3})$/, '$1-$2');
   }
-
+  liberarBotaoVoltar(): boolean{
+    if(this.data != null && this.data.dialog){
+      return false;
+    }
+    return true;
+  }
+  novo(){
+    this.endereco = new EnderecoDTO();
+    this.router.navigate(['acesso/sistema/cadastro/endereco'])
+  }
 }

@@ -27,38 +27,125 @@ h1 {
     color: rgb(60, 72, 88);
     line-height: 1.6;
   }
-.icones_contato, .conteudo, .menu_fixo, button, .conteiner_rodape{
-    background-color: #0e2442;
+/* button cadastrar */
+.novo_cadastro, .voltar, .novo, .button_salvar{
+  border: none!important;
+  padding: 12px 24px!important;
+  font-size: 16px!important;
+  font-weight: 500!important;
+  border-radius: 8px!important;
+  cursor: pointer!important;
+  transition: background-color 0.3s ease, transform 0.2s ease!important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15)!important;
+  color: white!important;
 }
-.reservados{
-  background-color: #233b5c;
+.novo_cadastro, .button_salvar{
+  background-color: rgb(77, 158, 77)!important;
+}
+.voltar, .novo{
+  background-color: #005CBB!important;
+}
+.novo_cadastro:hover, .voltar:hover, .novo:hover, .button_salvar:hover{
+    background-color: #0e2442!important;
+}
+
+/* Table */
+table {
+  width: 100%!important;
+  background-color: white!important;
+}
+.mat-elevation-z8{
+  width: 70%!important;
+}
+.demo-paginator{
+  background-color: white!important;
+}
+th{
+  background-color: #0e2442!important;
+  color: white!important;
+}
+/* icones detalhe, delete, ativo */
+.icones{
+  display: flex!important;
+  .detalhe{
+     mat-icon{
+      background-color: #005CBB!important;
+      border-radius: 100%!important;
+      width: 30px!important;
+      height: 30px!important;
+      font-size: 18px!important;
+      color: white!important;
+      display: flex!important;
+      align-items: center!important;
+      justify-content: center!important;
+      cursor: pointer!important;
+     }                 
+  }
+  .delete{
+      mat-icon{
+          background-color: red!important;
+          border-radius: 100%!important;
+          width: 30px!important;
+          height: 30px!important;
+          font-size: 18px!important;
+          color: white!important;
+          display: flex!important;
+          align-items: center!important;
+          justify-content: center!important;
+          margin-left: 10px!important;
+          cursor: pointer!important;
+      }
+  }
+  .detalhe{
+      mat-icon:hover{
+         background-color: #0E2442!important;     
+      }
+  }
+  .delete{
+      mat-icon:hover{
+         background-color: rgb(199, 3, 3)!important;    
+      }
+  }
+  .example-section {
+      display: flex!important;
+      align-content: center!important;
+      align-items: center!important;
+      margin-left: 10px!important;
+  }
+}
+.usrLogin, .role, .icone_menu{
+  color: #0E2442!important;
+}
+/* --------- */
+.reservados, .dados_empresa, .sidebar, #content_home, .conteiner_rodape, .topo, .button_pesquisa{
+  background-color: #0E2442!important;
 }
 
 /* CARD*/
-.arrow-left, .arrow-right {
-  color: #233b5c!important;
+.arrow-left, .arrow-right, .voltar_login, .icone_imovel {
+  color: #0E2442!important;
 }
 .arrow-left:hover,
 .arrow-right:hover {
-  background-color: #233b5c!important;
-  color: #ffffff!important;
+  background-color: #0E2442!important;
+  color: #C0C0C0!important;
 }
 /* ------ */
 
 .success-snackbar{
-    --mat-mdc-snack-bar-button-color: rgb(255, 255, 255)!important;
-    --mdc-snackbar-container-color: rgb(50, 104, 50)!important;
+    --mat-mdc-snack-bar-button-color: #C0C0C0!important;
+    --mdc-snackbar-container-color: rgb(77, 158, 77)!important;
     --mdc-snackbar-supporting-text-color: white;
 }
 .error-snackbar {
-    --mat-mdc-snack-bar-button-color: rgb(255, 255, 255)!important;
+    --mat-mdc-snack-bar-button-color: #C0C0C0!important;
     --mdc-snackbar-container-color: rgb(223, 67, 67)!important;;
     --mdc-snackbar-supporting-text-color: white;
 }
 .warning-snackbar {
-    --mat-mdc-snack-bar-button-color: rgb(255, 255, 255)!important;
+    --mat-mdc-snack-bar-button-color: #C0C0C0!important;
     --mdc-snackbar-container-color: rgb(216, 111, 63)!important;;
-    --mdc-snackbar-supporting-text-color: rgb(255, 255, 255);
+    --mdc-snackbar-supporting-text-color: #C0C0C0;
 }
 .mdc-dialog--open .mat-mdc-dialog-surface, .mdc-dialog--closing .mat-mdc-dialog-surface{
     background: hsla(0, 0%, 13%, 0.9);
@@ -77,11 +164,9 @@ h1 {
     background-color: white!important;
     margin: 10px!important;
 }
+
 .mat-mdc-option .mdc-list-item__primary-text{
     color: #0e2442!important;
-}
-.mat-mdc-select-panel-above div.mat-mdc-select-panel{
-    background-color: #ffffff!important;
 }
 .mat-mdc-option .mat-icon, .mat-mdc-option .mat-pseudo-checkbox-full{
     border: 2px solid #0e2442!important;
@@ -106,31 +191,46 @@ h1 {
     color: rgb(60, 72, 88)!important;
 }
 .custom-dialog-container {
-    display: flex!important;
-    flex-direction: column!important;
-  }
+  display: flex!important;
+  flex-direction: column!important;
+}
 
-  .custom-dialog-container .mat-dialog-content {
-    flex: 1!important;
-    overflow-y: auto!important;
-  }
+.custom-dialog-container .mat-dialog-content {
+  flex: 1!important;
+  overflow-y: auto!important;
+}
 
-  .custom-dialog-container .mat-dialog-actions {
-    flex-shrink: 0!important;
-  }
-  .mat-mdc-radio-button .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{
-    border-color: rgb(60, 72, 88,0.4)!important;
-  }
-  .mdc-checkbox:hover .mdc-checkbox__native-control:checked~.mdc-checkbox__background{
-    background-color: #0e2442!important;
-  }
-  .mdc-checkbox__native-control:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background{
-    background-color: #0e2442!important
-  }
-  .mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{
-    background-color: #0e2442!important
-  }
-  .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
-    stroke: #BB9D5C!important;
-  }
-
+.custom-dialog-container .mat-dialog-actions {
+  flex-shrink: 0!important;
+}
+.mat-mdc-radio-button .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{
+  border-color: rgb(60, 72, 88,0.4)!important;
+}
+.mdc-checkbox:hover .mdc-checkbox__native-control:checked~.mdc-checkbox__background{
+  background-color: #0e2442!important;
+}
+.mdc-checkbox__native-control:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:indeterminate~.mdc-checkbox__background{
+  background-color: #0e2442!important
+}
+.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{
+  background-color: #0e2442!important
+}
+/* spiner */
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
+  stroke: #0e2442!important;
+}
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height:  600px;
+  margin: auto;
+}
+/* ------ */
+input{
+  padding-left: 5px;
+}
+.mat-mdc-menu-content{
+  background-color: white!important;
+}

@@ -1,11 +1,9 @@
 import { environment } from '../../../../environments/environment.prod';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from '../../interface/acesso/login';
-import { Mensagem } from './../../utils/mensagem';
 import { Router } from '@angular/router';
-import { SessaoService } from '../sessao/sessao.service';
-import { tap } from 'rxjs';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Util } from '../../utils/util';
 
@@ -14,61 +12,38 @@ import { Util } from '../../utils/util';
 })
 export class LoginService {
 
-  constructor(private mensagem: Mensagem,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private router: Router,
-              private sessaoService: SessaoService,
               private cookieService: CookieService) { }
 
   entrar(login: Login){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>(environment.api_url + "/auth", JSON.stringify(login), {headers:headers}).pipe(
+    return this.http.post<any>(environment.api_url_public + "/auth", JSON.stringify(login), {headers:headers}).pipe(
       tap ((res) =>{
-            this.setToken(res.token);
-            localStorage.setItem('role', Util.encode(res.role));
-            this.sessaoService.setUsrLogin(res.usrLogin);
-            this.sessaoService.setRole(res.role);
-            this.sessaoService.setToken(res.token);
-            this.redirecionar()
+        this.setToken(res.token);
+        this.setUsuario(res.role, res.usrLogin, res.usrCodigo);
+        
+        //this.redirecionar();
       }),
     )
   }
 
+
   redirecionar() {
-    setTimeout(() => {
+    this.router.navigate(['acesso/sistema/detalhe/dashboard']).then(() => {
       window.location.reload();
-    }, 50);
-    this.router.navigate(['acesso/sistema'])
+    });
   }
 
   setToken(token: any): void{
-    localStorage.setItem('XAuthorization', token);
     this.cookieService.set('XAuthorization', token, 1, '/');
   }
 
-deslogar() {
-  localStorage.clear();
-  this.cookieService.delete('XAuthorization', '/');
-  this.router.navigate(['']);
-}
-
-get obterToken(): any {
-  return this.cookieService.get('XAuthorization')
-    ? this.cookieService.get('XAuthorization')
-    : null;
-}
-get logado(): boolean {
-  return this.cookieService.get('XAuthorization') ? true
-  : localStorage.getItem('XAuthorization') ? true : false;
-}
-sair(): void{
-  this.cookieService.delete('XAuthorization');
-  localStorage.clear();
-  this.sessaoService.inicializa();
-  this.mensagem.sucesso("Deslogado com sucesso")
-  this.router.navigate([''])
-}
-
+  setUsuario(role: any, usrLogin: any, usrCodigo: any): void{
+    this.cookieService.set('role', Util.encode(role))
+    this.cookieService.set('user', Util.encode(usrLogin))
+    this.cookieService.set('codUser', Util.encode(usrCodigo))
+  }
 }

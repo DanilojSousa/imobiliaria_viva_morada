@@ -11,7 +11,7 @@ export class SituacaoService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Situacao[]> {
-    return this.http.get<Situacao[]>(environment.api_url + "/situacao/getAll", { withCredentials: true }).pipe(
+    return this.http.get<Situacao[]>(environment.api_url + "/situacao", { withCredentials: true }).pipe(
       map((obj) => obj),
     );
   }

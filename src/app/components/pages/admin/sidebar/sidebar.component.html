@@ -1,0 +1,85 @@
+<div class="sidebar" (mouseenter)="hover = true" (mouseleave)="hover = false" [class.expanded]="hover">
+    <div class="menu" (click)="paginaPrincipal()">
+        <img [src]="mostrarLogo()" width="40px" height="40px">
+        @if(hover){
+            <div class="titulo">{{empresa.empRazaoSocial}}</div>
+        }
+    </div>
+    <mat-divider></mat-divider>
+    <div class="menu"  (click)="navegar('dashboard')">
+        <div class="icone_sitema"><mat-icon fontIcon="bar_chart_4_bars"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Dashboard</div>
+        }
+    </div>
+    <div class="menu" (click)="navegar('imovel')">
+        <div class="icone_sitema"><mat-icon fontIcon="real_estate_agent"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Imóvel</div>
+        }
+    </div>
+    @if(permissao()){
+        <div class="menu" (click)="navegar('usuario')">
+            <div class="icone_sitema"><mat-icon fontIcon="account_circle"></mat-icon></div>
+            @if(hover){
+                <div class="titulo">Usuario</div>
+            }
+        </div>
+    }
+    @if(permissao()){
+        <div class="menu"  (click)="navegar('empresa')">
+            <div class="icone_sitema"><mat-icon fontIcon="factory"></mat-icon></div>
+            @if(hover){
+                <div class="titulo">Empresa</div>
+            }
+        </div>
+    }
+    <div class="menu" (click)="navegar('endereco')">
+        <div class="icone_sitema"><mat-icon fontIcon="location_on"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Endereço</div>
+        }
+    </div>
+    <div class="menu" (click)="navegar('condominio')">
+        <div class="icone_sitema"><mat-icon fontIcon="map"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Condominio</div>
+        }
+    </div>
+    <div class="menu"  (click)="navegar('proximidade')">
+        <div class="icone_sitema"><mat-icon fontIcon="360"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Proximidade</div>
+        }
+    </div>
+    <div class="menu" (click)="navegar('negocio')">
+        <div class="icone_sitema"><mat-icon fontIcon="handshake"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Negócio</div>
+        }
+    </div>
+    <div class="menu"  (click)="navegar('tipoImovel')">
+        <div class="icone_sitema"><mat-icon fontIcon="app_registration"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Tipo Imóvel</div>
+        }
+    </div>
+    <div class="menu" (click)="navegar('situacao')">
+        <div class="icone_sitema"><mat-icon fontIcon="engineering"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Situação</div>
+        }
+    </div>
+    <div class="menu"  (click)="navegar('localizacao')">
+        <div class="icone_sitema"><mat-icon fontIcon="surfing"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Localização</div>
+        }
+    </div>
+    <div class="menu"  (click)="navegar('areaLazer')">
+        <div class="icone_sitema"><mat-icon fontIcon="sports_volleyball"></mat-icon></div>
+        @if(hover){
+            <div class="titulo">Àrea laser</div>
+        }
+    </div>
+</div>

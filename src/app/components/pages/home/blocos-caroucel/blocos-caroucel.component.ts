@@ -1,8 +1,8 @@
 import { Component, Input, LOCALE_ID, OnInit } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { PesquisaFiltradaImovel } from '../../../interface/produto/pesquisaFiltradaImovel';
-import { Pageable } from '../../../interface/produto/pageable';
-import { Imovel } from '../../../interface/produto/imovel';
+import { PesquisaFiltradaImovel } from '../../../interface/imovel/pesquisaFiltradaImovel';
+import { Pageable } from '../../../interface/imovel/pageable';
+import { Imovel } from '../../../interface/imovel/imovel';
 import { ImovelService } from '../../../service/imovel/imovel.service';
 import localePt from '@angular/common/locales/pt';
 import { MatIcon } from '@angular/material/icon';
@@ -12,9 +12,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SessaoService } from '../../../service/sessao/sessao.service';
-import { ImagensFiltrada } from '../../../interface/produto/imagens_filtrada';
-import { environment } from '../../../../../environments/environment.prod';
-import { ImagensCodigo } from '../../../interface/produto/ImagensCodigo';
+import { ImagensFiltrada } from '../../../interface/imovel/imagens_filtrada';
+import { ImagensCodigo } from '../../../interface/imovel/ImagensCodigo';
+import { Util } from '../../../utils/util';
+import { OrdenarEnum } from '../../../interface/enum/ordenarImovel';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -37,6 +38,7 @@ export class BlocosCaroucelComponent implements OnInit{
   pageSize = 12;
   spinner: boolean = false;
   filtro: boolean = false;
+  isAtivo: boolean = false;
   pageEvent!: PageEvent;
   imagensFiltrada: ImagensFiltrada = new ImagensFiltrada();
   constructor(private imovelService : ImovelService,
@@ -52,6 +54,8 @@ export class BlocosCaroucelComponent implements OnInit{
   }
 
   pesquisaFiltrada() {
+    this.pesquisaFiltradaImovel.ordenar = OrdenarEnum.DATA
+    this.pesquisaFiltradaImovel.filter = OrdenarEnum.DESC
     this.imovelService.pesquisaFiltrada(this.pesquisaFiltradaImovel).subscribe({
       next:(res)=>{
         this.pageable = res;
@@ -85,7 +89,7 @@ export class BlocosCaroucelComponent implements OnInit{
     }
   }
   mostraImagem(imgCodigo: number): string{
-    return `${environment.api_url}/imagens/getImagem?imgCodigo=${imgCodigo}`;
+    return Util.getImagemImovel(imgCodigo);
   }
 
   compartilhar(imovel : Imovel){
@@ -102,6 +106,19 @@ export class BlocosCaroucelComponent implements OnInit{
       // Fallback para navegadores que não suportam a Web Share API
       alert('A funcionalidade de compartilhamento não está disponível neste dispositivo.');
     }
+    this.imovelService.atualizaCompartilhamento(imovel.imvCodigo).subscribe({
+      next:()=>{}
+    })
+  }
+  favorito(imovel : Imovel){
+    const item = this.pageable.content.find(x => x.imvCodigo === imovel.imvCodigo);
+    if (item) {
+      item.imvFavorito = item.imvFavorito > 0 ? -1 : 1;
+      this.imovelService.atualizaFavorito(item).subscribe({
+        next:()=>{}
+      });
+    }
+    
   }
 
   handlePageEvent(e: PageEvent) {

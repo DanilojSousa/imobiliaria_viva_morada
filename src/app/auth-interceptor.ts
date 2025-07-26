@@ -1,18 +1,32 @@
-import { HttpRequest, HttpInterceptorFn, HttpHandlerFn } from '@angular/common/http';
+import { HttpRequest, HttpInterceptorFn, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { catchError, throwError } from 'rxjs';
 
 export const noopInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const cookie = inject(CookieService);
+  const router = inject(Router);
+
   const token = cookie.get('XAuthorization')?.trim() || localStorage.getItem('XAuthorization');
+
+  let authReq = req;
   if (token) {
-    const authReq = req.clone({
+    authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
       withCredentials: true
     });
-    return next(authReq);
   }
-  return next(req);
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 || error.status === 403) {
+        console.log("Token inválido ou acesso proibido");
+        cookie.deleteAll();
+        router.navigate(['/login']);
+      }
+      return throwError(() => error);
+    })
+  );
 };
 
 // TODO: Figure how to have the router from the angular context to redirect
