@@ -1,7 +1,7 @@
 <div class="conteiner_rodape">
   <div class="dados_site">
     <div>
-      <img [src]="mostraImagem(empresa.empCodigo!)" width="250px" height="250px">
+      <img [src]="mostraImagem()" width="250px" height="250px">
     </div>
     <div class="informacoes">
       <div class="menus">
@@ -42,6 +42,7 @@
         </div>
       </div>
     </div>
+    <app-newsletter></app-newsletter>
   </div>
   <div class="reservados">
     <p>&#64; Copyright 2024 - {{empresa.empRazaoSocial}} - Todos os direitos reservados</p>

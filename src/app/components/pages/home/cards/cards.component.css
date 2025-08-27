@@ -19,6 +19,10 @@
     margin: auto;
     cursor: pointer;
     justify-content: center;
+    .imgens_container{
+      display: flex;
+      width: auto;
+    }
     .imagens{
       width: 100%;
       height: 500px; /* ou outro valor fixo ou baseado no layout responsivo */

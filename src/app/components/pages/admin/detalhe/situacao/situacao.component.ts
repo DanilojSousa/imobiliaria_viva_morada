@@ -36,7 +36,6 @@ export class SituacaoComponent implements OnInit {
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private situacaoImovelService : SituacaoImovelService,
               private mensagem: Mensagem,
-              private route: Router,
               private sessaoServce: SessaoService){}
 
   ngOnInit(): void {
@@ -50,6 +49,7 @@ export class SituacaoComponent implements OnInit {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a situação do Imovel")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -87,7 +87,8 @@ export class SituacaoComponent implements OnInit {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar a situação do Imovel, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros");
+        console.log(err.error?.message);
       }
     })
   }

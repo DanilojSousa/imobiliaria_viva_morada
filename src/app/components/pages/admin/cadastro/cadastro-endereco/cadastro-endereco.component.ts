@@ -50,7 +50,7 @@ export class CadastroEnderecoComponent implements OnInit {
       next:(res)=>{
         this.listaEstado = res;
       }, error:(err)=>{
-        console.log("Erro ao carregar a lista de estado: ", err)
+        console.log("Erro ao carregar a lista de estado: ", err.error?.message)
       }
     })
     this.detalhe();
@@ -64,8 +64,8 @@ export class CadastroEnderecoComponent implements OnInit {
           this.endereco = res;
           this.sicronizarListas();
         },error:(err)=>{
-          console.log("Erro ao carregar o endereço: "+ err);
-          this.mensagemService.error("Erro ao carregar o endereço")
+          console.log("Erro ao carregar o endereço: "+ err.error?.message);
+          this.mensagemService.error(err.error?.message)
         }
       })
     }
@@ -77,7 +77,7 @@ export class CadastroEnderecoComponent implements OnInit {
       next:(res)=>{
         this.listaCidade = res;
       }, error:(err)=>{
-        console.log("Erro ao carregar a cidade: "+ err);
+        console.log("Erro ao carregar a cidade: "+ err.error?.message);
       }
     })
   }
@@ -92,7 +92,7 @@ export class CadastroEnderecoComponent implements OnInit {
           const cidade = this.listaCidade.find(cidade => cidade.cidCodigo === this.endereco.cidade.cidCodigo);
           if (cidade) this.endereco.cidade = cidade;
         }, error:(err)=>{
-          console.log("Erro ao carregar a cidade da sicronização de listas: "+ err);
+          console.log("Erro ao carregar a cidade da sicronização de listas: "+ err.error?.message);
         }
       })
     }

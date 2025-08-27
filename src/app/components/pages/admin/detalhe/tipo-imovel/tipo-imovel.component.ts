@@ -36,7 +36,6 @@ export class TipoImovelComponent implements OnInit {
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private tipoImovelService : TipoImovelService,
               private mensagem: Mensagem,
-              private route: Router,
               private sessaoServce: SessaoService){}
 
   ngOnInit(): void {
@@ -50,6 +49,7 @@ export class TipoImovelComponent implements OnInit {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro ao buscar o tipo imovel")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -87,7 +87,8 @@ export class TipoImovelComponent implements OnInit {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar tipo imovel, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros");
+        console.log(err.error?.message);
       }
     })
   }

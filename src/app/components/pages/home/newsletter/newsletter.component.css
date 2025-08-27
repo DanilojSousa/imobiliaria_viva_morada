@@ -1,0 +1,45 @@
+.content_newsletter{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .titulo h4{
+        margin-top: 50px;
+        margin-bottom: 0px;
+        color: white;
+        font-size: 20px;
+    }
+    .texto p{
+        color: white;
+    }
+    .formulario{
+        width: 100%;
+        margin-bottom: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .input_button{
+            display: flex;
+            align-items: center;
+            input{
+                width: 350px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .button_assinar{
+                height: 45px;
+                width: 100px;
+                border: none;
+                padding: 12px 24px;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                color: white;
+            }
+            .button_assinar:hover{
+                background-color: #408343!important;
+            }
+        }
+    }
+}

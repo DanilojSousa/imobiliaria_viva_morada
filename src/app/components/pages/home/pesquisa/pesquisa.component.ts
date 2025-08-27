@@ -47,7 +47,6 @@ export class PesquisaComponent implements OnInit{
               private tipoImovelService: TipoImovelService,
               private router: Router){}
   ngOnInit(): void {
-    this.empresa = this.sessaoService.getEmpresa();
     this.carregaNegocio();
     this.carregaTipoImovel();
     this.carregaEstado();
@@ -119,7 +118,7 @@ export class PesquisaComponent implements OnInit{
       this.pesquisaFiltradaImovel.valorMinimo = value;
     }
   }
-  mostraImagem(empCodigo : number): string {
-    return Util.mostraImagemEmpresa(empCodigo);
+  mostraImagem(): string {
+    return Util.mostraImagemEmpresa(300, 300);
   }
 }

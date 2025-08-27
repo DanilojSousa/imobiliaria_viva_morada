@@ -28,7 +28,7 @@ export class DestaquesComponent implements OnInit{
       next:(res)=>{
         this.pageable = res;
       },error: (err) => {
-        console.log(err)
+        console.log(err.error?.message);
       }
     })
   }

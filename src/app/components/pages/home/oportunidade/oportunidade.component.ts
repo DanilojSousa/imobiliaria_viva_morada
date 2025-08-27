@@ -41,6 +41,6 @@ export class OportunidadeComponent implements OnInit {
   }
 
   mostraImagem(imgCodigo: number): string{
-    return Util.getImagemImovel(imgCodigo);
+    return Util.getImagemImovel(imgCodigo, 415, 450);
   }
 }

@@ -1,5 +1,5 @@
 import { ImovelCard } from '../../../interface/imovel/imovel-card';
-import {  Component, inject, Inject, Input, LOCALE_ID, OnInit, PLATFORM_ID} from '@angular/core';
+import {  Component, inject, Inject, LOCALE_ID, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -67,7 +67,7 @@ export class CardsComponent implements OnInit {
   }
 
   mostraImagem(imgCodigo: number): string{
-    return Util.getImagemImovel(imgCodigo);
+    return Util.getImagemImovel(imgCodigo, 0, 0);
   }
 
   //slide
@@ -110,7 +110,7 @@ export class CardsComponent implements OnInit {
   }
     
   mostraImagemUsuario(usrCodigo: number): string{
-    return Util.mostraImagemUsuario(usrCodigo);
+    return Util.mostraImagemUsuario(usrCodigo, 50, 50);
   }
 }
 

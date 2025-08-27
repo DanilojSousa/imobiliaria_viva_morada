@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
   }
 
   mostrarLogo(): string{
-    return Util.mostrarLogo(this.empresa.empCodigo);
+    return Util.mostrarLogo(40, 40);
   }
 
   paginaPrincipal(){

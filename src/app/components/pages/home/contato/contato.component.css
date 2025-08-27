@@ -4,23 +4,63 @@
     margin-bottom: 50px;
     flex-direction: column;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../../../../../assets/contato/fundo_conato.png");   
-    background-size: cover; /* Mantém o tamanho original da imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    background-position: center; /* Posiciona a imagem no topo e centralizada */
-    .titulo{
-        width: 100%;
+    .contato_titulo{
+        width: 70%;
         margin-top: 50px;
-        h1{
-            z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h4{
             font-size: 30px;
-            margin: 0px 60px 30px;
-            text-align: left;
-            color: white;
+            margin: 0px;
+        }
+        p{
+            margin-bottom: 50px;
+        }
+        .contato_detalhes{
+            width: 100%;
+            display: flex;
+            margin: auto;
+            justify-content: center;
+            .datelhe_endereco{
+                width: 50%;
+                h5{
+                    font-size: 20px;
+                }
+                .detail-item{
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    mat-icon{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 25px;
+                        padding: 5px;
+                        height: 100%;
+                        margin-right: 10px;
+                        background-color: #0E2442;
+                        border-radius: 10px;
+                        color: white;
+                    }
+                    .detail-title{
+                        font-size: 20px;
+                    }
+                    .detail-text{
+                        font-size: 16px;
+                    }
+
+                }
+
+            }
+            .conteudo_contato{
+                width: 50%;
+            }
         }
     }
     .conteudo_contato{
-        width: 30%;
+  
         margin-bottom: 50px;
         .form{
             display: flex;

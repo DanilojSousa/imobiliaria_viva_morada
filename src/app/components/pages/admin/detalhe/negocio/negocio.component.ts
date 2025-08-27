@@ -48,6 +48,7 @@ export class NegocioComponent implements OnInit {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a localização")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -85,7 +86,8 @@ export class NegocioComponent implements OnInit {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar o Negócio, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros")
+        console.log(err.error?.message)
       }
     })
   }

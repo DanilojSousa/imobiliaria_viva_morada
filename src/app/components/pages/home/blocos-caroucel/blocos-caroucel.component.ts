@@ -89,7 +89,7 @@ export class BlocosCaroucelComponent implements OnInit{
     }
   }
   mostraImagem(imgCodigo: number): string{
-    return Util.getImagemImovel(imgCodigo);
+    return Util.getImagemImovel(imgCodigo, 306, 308);
   }
 
   compartilhar(imovel : Imovel){

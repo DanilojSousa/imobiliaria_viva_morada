@@ -65,8 +65,8 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
         this.pageable = res;
         this.isLoadingResults = false;
       },error: (err) => {
-        console.log("Erro ao buscar o condomínio: "+err)
         this.mensagem.error("Erro ao buscar o condomínio")
+        console.log(err.error?.message);
         this.isLoadingResults = false;
       }
     })
@@ -104,7 +104,8 @@ export class CondominioComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar condomínio, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros");
+        console.log(err.error?.message)
       }
     })
   }

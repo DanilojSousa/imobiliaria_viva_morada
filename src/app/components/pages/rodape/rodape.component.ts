@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../interface/geral/empresa';
 import { Util } from '../../utils/util';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { timer } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment.prod';
 import { SessaoService } from '../../service/sessao/sessao.service';
+import { NewsletterComponent } from "../home/newsletter/newsletter.component";
 
 @Component({
     selector: 'app-rodape',
-    imports: [MatIconModule],
+    imports: [MatIconModule, NewsletterComponent],
     templateUrl: './rodape.component.html',
     styleUrl: './rodape.component.css'
 })
@@ -33,8 +34,8 @@ export class RodapeComponent implements OnInit {
     });
   }
 
-  mostraImagem(empCodigo: number): string{
-      return Util.mostraImagemEmpresa(empCodigo);
+  mostraImagem(): string{
+      return Util.mostraImagemEmpresa(250, 250);
   }
 
   formatarTelefone(){

@@ -1,0 +1,22 @@
+<div class="content_newsletter">
+    <div class="titulo">
+        <h4>Assine Nossa Newsletter</h4>
+    </div>
+    <div class="texto">
+        <p>Receba as melhores ofertas de imóveis diretamente no seu email.</p>
+    </div>
+    <div class="formulario">
+        <form #formRef="ngForm" (ngSubmit)="salvar()">
+            <div class="input_button">
+                <input type="text" 
+                    required
+                    #nome 
+                    id="email" 
+                    placeholder="Seu melhor e-mail" 
+                    name="nwlEmail" 
+                    [(ngModel)]="newsletter.nwlEmail"/>
+                    <button class="button_assinar" mat-flat-button>Assinar</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -71,7 +71,7 @@ export class CadastroUsuarioComponent implements OnInit {
         this.detalhe();
       },
       error: (err) => {
-        console.error('Erro ao carregar dados iniciais:', err);
+        console.error('Erro ao carregar dados iniciais:', err.error?.message);
       }
     });
   }
@@ -84,7 +84,7 @@ export class CadastroUsuarioComponent implements OnInit {
           this.usuario = res;
           this.sicronizarListas();
         },error:(err)=>{
-          this.mensagemService.error("Erro ao carregar o usuário")
+          this.mensagemService.error(err.error?.message)
         }
       })
     }

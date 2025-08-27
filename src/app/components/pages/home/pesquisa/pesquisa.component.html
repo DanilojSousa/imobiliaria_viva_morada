@@ -1,9 +1,7 @@
 <div id="pesquisa">
-    @if(empresa.empCodigo != null){
-        <div class="logo">
-          <img [src]="mostraImagem(empresa.empCodigo!)" width="300" height="300">
-        </div>
-    }
+    <div class="logo">
+        <img [src]="mostraImagem()" width="300" height="300">
+    </div>
     <div class="pesquisa_form">
         <div class="formulario">
             <form class="form" #myForm="ngForm">

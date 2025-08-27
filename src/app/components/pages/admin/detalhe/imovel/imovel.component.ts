@@ -9,7 +9,7 @@ import { ImovelService } from '../../../../service/imovel/imovel.service';
 import { PesquisaFiltradaImovel } from '../../../../interface/imovel/pesquisaFiltradaImovel';
 import { Imovel } from '../../../../interface/imovel/imovel';
 import { CommonModule } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { Mensagem } from '../../../../utils/mensagem';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
@@ -17,11 +17,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-imovel',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule,
-        CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule],
+        CommonModule, MatIconModule, MatSlideToggleModule, MatButtonModule, MatInputModule, FormsModule],
     providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
     templateUrl: './imovel.component.html',
     styleUrl: './imovel.component.css'
@@ -57,6 +59,7 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar imóvel cadastrado")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -78,7 +81,8 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar o Imovel")
+        this.mensagem.error(err.error?.message)
+        console.log(err.error?.message)
       }
     })
   }
@@ -89,7 +93,8 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao desativar o Imovel")
+        this.mensagem.error(err.error?.message)
+        console.log(err.error?.message)
       }
     })
   }
@@ -135,5 +140,8 @@ export class ImovelComponent implements OnInit, AfterViewInit  {
 
   permissao(): boolean{
     return this.sessaoServce.permissao();
+  }
+  onInputChange(event: any) {
+    this. pesquisaFiltrada();
   }
 }

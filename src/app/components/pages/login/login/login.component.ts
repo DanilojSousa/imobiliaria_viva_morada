@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   emailForm: any;
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private sessaoService: SessaoService,
               private loginService: LoginService,
               private mensagem: Mensagem,
               private usuarioService: UsuarioService,
@@ -78,7 +77,7 @@ export class LoginComponent implements OnInit {
   }
 
   mostrarImagem(): string{
-    return Util.mostraImagemEmpresa(this.sessaoService.getEmpresa().empCodigo);
+    return Util.mostraImagemEmpresa(0, 0);
   }
 
   onSubmit(){
@@ -106,7 +105,7 @@ export class LoginComponent implements OnInit {
       this.usuarioService.alteraSenha(this.usuarioAlterarSenha).subscribe({
         next:()=>{
           this.mensagem.sucesso("Senha alterado com sucesso");
-          this.voltar();
+          this.router.navigate(['login'])
         }
       })
     }else if(this.config.recuperarSenha){
@@ -117,6 +116,7 @@ export class LoginComponent implements OnInit {
         }
       })
     }
+    this.loginForm.reset();
   }
 
   atualizaConfig(novaSenha:boolean, recuperarSenha:boolean, button: string, titulo: string){

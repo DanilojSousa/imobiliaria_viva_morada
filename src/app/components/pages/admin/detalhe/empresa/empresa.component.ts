@@ -75,6 +75,7 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
         this.spinnerAcao = false;
       },error: (err) => {
         this.mensagem.error("Erro ao buscar a empresa")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
         this.spinnerAcao = false;
       }
@@ -97,7 +98,8 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar empresa, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros")
+        console.log(err.error?.message)
       }
     })
   }
@@ -108,7 +110,8 @@ export class EmpresaComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao alterar a Empresa")
+        this.mensagem.error("Erro ao desativvar a empresa")
+        console.log(err.error?.message)
       }
     })
   }

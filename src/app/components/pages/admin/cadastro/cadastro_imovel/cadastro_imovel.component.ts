@@ -129,7 +129,7 @@ export class CadastroImovelComponent implements OnInit {
           this.sicronizarListas();
           this.spinner = true;
         },error:(err)=>{
-          this.mensagem.error("Erro ao carregar o imovel")
+          this.mensagem.error(err.error?.message)
           this.spinner = true;
         }
       })
@@ -195,7 +195,7 @@ export class CadastroImovelComponent implements OnInit {
         this.mensagem.sucesso("Imóvel salvo com sucesso");
         this.spinnerAcao = false;
       }, error:(err)=>{
-        this.mensagem.error("Erro ao salvar o Imóvel");
+        this.mensagem.error(err.error?.message);
         console.log("Erro ao salvar o Imóvel: "+ err.error?.message);
         this.spinnerAcao = false;
       }

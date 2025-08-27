@@ -4,7 +4,7 @@
         <div class="arrow-left" (click)="navegarImagem('prev')">&#10094;</div>
         <div class="conteudo_card">
             @for(imovel of imovelCard; track imovel; let i = $index){
-                <div (click)="detalhes(imovel.imvCodigo)">
+                <div class="imgens_container" (click)="detalhes(imovel.imvCodigo)">
                     <div class="imagens">
                         <img [class.img1]="i === 1" [class.img2]="i === 4" [class.img3]="i === 5"
                             [src]="mostraImagem(imovel.imgCodigo)"

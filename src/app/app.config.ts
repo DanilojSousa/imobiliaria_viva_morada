@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -8,8 +8,6 @@ import { Mensagem } from './components/utils/mensagem';
 import { SessaoService } from './components/service/sessao/sessao.service';
 import { LogadoOnGuard } from './components/account/shared/logadoOn';
 import { noopInterceptor } from './auth-interceptor';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +16,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, 
+      withEnabledBlockingInitialNavigation(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      })),
     provideClientHydration(),
     provideAnimations(),
     SessaoService,

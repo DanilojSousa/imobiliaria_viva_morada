@@ -20,8 +20,12 @@ export class Util{
 
     static decodeTime(base64: string): string{
       if(base64 != null){
+        // Converte de URL-safe para padrão
+        const base64Standard = base64.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = base64Standard.length % 4;
+        const base64Padded = pad ? base64Standard + '='.repeat(4 - pad) : base64Standard;
         const chaveBytes = CryptoJS.enc.Utf8.parse(this.CHAVE); // Convertendo a chave para bytes
-        const decrypted = CryptoJS.AES.decrypt(base64, chaveBytes, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 });
+        const decrypted = CryptoJS.AES.decrypt(base64Padded, chaveBytes, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 });
         const decryptedText = decrypted.toString(CryptoJS.enc.Utf8);
         const parts = decryptedText.split('_');
         const time = parts[1];
@@ -76,20 +80,17 @@ export class Util{
       return imageUrl;
     }
 
-    static mostraImagemEmpresa(empCodigo: number): string {
-      if(empCodigo != undefined){
-        return `${environment.api_url_public}/empresa/imagem/${empCodigo}`;
-      }
-      return '';
+    static mostraImagemEmpresa(width: number, height: number): string {
+        return `${environment.api_url_public}/empresa/imagem?width=${width}&height=${height}&descricao=logo`;
     }
-    static getImagemImovel(imgCodigo: number): string {
-    return `${environment.api_url_public}/imagens/${imgCodigo}`;
+    static getImagemImovel(imgCodigo: number, width: number, height: number): string {
+      return `${environment.api_url_public}/imagens/${imgCodigo}?width=${width}&height=${height}&descricao=imovel`;
     }
-    static mostraImagemUsuario(usrCodigo:number){
-      return `${environment.api_url_public}/usuario/imagem/${usrCodigo}`
+    static mostraImagemUsuario(usrCodigo:number, width:number, height:number){
+      return `${environment.api_url_public}/usuario/imagem/${usrCodigo}?width=${width}&height=${height}&descricao=usuario`
     }
-    static mostrarLogo(empCodigo: number): string {
-      return `${environment.api_url_public}/empresa/icone/${empCodigo}`
+    static mostrarLogo(width: number, height: number): string {
+      return `${environment.api_url_public}/empresa/icone?width=${width}&height=${height}&descricao=icone`
     }
 }
 

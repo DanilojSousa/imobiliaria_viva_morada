@@ -5,6 +5,17 @@
                 <div class="novo_cadastro" (click)="novo()">
                     Cadastrar
                 </div>
+                <div class="coluna">
+                    <div>
+                        <label>Pesquisar: </label>
+                        <input type="text"  
+                            id="pesquisa" 
+                            placeholder="Ref ou Descrição" 
+                            name="pesquisa" 
+                            [(ngModel)]="pesquisaFiltradaImovel.pesquisa"
+                            (input)="onInputChange($event)"/>
+                    </div>
+                </div>
             </div>
             <table mat-table [dataSource]="pageable.content || []">
         

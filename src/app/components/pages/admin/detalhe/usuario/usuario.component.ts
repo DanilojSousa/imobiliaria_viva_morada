@@ -16,11 +16,14 @@ import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.componen
 import { Usuario } from '../../../../interface/acesso/usuario';
 import { UsuarioService } from '../../../../service/acesso/usuario.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-usuario',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule,
-        MatTableModule, MatPaginatorModule, CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule],
+        MatTableModule, MatPaginatorModule, CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule,
+        MatInputModule, FormsModule],
     templateUrl: './usuario.component.html',
     styleUrl: './usuario.component.css'
 })
@@ -71,7 +74,8 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
         this.pageable = res;
         this.isLoadingResults = false;
       },error: (err) => {
-        this.mensagem.error("Erro ao buscar o usuário")
+        this.mensagem.error("Erro ao buscar o usuário");
+        console.log(err.error?.message);
         this.isLoadingResults = false;
       }
     })
@@ -93,7 +97,8 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar usuário, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros");
+        console.log(err.error?.message);
       }
     })
   }
@@ -105,6 +110,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
       },
       error: (err) => {
         this.mensagem.error("Erro ao alterar o Usuário")
+        console.log(err.error?.message)
       }
     })
   }
@@ -124,4 +130,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
     });
   }
 
+  onInputChange(event: any) {
+    this. pesquisaFiltrada();
+  }
 }

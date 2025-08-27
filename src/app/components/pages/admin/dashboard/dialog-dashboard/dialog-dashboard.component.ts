@@ -61,7 +61,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel favorito");
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })
@@ -72,7 +73,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel compartilhado");
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })
@@ -83,7 +85,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel visualizado");
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })
@@ -94,7 +97,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel ativo");
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })
@@ -105,7 +109,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel inativo");
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })
@@ -116,7 +121,8 @@ export class DialogDashboardComponent implements OnInit {
             this.pageable = res;
             this.isLoadingResults = false;
           },error: (err) => {
-            this.mensagem.error("Erro buscar imóvel cadastrado")
+            this.mensagem.error("Erro buscar imóvel total")
+            console.log(err.error?.message);
             this.isLoadingResults = false;
           }
         })

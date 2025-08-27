@@ -39,7 +39,7 @@ h1 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15)!important;
   color: white!important;
 }
-.novo_cadastro, .button_salvar{
+.novo_cadastro, .button_salvar, .button_assinar{
   background-color: rgb(77, 158, 77)!important;
 }
 .voltar, .novo{
@@ -117,7 +117,8 @@ th{
   color: #0E2442!important;
 }
 /* --------- */
-.reservados, .dados_empresa, .sidebar, #content_home, .conteiner_rodape, .topo, .button_pesquisa{
+.reservados, .dados_empresa, .sidebar, #content_home, .conteiner_rodape, .topo, .button_pesquisa, 
+#content_oportunidade, #content_sobre{
   background-color: #0E2442!important;
 }
 

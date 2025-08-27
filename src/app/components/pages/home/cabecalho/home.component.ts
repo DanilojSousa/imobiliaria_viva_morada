@@ -19,8 +19,6 @@ export class HomeComponent implements OnInit {
   mostrarMenuFixo = false;
   logado: boolean = false;
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private cookieService: CookieService,
               private sessaoService: SessaoService){}
 
   ngOnInit(){

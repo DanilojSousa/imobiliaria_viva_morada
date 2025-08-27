@@ -26,7 +26,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   mostraImagemUsuario(): void{
-    const imagem = Util.mostraImagemUsuario(this.sessaoService.getUsrCodigo());
+    const imagem = Util.mostraImagemUsuario(this.sessaoService.getUsrCodigo(), 50, 50);
     if(imagem !== undefined && imagem !== ''){
       this.imagemUrl = imagem;
     }else{

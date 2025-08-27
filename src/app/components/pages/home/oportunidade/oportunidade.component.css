@@ -5,13 +5,16 @@
     flex-direction: column;
     margin-top: 50px;
     margin-bottom: 50px;
+    background-color: #0E2442;
     .titulo{
+        margin-top: 50px;
         width: 100%;
         h1{
             z-index: 2;
             font-size: 30px;
             margin: 0px 60px 30px;
             text-align: left;
+            color: white;
         }
     }
     .cards{
@@ -21,6 +24,7 @@
         flex-wrap: wrap; /* Permite quebrar para a próxima linha */
         gap: 15px; /* Espaço entre os blocos */
         overflow: hidden!important;
+        margin-bottom: 100px;
         .card{
             position: relative;
             width: 415px;

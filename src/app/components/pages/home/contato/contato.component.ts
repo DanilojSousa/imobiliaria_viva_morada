@@ -4,26 +4,40 @@ import { EmailService } from '../../../service/geral/email.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Email } from '../../../interface/geral/email';
+import { MatIconModule } from '@angular/material/icon';
+import { Empresa } from '../../../interface/geral/empresa';
+import { EmpresaEndereco } from '../../../interface/geral/empresa-endereco';
+import { EmpresaService } from '../../../service/geral/empresa.service';
+import { Mensagem } from '../../../utils/mensagem';
 
 @Component({
     selector: 'app-contato',
-    imports: [MatButtonModule, FormsModule, CommonModule, MatSnackBarModule],
+    imports: [MatButtonModule, FormsModule, CommonModule, MatIconModule],
     templateUrl: './contato.component.html',
     styleUrl: './contato.component.css'
 })
 export class ContatoComponent implements OnInit{
 
-  private _snackBar = inject(MatSnackBar);
   readonly dialog = inject(MatDialog);
+  empresaEndereco = new EmpresaEndereco();
+  empresa = new Empresa();
   formattedPhone!: string;
   valida: boolean = false;
-  constructor(private emailService: EmailService,
-              private sessaoService: SessaoService){}
+  constructor(private empresaService: EmpresaService,
+              private emailService: EmailService,
+              private mensagem: Mensagem){}
+
   ngOnInit(): void {
-    
+    this.carregaEmpresaEndereco();
+  }
+  carregaEmpresaEndereco() {
+    this.empresaService.getByEmpresaEndereco().subscribe({
+      next:(res)=>{
+        this.empresaEndereco = res;
+      }
+    })
   }
 
   onEmail(myForm: NgForm){
@@ -33,16 +47,17 @@ export class ContatoComponent implements OnInit{
       email.evmConteudo = myForm.value.mensagem +"<br/><br/>"+myForm.value.nome+"<br/> Telefone: "+this.formattedPhone+"<br/> Email: "+myForm.value.email
       this.emailService.enviarEmail(email).subscribe({
         next:(res) =>{
-          this.openSnackBar("Email enviado com sucesso", "sucesso");
-        },error:(er)=>{
-          this.openSnackBar("Erro ao enviar o e-mail","error");
+          this.mensagem.sucesso("Email enviado com sucesso");
+        },error:(err)=>{
+          this.mensagem.error(err.error?.message);
+          console.log(err.error?.message)
         }
       })
     }
   }
   onWhatsapp(myForm: NgForm){
     if(this.validarFormulario(myForm)){
-      const url =  "https://api.whatsapp.com/send?phone=55"+this.sessaoService.getEmpresa().contato.cntWhatsapp+"&text="+myForm.value.mensagem;
+      const url =  "https://api.whatsapp.com/send?phone=55"+this.empresaEndereco.cntWhatsapp+"&text="+myForm.value.mensagem;
       window.open(url, '_blank')
     }
   }
@@ -61,12 +76,6 @@ export class ContatoComponent implements OnInit{
     return true;
   }
 
-  openSnackBar(text: string, tipo: string) {
-    this._snackBar.open(text, 'X',{
-      duration: 3000,
-      panelClass: [tipo],
-    });
-  }
   onPhoneInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     const value = input.value;

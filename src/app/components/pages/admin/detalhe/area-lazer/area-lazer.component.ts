@@ -37,7 +37,6 @@ export class AreaLazerComponent implements OnInit, AfterViewInit  {
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private areaLazerService : AreaLazerService,
               private mensagem: Mensagem,
-              private route: Router,
               private sessaoServce: SessaoService){}
 
   ngAfterViewInit(): void {
@@ -54,7 +53,8 @@ export class AreaLazerComponent implements OnInit, AfterViewInit  {
         this.pageable = res;
         this.isLoadingResults = false;
       },error: (err) => {
-        this.mensagem.error("Erro buscar a Area de Lazer")
+        this.mensagem.error("Erro buscar a Area de Lazer");
+        console.log(err.error?.message);
         this.isLoadingResults = false;
       }
     })
@@ -92,7 +92,8 @@ export class AreaLazerComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar a Área de Lazer, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros");
+        console.log(err.error?.message);
       }
     })
   }

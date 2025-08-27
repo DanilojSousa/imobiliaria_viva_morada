@@ -5,6 +5,17 @@
                 <div class="novo_cadastro" (click)="novo()">
                     Cadastro
                 </div>
+                <div class="coluna">
+                    <div>
+                        <label>Pesquisar: </label>
+                        <input type="text"  
+                            id="pesquisa" 
+                            placeholder="Ref ou Descrição" 
+                            name="pesquisa" 
+                            [(ngModel)]="paginacao.pesquisa"
+                            (input)="onInputChange($event)"/>
+                    </div>
+                </div>
             </div>
           @if(pageable != null){
             <table mat-table [dataSource]="pageable.content || []">

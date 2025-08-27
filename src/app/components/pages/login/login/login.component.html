@@ -44,14 +44,16 @@
               @if(config.novaSenha){
                 <div class="form-input">
                   <label>Confirmar Senha</label>
+                  <div class="senha_icone">
                   <input required="true"
                           formControlName="confirmarSenha"
                           [type]="hide ? 'password' : 'text'">
-                </div>
                         <mat-icon class="mat-icon"
                                   (click)="clickEvent($event)">
                                   {{hide ? 'visibility_off' : 'visibility'}}
                         </mat-icon>
+                  </div>
+                </div>
               }
               <button class="entrar"
                       mat-button type="submit">

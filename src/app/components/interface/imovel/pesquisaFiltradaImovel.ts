@@ -24,6 +24,7 @@ export class PesquisaFiltradaImovel{
     public size: number;
     public filter: number;
     public ordenar: string;
+    public pesquisa!: string;
     constructor(){
         this.page = 0;
         this.size = 12;

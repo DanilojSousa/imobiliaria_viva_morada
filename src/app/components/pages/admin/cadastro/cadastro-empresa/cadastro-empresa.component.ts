@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mensagem } from '../../../../utils/mensagem';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -55,7 +55,7 @@ export class CadastroEmpresaComponent implements OnInit {
         this.detalhe();
       },
       error: (err) => {
-        console.error('Erro ao carregar dados iniciais:', err);
+        console.error('Erro ao carregar dados iniciais:', err.error?.message);
       }
     });
   }
@@ -69,7 +69,7 @@ export class CadastroEmpresaComponent implements OnInit {
           this.sicronizarListas();
         },error:(err)=>{
           console.log("Erro ao carregar a empresa: "+err.error?.message)
-          this.mensagemService.error("Erro ao carregar a empresa")
+          this.mensagemService.error(err.error?.message)
         }
       })
     }
@@ -92,13 +92,12 @@ export class CadastroEmpresaComponent implements OnInit {
     }
     this.empresa.empCnpj = this.empresa.empCnpj .replace(/\D/g, '');
     this.empresa.contato.cntWhatsapp = this.empresa.contato.cntWhatsapp.replace(/[^0-9]/g, '');
-    console.log(this.empresa)
     this.empresaService.salvar(this.empresa).subscribe({
       next:(res)=>{
         this.empresa = res;
         this.mensagemService.sucesso("Empresa salvo com sucesso");
       }, error:(err)=>{
-        this.mensagemService.error("Erro ao salvar a empresa");
+        this.mensagemService.error(err.error?.message);
         console.log("Erro ao salvar a empresa: "+ err.error?.message);
       }
     });

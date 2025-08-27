@@ -120,6 +120,7 @@ export class FiltradoComponent implements OnInit {
         this.pageable = res;
         this.carregaFiltro();       
       },error: (err) => {
+        console.log(err.error?.message);
         this.spinner = false;
       }
     })

@@ -14,10 +14,11 @@
     height: auto;
     justify-content: center;
     align-items: center;
+    margin: auto;
 
     img{
-        width: 55%;
-        height: 55%;
+        width: 75%;
+        height: 75%;
         overflow: hidden;
         margin: 20px;
     }
@@ -33,6 +34,7 @@
     z-index: 1;
     display: flex;
     justify-content: center;
+    background-color: rgb(212, 208, 208)!important;
     }
 
     .arrow-left {

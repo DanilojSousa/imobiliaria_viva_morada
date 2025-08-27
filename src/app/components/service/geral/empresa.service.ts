@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Mensagem } from '../../utils/mensagem';
 import { Paginacao } from '../../interface/imovel/paginacao';
 import { Pageable } from '../../interface/imovel/pageable';
+import { EmpresaEndereco } from '../../interface/geral/empresa-endereco';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,8 @@ export class EmpresaService {
   }
   getByAtivo(): Observable<Empresa>{
     return this.http.get<Empresa>(environment.api_url_public + "/empresa/ativo", { withCredentials: true });
+  }
+  getByEmpresaEndereco(): Observable<EmpresaEndereco>{
+    return this.http.get<EmpresaEndereco>(environment.api_url_public + "/empresa/contatos", { withCredentials: true });
   }
 }

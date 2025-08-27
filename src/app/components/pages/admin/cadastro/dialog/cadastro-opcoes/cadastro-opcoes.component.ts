@@ -108,7 +108,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.proximidade = res;
         }, error:(err)=>{
-          console.log("Não foi possivel carregar a proximidade: "+ err);
+          console.log("Não foi possivel carregar a proximidade: "+ err.error?.message);
         }
       })
     }
@@ -119,7 +119,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.areaLazer = res;
         }, error:(err)=>{
-          console.log("Não foi possivel carregar a àrea de lazer: "+ err);
+          console.log("Não foi possivel carregar a àrea de lazer: "+ err.error?.message);
         }
       })
     }
@@ -130,7 +130,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.listaEndereco = res;
         this.carregaCondominio();
       }, error:(err)=>{
-        console.log("Não foi possivel carregar o endereço: "+ err);
+        console.log("Não foi possivel carregar o endereço: "+ err.error?.message);
       }
     });
   }
@@ -142,7 +142,7 @@ export class CadastroOpcoesComponent implements OnInit {
           const endereco = this.listaEndereco.find(endereco => endereco.endCodigo === this.condominio.endereco.endCodigo);
           if (endereco) this.condominio.endereco = endereco;
         }, error:(err)=>{
-          console.log("Não foi possivel carregar o condomínio: "+ err);
+          console.log("Não foi possivel carregar o condomínio: "+ err.error?.message);
         }
       })
     }
@@ -154,7 +154,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.situacaoImovel = res;
         },error:(err)=>{
-          console.log("Não foi possivel carregar a situação imovel: "+ err);
+          console.log("Não foi possivel carregar a situação imovel: "+ err.error?.message);
         }
       })
     }
@@ -165,7 +165,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.tipoImovel = res;
         },error:(err)=>{
-          console.log("Não foi possivel carregar a tipo imovel: "+ err);
+          console.log("Não foi possivel carregar a tipo imovel: "+ err.error?.message);
         }
       })
     }
@@ -176,7 +176,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.negocio = res;
         },error:(err)=>{
-          console.log("Não foi possivel carregar a negócio: "+ err);
+          console.log("Não foi possivel carregar a negócio: "+ err.error?.message);
         }
       })
     }
@@ -188,7 +188,7 @@ export class CadastroOpcoesComponent implements OnInit {
         next:(res)=>{
           this.localizacaoPraia = res;
         },error:(err)=>{
-          console.log("Não foi possivel carregar a localização praia: "+ err);
+          console.log("Não foi possivel carregar a localização praia: "+ err.error?.message);
         }
       })
     }
@@ -246,7 +246,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar o condomínio: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar o condomínio");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }
@@ -259,7 +259,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar a localização praia: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar a localização praia");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }
@@ -271,7 +271,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar o Negócio: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar o Negócio");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }
@@ -283,7 +283,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar o tipo imóvel: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar o tipo imóvel");
+        this.mensagemService.error(err.error?.message);
 
       }
     })
@@ -296,7 +296,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar a situação imóvel: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar a situação imóvel");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }
@@ -308,7 +308,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar a proximidade: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar a proximidade");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }
@@ -320,7 +320,7 @@ export class CadastroOpcoesComponent implements OnInit {
         this.dialogRef.close();
       },error:(err)=>{
         console.log("Erro ao salvar a àrea de lazer: "+ err.error?.message);
-        this.mensagemService.error("Erro ao salvar a àrea de lazer");
+        this.mensagemService.error(err.error?.message);
       }
     })
   }

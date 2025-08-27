@@ -17,11 +17,14 @@ import { Paginacao } from '../../../../interface/imovel/paginacao';
 import { SessaoService } from '../../../../service/sessao/sessao.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { DeletarComponent } from '../../cadastro/dialog/deletar/deletar.component';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-endereco',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule,
-        MatTableModule, MatPaginatorModule, CommonModule, MatIcon, MatSlideToggleModule, MatButtonModule],
+        MatTableModule, MatPaginatorModule, CommonModule, MatIcon, MatSlideToggleModule, 
+        MatButtonModule, MatInputModule, FormsModule],
     providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
     templateUrl: './endereco.component.html',
     styleUrl: './endereco.component.css'
@@ -77,6 +80,7 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar endereço cadastrado")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -98,7 +102,8 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar o Endereço, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros")
+        console.log(err.error?.message)
       }
     })
   }
@@ -118,5 +123,8 @@ export class EnderecoComponent implements OnInit, AfterViewInit  {
   }
   permissao(): boolean{
     return this.sessaoServce.permissao();
+  }
+  onInputChange(event: any) {
+    this.pesquisaFiltrada();
   }
 }

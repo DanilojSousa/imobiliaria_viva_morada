@@ -9,7 +9,34 @@
     .button{
       margin-bottom: 20px;
       display: flex;
+      justify-content: space-between;
+      .coluna{
+        display: flex;
+        align-items: center;
+        input{
+          border-radius: 2px;
+          min-height: 40px;
+          border: 1px solid rgba(226, 228, 232, 0.8);
+          flex: 1 1 0%;
+          outline: none;
+          max-width: 100%;
+          font-size: inherit;
+          color: inherit;
+          min-width: 1px;
+          font-family: inherit;
+          line-height: 1.15em;
+          letter-spacing: 0.3px;
+          word-spacing: -0.75px;
+          padding-left: 5px;
+          color: #818181;
+          margin-right: 5px;
+      }
+      input::placeholder {
+          color: rgb(185, 183, 183); /* Cor desejada para o placeholder */
+          opacity: 1; /* Para garantir que a cor aplicada seja visível */
+      } 
     }
+  }
     .example-container {
       position: relative;
     }

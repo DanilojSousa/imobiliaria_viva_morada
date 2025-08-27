@@ -4,7 +4,6 @@ import { InicioComponent } from './components/pages/home/inicio.component';
 import { DetalheComponent } from './components/pages/home/detalhe/detalhe.component';
 import { FiltradoComponent } from './components/pages/home/filtrado/filtrado.component';
 import { SistemaComponent } from './components/pages/admin/sistema/sistema.component';
-import { LogadoOnGuard } from './components/account/shared/logadoOn';
 import { CadastroImovelComponent } from './components/pages/admin/cadastro/cadastro_imovel/cadastro_imovel.component';
 import { ImovelComponent } from './components/pages/admin/detalhe/imovel/imovel.component';
 import { UsuarioComponent } from './components/pages/admin/detalhe/usuario/usuario.component';
@@ -21,6 +20,7 @@ import { CadastroEmpresaComponent } from './components/pages/admin/cadastro/cada
 import { AreaLazerComponent } from './components/pages/admin/detalhe/area-lazer/area-lazer.component';
 import { ProximidadeComponent } from './components/pages/admin/detalhe/proximidade/proximidade.component';
 import { DashboardComponent } from './components/pages/admin/dashboard/dashboard.component';
+import { CancelarInscricaoComponent } from './components/pages/home/newsletter/cancelar-inscricao/cancelar-inscricao.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +33,7 @@ export const routes: Routes = [
   {path: 'login/:id', component: LoginComponent},
   {path: 'imovel/detalhes/:imvCodigo', component: DetalheComponent},
   {path: 'imovel/filtro', component: FiltradoComponent},
+  {path: 'newsletter/cancelar/:nwlCodigo', component: CancelarInscricaoComponent},
   {
     path: 'acesso/sistema', component: SistemaComponent,
     children:[

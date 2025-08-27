@@ -36,7 +36,6 @@ export class LocalizacaoComponent implements OnInit  {
   displayedColumns: string[] = ['Ref:', 'Descrição', 'Ação'];
   constructor(private localizacaoService : LocalizacaoPraiaService,
               private mensagem: Mensagem,
-              private route: Router,
               private sessaoServce: SessaoService){}
 
   ngOnInit(): void {
@@ -50,6 +49,7 @@ export class LocalizacaoComponent implements OnInit  {
         this.isLoadingResults = false;
       },error: (err) => {
         this.mensagem.error("Erro buscar a localização")
+        console.log(err.error?.message)
         this.isLoadingResults = false;
       }
     })
@@ -87,7 +87,8 @@ detalhe(lcpCodigo: number | null){
         this.pesquisaFiltrada();
       },
       error: (err) => {
-        this.mensagem.error("Erro ao deletar a localização, favor validar se possui vinculação com outros cadastros")
+        this.mensagem.error(err.error?.message+", favor validar se possui vinculação com outros cadastros")
+        console.log(err.error?.message)
       }
     })
   }

@@ -14,7 +14,6 @@ import { UsuarioService } from '../../../service/acesso/usuario.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EmailService } from '../../../service/geral/email.service';
 import { Email } from '../../../interface/geral/email';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { ProximidadeService } from '../../../service/imovel/proximidade.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { VisualizarImagemDialogComponent } from '../dialog/visualizar-imagem/visualizar-imagem-dialog.component';
@@ -26,6 +25,7 @@ import { HomeComponent } from "../cabecalho/home.component";
 import { SessaoService } from '../../../service/sessao/sessao.service';
 import { Util } from '../../../utils/util';
 import { RodapeComponent } from "../../rodape/rodape.component";
+import { Mensagem } from '../../../utils/mensagem';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -33,14 +33,13 @@ registerLocaleData(localePt, 'pt-BR');
     selector: 'app-detalhe',
     imports: [MatGridListModule, MatButtonModule,
     MatProgressSpinnerModule, MatIconModule, CommonModule,
-    FormsModule, MatSnackBarModule, MatDividerModule, HomeComponent, RodapeComponent],
+    FormsModule, MatDividerModule, HomeComponent, RodapeComponent],
     providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
     templateUrl: './detalhe.component.html',
     styleUrl: './detalhe.component.css'
 })
 export class DetalheComponent implements OnInit {
 
-  private _snackBar = inject(MatSnackBar);
   readonly dialog = inject(MatDialog);
   listaImagens: Imagens[] = []
   imovel: Imovel = new Imovel();
@@ -67,7 +66,8 @@ export class DetalheComponent implements OnInit {
               private emailService: EmailService,
               private areaLazerService: AreaLazerService,
               private proximidadeService: ProximidadeService,
-              private sessaoService: SessaoService){}
+              private sessaoService: SessaoService,
+              private notificacao: Mensagem){}
 
   ngOnInit(): void {
     const imvCodigo = this.route.snapshot.paramMap.get('imvCodigo');
@@ -125,9 +125,9 @@ export class DetalheComponent implements OnInit {
         this.listaImagens = res;
         this.dialog.open(VisualizarImagemDialogComponent,{
           width: '100%',
-          height: 'auto',
+          height: '100%',
           maxWidth: '100%',
-          maxHeight: 'auto',
+          maxHeight: '100%',
           data: { listaImagens: this.listaImagens, indice: indice }
         });
       }
@@ -135,10 +135,10 @@ export class DetalheComponent implements OnInit {
   }
 
   mostraImagem(imgCodigo: number): string{
-      return Util.getImagemImovel(imgCodigo);
+      return Util.getImagemImovel(imgCodigo, 0, 0);
   }
   mostraImagemUsuario(usrCodigo: number): string{
-    return Util.mostraImagemUsuario(usrCodigo);
+    return Util.mostraImagemUsuario(usrCodigo, 50, 50);
   }
 
   carrega():string{
@@ -165,7 +165,7 @@ export class DetalheComponent implements OnInit {
 
   onEmail(myForm: NgForm){
     if(!this.validaFormulario(myForm)){
-      this.openSnackBar("Os campos devem ser preenchidos", "warning-snackba");
+      this.notificacao.atencao("Os campos devem ser preenchidos");
       return;
     }
     const email = new Email();
@@ -178,9 +178,9 @@ export class DetalheComponent implements OnInit {
     email.evmConteudo = myForm.value.mensagem +"<br/><br/>"+myForm.value.nome+"<br/> Telefone: "+this.formattedPhone+"<br/> Email: "+myForm.value.email
     this.emailService.enviarEmail(email).subscribe({
       next:(res) =>{
-        this.openSnackBar("Email enviado com sucesso", "success-snackbar");
-      },error:(er)=>{
-        this.openSnackBar("Erro ao enviar o e-mail","error-snackbar");
+        this.notificacao.sucesso("Email enviado com sucesso");
+      },error:(err)=>{
+        this.notificacao.error(err.error?.message);
       }
     })
   }
@@ -208,12 +208,6 @@ export class DetalheComponent implements OnInit {
     window.open(url, '_blank');''
   }
 
-  openSnackBar(text: string, tipo: string) {
-    this._snackBar.open(text, 'X',{
-      duration: 3000,
-      panelClass: [tipo],
-    });
-  }
   visualizarImagen(indice: number){
     this.carregaListaImagem(indice);
   }

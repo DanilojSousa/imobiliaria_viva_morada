@@ -1,42 +1,49 @@
 #content_sobre{
-    width: 100%;
+    width: 90%;
     min-height: 500px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    .titulo{
-        width: 100%;
-        h1{
-            z-index: 2;
-            font-size: 30px;
-            margin: 0px 60px 30px;
-            text-align: left;
-        }
+    margin: auto;
+    .imagem_fundo{
+        width: 550px;
+        height: 550px;
+        background-image: url("../../../../../assets/quem_somos/quem_somos.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat; 
+        margin-top: 100px;
+        margin-bottom: 100px;
     }
     .conteudo_sobre{
         width: 50%;
         display: flex;
         flex-direction: column;
         unicode-bidi: isolate;
-        margin-bottom: 100px;
+        margin-left: 20px;
+        h3{
+            font-size: 30px;
+            color: white;
+        }
         p{
             font-family: Montserrat, "Trebuchet MS", serif;
             font-size: 14px;
-            color: rgb(60, 72, 88);
+            color: white;
             margin-bottom: 10px;
-            a{
-                color: rgb(27, 116, 233);
-                cursor: pointer;
+        }
+        .quaidades_icones{
+            margin-top: 50px;
+            div{
+                display: flex;
+                align-items: center;
+                margin-right: 15px;
+                color: white;
+                mat-icon{
+                    color: green;
+                    margin-right: 5px;
+                }
             }
         }
-    }
-    .imagem_fundo{
-        width: 100%;
-        height: 300px;
-        background-image: url("../../../../../assets/home/imagem_final_home.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat; 
     }
 }
 @media(max-width: 700px) {
