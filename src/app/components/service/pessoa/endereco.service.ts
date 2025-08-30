@@ -10,7 +10,6 @@ import { Paginacao } from '../../interface/imovel/paginacao';
   providedIn: 'root'
 })
 export class EnderecoService {
-
   constructor(private http: HttpClient) { }
 
   salvar(endereco: EnderecoDTO): Observable<EnderecoDTO> {
@@ -36,5 +35,8 @@ export class EnderecoService {
   }
   delete(endCodigo: number) {
     return this.http.delete(environment.api_url + "/endereco/"+ endCodigo, { withCredentials: true });
+  }
+  buscarEnderecoViaCep(endCep: string) {
+    return this.http.get<EnderecoDTO>(environment.api_url + "/endereco/cep/"+endCep, { withCredentials: true });
   }
 }
