@@ -148,4 +148,12 @@ export class CadastroEnderecoComponent implements OnInit {
     this.endereco = new EnderecoDTO();
     this.router.navigate(['acesso/sistema/cadastro/endereco'])
   }
+  buscarEnderecoViaCep(){
+    this.enderecoService.buscarEnderecoViaCep(this.endereco.endCep).subscribe({
+      next:(res)=>{
+        this.endereco = res;
+        this.sicronizarListas();
+      }
+    })
+  }
 }
