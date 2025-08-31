@@ -13,6 +13,22 @@
       <form (ngSubmit)="salvar()" novalidate>
         <div class="coluna">
           <div>
+            <label for="endCep"><span>*</span>CEP</label>
+            <input type="text" 
+                  id="endCep" 
+                  placeholder="Digite o CEP" 
+                  name="endCep" 
+                  [(ngModel)]="endereco.endCep"
+                  (input)="checarCep(endereco.endCep)"
+                  (blur)="buscarEnderecoViaCep()"
+                  maxlength="9"/>  
+                @if (endereco.endCep === undefined && valida) {
+                    <div class="error">
+                        O Cep é obrigatório.
+                    </div>
+                }       
+        </div>
+          <div>
               <label for="endEndereco"><span>*</span>Endereço</label>
               <input type="text" 
                   required
@@ -34,22 +50,22 @@
                   name="endNumero" 
                   [(ngModel)]="endereco.endNumero"/>
           </div>
-          <div>
-              <label for="endBairro"><span>*</span>Bairro</label>
-              <input type="text" 
-                    required
-                    id="endBairro" 
-                    placeholder="Digite o bairro" 
-                    name="endBairro" 
-                    [(ngModel)]="endereco.endBairro"/>
-              @if (endereco.endBairro === undefined && valida) {
-                  <div class="error">
-                      O bairro é obrigatório.
-                  </div>
-              }      
-          </div>
         </div>
         <div class="coluna">
+          <div>
+            <label for="endBairro"><span>*</span>Bairro</label>
+            <input type="text" 
+                  required
+                  id="endBairro" 
+                  placeholder="Digite o bairro" 
+                  name="endBairro" 
+                  [(ngModel)]="endereco.endBairro"/>
+            @if (endereco.endBairro === undefined && valida) {
+                <div class="error">
+                    O bairro é obrigatório.
+                </div>
+            }      
+        </div>
           <div>
             <label for="endComplemento">Complemento</label>
             <input type="text" 
@@ -57,23 +73,7 @@
                   placeholder="Digite o Complemento" 
                   name="endComplemento" 
                   [(ngModel)]="endereco.endComplemento"/>                  
-          </div>
-          <div>
-              <label for="endCep"><span>*</span>CEP</label>
-              <input type="text" 
-                    id="endCep" 
-                    placeholder="Digite o CEP" 
-                    name="endCep" 
-                    [(ngModel)]="endereco.endCep"
-                    (input)="checarCep(endereco.endCep)"
-                    maxlength="9"/>  
-                  @if (endereco.endCep === undefined && valida) {
-                      <div class="error">
-                          O Cep é obrigatório.
-                      </div>
-                  }       
-          </div>
-          
+          </div>          
           <div class="select">
             <label for="estado"><span>*</span>Estado</label>
             <mat-select id="estado" [(ngModel)]="estado" required name="estado" placeholder="Selecione">
