@@ -1,8 +1,7 @@
 export class Imagens{
-
-    public imgCodigo!: number;
-    public imgImagem!: string;
-    public imgPrincipal!: boolean;
+    public imiCodigo!: number;
+    public imiImagem!: string;
+    public imiPrincipal!: boolean;
     public index!: number;
     
     constructor(){

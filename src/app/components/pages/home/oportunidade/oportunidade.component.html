@@ -5,7 +5,7 @@
     <div class="cards">
         @for(imovel of listaImovelOportunidade; track imovel; let i = $index){
              <div class="card" (click)="detalhes(imovel.imvCodigo)">
-                <img [src]="mostraImagem(imovel.imgCodigo)" width="415px" height="450px"/>
+                <img [src]="mostraImagem(imovel.imiCodigo)" width="415px" height="450px"/>
                 <div class="informacao">
                     <div class="conteudo_oprtunidade">
                         <div class="titulo">{{imovel.imvDescricao}}</div>

@@ -18,7 +18,7 @@ export class ImovelCard{
     public usrNome!: string;
     public usrCreci!: string;
     public role!: string;
-    public imgCodigo!: number;
+    public imiCodigo!: number;
 
     constructor(){}
 }

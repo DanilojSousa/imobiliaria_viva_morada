@@ -19,7 +19,7 @@ export class VisualizarImagemDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imagemPrincipal = this.data.listaImagens[this.data.indice].imgImagem;
+    this.imagemPrincipal = this.data.listaImagens[this.data.indice].imiImagem;
     this.imagemSlide = [...this.data.listaImagens];
   }
 
@@ -41,7 +41,7 @@ export class VisualizarImagemDialogComponent implements OnInit {
     }
   }
   mudarImagem(indice: number){
-    this.imagemPrincipal = this.imagemSlide[indice].imgImagem;
+    this.imagemPrincipal = this.imagemSlide[indice].imiImagem;
   }
   close(){
     this.dialogRef.close()
