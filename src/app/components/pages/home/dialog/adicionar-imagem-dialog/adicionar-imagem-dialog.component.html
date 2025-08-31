@@ -35,15 +35,15 @@
                 @for (imagens of imovel.imagens; track imagens; let i = $index) {
                     <div class="imagens">
                         <div>
-                            <img [src]="mostrarImagem(imagens.imgImagem)" width="100" height="100"/>
+                            <img [src]="mostrarImagem(imagens.imiImagem)" width="100" height="100"/>
                         </div>
-                        @if(imagens.imgCodigo != null){
+                        @if(imagens.imiCodigo != null){
                             <div>
-                                Ref: {{imagens.imgCodigo}}
+                                Ref: {{imagens.imiCodigo}}
                             </div>
                         }
                         <div>
-                            <mat-radio-button class="example-radio-button" [checked]="imagens.imgPrincipal" [value]="i">Imagem Principal</mat-radio-button>
+                            <mat-radio-button class="example-radio-button" [checked]="imagens.imiPrincipal" [value]="i">Imagem Principal</mat-radio-button>
                         </div>
                         <div class="icone_delete" (click)="deletarImagens(i)">
                             <mat-icon fontIcon="delete"></mat-icon>

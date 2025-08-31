@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="topo">{{tile.situacaoImovel.stiDescricao}}</div>
                 <div class="arrow-left" (click)="navegarImagem('prev', tile.imagensCodigo)">&#10094;</div>
-                <img [src]="mostraImagem(tile.imagensCodigo[indexImagem(tile.imagensCodigo)].imgCodigo)" (click)="detalhes(tile.imvCodigo)" width="306px" height="308px"/>                                     
+                <img [src]="mostraImagem(tile.imagensCodigo[indexImagem(tile.imagensCodigo)].imiCodigo)" (click)="detalhes(tile.imvCodigo)" width="306px" height="308px"/>                                     
                 <div class="arrow-right" (click)="navegarImagem('next', tile.imagensCodigo)">&#10095;</div>
                 <div class="icones_superior">
                     <div class="codigo">Ref.:{{tile.imvCodigo}}</div>

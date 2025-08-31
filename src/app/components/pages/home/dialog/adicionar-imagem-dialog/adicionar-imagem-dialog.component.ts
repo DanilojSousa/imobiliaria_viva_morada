@@ -47,8 +47,8 @@ export class AdicionarImagemDialogComponent implements OnInit {
   }
 
   fecharDialog(){
-    this.imovel.imagens.map(x => x.imgPrincipal = false)
-    this.imovel.imagens[this.index].imgPrincipal = true;
+    this.imovel.imagens.map(x => x.imiPrincipal = false)
+    this.imovel.imagens[this.index].imiPrincipal = true;
     this.dialogRef.close(this.imovel);
   }
   
@@ -85,8 +85,8 @@ export class AdicionarImagemDialogComponent implements OnInit {
           image.onload = () => {
             if (image.width >= 800 && image.height >= 800) {
               const imagens = new Imagens();
-              imagens.imgImagem = base64String; // Armazena apenas o conteúdo Base64
-              imagens.imgPrincipal = this.imovel!.imagens.length === 0;
+              imagens.imiImagem = base64String; // Armazena apenas o conteúdo Base64
+              imagens.imiPrincipal = this.imovel!.imagens.length === 0;
               this.imovel.imagens.push(imagens);
             } else {
               this.mensagemService.atencao(`Arquivo ${file.name} inválido: dimensões inferior ao tamanho 800x800.`);

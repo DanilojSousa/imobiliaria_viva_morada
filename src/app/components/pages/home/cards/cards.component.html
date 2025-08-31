@@ -7,7 +7,7 @@
                 <div class="imgens_container" (click)="detalhes(imovel.imvCodigo)">
                     <div class="imagens">
                         <img [class.img1]="i === 1" [class.img2]="i === 4" [class.img3]="i === 5"
-                            [src]="mostraImagem(imovel.imgCodigo)"
+                            [src]="mostraImagem(imovel.imiCodigo)"
                             width="100%" height="100%" [class.opacity]="i !== indexImagemAtiva"/>
                     </div>
                     <div class="informacoes" [class.opacity]="i !== indexImagemAtiva">

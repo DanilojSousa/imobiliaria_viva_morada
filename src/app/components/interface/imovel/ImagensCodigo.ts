@@ -1,6 +1,6 @@
 export class ImagensCodigo{
 
-    public imgCodigo!: number;
+    public imiCodigo!: number;
     public index!: number;
     
     constructor(){

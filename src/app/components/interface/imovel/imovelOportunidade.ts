@@ -4,7 +4,7 @@ export class ImovelOportunidade{
     public imvDescricao!: string;
     public imvValor!: number;
     public imvObservacao!: string;
-    public imgCodigo!: number;
+    public imiCodigo!: number;
 
     constructor(){}
 }
