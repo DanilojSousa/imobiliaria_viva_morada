@@ -18,6 +18,7 @@ import { UsuarioService } from '../../../../service/acesso/usuario.service';
 import { BreakpointObserver } from '@angular/cdk/layout'
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { Util } from '../../../../utils/util';
 
 @Component({
     selector: 'app-usuario',
@@ -34,7 +35,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
   pageable!: Pageable<Usuario>;
   paginacao: Paginacao = new Paginacao(0, 5);
   pageEvent!: PageEvent;
-  displayedColumns: string[] = ['Ref:', 'Nome','Nível','Situação','Ação'];
+  displayedColumns: string[] = ['Foto','Ref:', 'Nome','Nível','Situação','Ação'];
   constructor(private usuarioService : UsuarioService,
               private mensagem: Mensagem,
               private route: Router, 
@@ -57,7 +58,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
     } else if (isMedium) {
       this.displayedColumns = ['Ref:', 'Nome', 'Situação', 'Ação'];
     } else {
-      this.displayedColumns = ['Ref:', 'Nome', 'Nível', 'Situação', 'Ação'];
+      this.displayedColumns = ['Foto','Ref:', 'Nome', 'Nível', 'Situação', 'Ação'];
     }
   }
 
@@ -132,5 +133,9 @@ export class UsuarioComponent implements OnInit, AfterViewInit  {
 
   onInputChange(event: any) {
     this. pesquisaFiltrada();
+  }
+
+  mostrarImagens(usrImagem: string): string {
+    return Util.mostraImagemString(usrImagem);
   }
 }

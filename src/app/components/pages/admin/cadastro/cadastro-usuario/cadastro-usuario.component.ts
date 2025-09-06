@@ -181,7 +181,7 @@ export class CadastroUsuarioComponent implements OnInit {
       }
     }else{
       this.validaSenha = false;
-        this.validaSenha2 = false;
+      this.validaSenha2 = false;
     }
   }
 
